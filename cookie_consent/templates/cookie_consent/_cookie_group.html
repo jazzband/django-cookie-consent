@@ -1,0 +1,54 @@
+{% load i18n %}
+{% load url from future %}
+{% load cookie_consent_tags %}
+
+
+<div class="cookie-group">
+  <h2>{{ cookie_group.name }}</h2>
+
+  <p>
+    {{ cookie_group.description }}
+  </p>
+
+  {% if not cookie_group.is_required %}
+    <div class="cookie-group-form">
+     {% if request|cookie_group_accepted:cookie_group.varname %}
+       <span class="cookie-consent-accepted">{% trans "Accepted" %}</span>
+     {% else %}
+       <form class="cookie-consent-accept" action="{% url "cookie_consent_accept" cookie_group.varname %}" method="POST">
+         {% csrf_token %}
+         <input type="submit" value="{% trans "Accept" %}">
+       </form>
+     {% endif %}
+
+     {% if request|cookie_group_declined:cookie_group.varname %}
+       <span class="cookie-consent-declined">{% trans "Declined" %}</span>
+     {% else %}
+       <form class="cookie-consent-decline" action="{% url "cookie_consent_decline" cookie_group.varname %}" method="POST">
+         {% csrf_token %}
+         <input type="submit" value="{% trans "Decline" %}">
+       </form>
+     {% endif %}
+    </div>
+  {% endif %}
+
+
+  <table>
+  {% for cookie in cookie_group.cookie_set.all %}
+   <tr>
+     <th>
+        {{ cookie.name }}
+        {% if cookie.domain %}
+          ({{ cookie.domain }})
+        {% endif %}
+     </th>
+     <td>
+       {% if cookie.description %}
+        {{ cookie.description }}
+       {% endif %}
+     </td>
+   </tr>
+  {% endfor %}
+  </table>
+
+</div>

@@ -1,0 +1,6 @@
+include LICENSE
+include AUTHORS
+include README.rst
+recursive-include cookie_consent/templates *
+recursive-include cookie_consent/static *
+recursive-include cookie_consent/fixtures *
