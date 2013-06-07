@@ -1,27 +1,44 @@
 =====================
-django-cookie-consent
+Django cookie consent
 =====================
 
-Install
--------
+django-cookie-consent is a reusable application for managing various
+cookies and visitors consent for their use in Django project.
+
+Features:
+
+* cookies and cookie groups are stored in models for easy management
+  through Django admin interface
+
+* support for both opt-in and opt-out cookie consent schemes
+
+* removing declined cookies (or non accepted when opt-in scheme is used)
+
+* logging user actions when they accept and decline various cookies
+
+* easy adding new cookies and seamlessly re-asking for consent for new cookies
+
+
+Configuration
+-------------
+
+1. Add ``coookie_consent`` to your ``INSTALLED_APPS``.
+
+2. Add ``django.core.context_processors.request``
+   to ``TEMPLATE_CONTEXT_PROCESSORS`` if it is not already added.
+
+3. Include django-cookie-consent urls in ``urls.py``::
+
+    url(r'^cookies/', include('cookie_consent.urls'))
+
+4. Run ``syncdb`` or ``migrate`` django management command.
+
+
+Example app
+-----------
 
 ::
 
-    pip install django-cookie-consent
+    cd tests && ./manage.py runserver
 
-Setup
------
-
-Add ``coookie_consent`` to ``INSTALLED_APPS``.
-
-Add ``django.core.context_processors.request`` to ``TEMPLATE_CONTEXT_PROCESSORS``.
-
-Include cookie consent urls in ``urls.py``::
-
-    url(r'^cookies/', include('cookie_consent.urls')),
-
-
-TODO
-----
-
-No raising exception if cookie oes not exists
+Username and password for admin are 'admin', 'password'.
