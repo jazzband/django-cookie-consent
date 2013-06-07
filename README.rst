@@ -18,6 +18,11 @@ Features:
 
 * easy adding new cookies and seamlessly re-asking for consent for new cookies
 
+Documentation
+-------------
+
+https://django-cookie-consent.readthedocs.org/en/latest/
+
 
 Configuration
 -------------
