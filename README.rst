@@ -1,4 +1,3 @@
-=====================
 Django cookie consent
 =====================
 
@@ -18,11 +17,16 @@ Features:
 
 * easy adding new cookies and seamlessly re-asking for consent for new cookies
 
+Documentation
+-------------
+
+https://django-cookie-consent.readthedocs.org/en/latest/
+
 
 Configuration
 -------------
 
-1. Add ``coookie_consent`` to your ``INSTALLED_APPS``.
+1. Add ``cookie_consent`` to your ``INSTALLED_APPS``.
 
 2. Add ``django.core.context_processors.request``
    to ``TEMPLATE_CONTEXT_PROCESSORS`` if it is not already added.
