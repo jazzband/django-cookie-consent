@@ -1,4 +1,19 @@
 (function ($) {
+
+  $.fn.evalXCookieConsent = function() {
+    return this.each(function() {
+      var src = $(this).attr('src');
+      if (src) {
+        var script = document.createElement('script');
+        script.src = src;
+        document.getElementsByTagName("head")[0].appendChild(script);
+      } else {
+        $.globalEval(this.innerHTML);
+      }
+      $(this).remove();
+    });
+  };
+
   $.showCookieBar = function (options) {
     var defaults = {
       content: '',
@@ -20,14 +35,7 @@
       $('body').removeClass('with-cookie-bar');
       $("script[type='x/cookie_consent']").each(function() {
         if (cookie_groups.indexOf($(this).attr('data-varname')) != -1) {
-          var src = $(this).attr('src');
-          if (src) {
-            var script = document.createElement('script');
-            script.src = src;
-            document.getElementsByTagName("head")[0].appendChild(script);
-          } else {
-            $.globalEval(this.innerHTML);
-          }
+          $(this).evalXCookieConsent();
         }
       });
       return false;
