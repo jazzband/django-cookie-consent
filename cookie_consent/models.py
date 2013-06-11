@@ -77,6 +77,10 @@ class Cookie(models.Model):
     def __unicode__(self):
         return "%s %s%s" % (self.name, self.domain, self.path)
 
+    @property
+    def varname(self):
+        return "%s=%s:%s" % (self.cookiegroup.varname, self.name, self.domain)
+
     def get_version(self):
         return self.created.isoformat()
 
