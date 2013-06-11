@@ -139,5 +139,8 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
 def accepted_cookies(request):
     """
     Filter returns accepted cookies varnames.
+
+    ::
+        {{ request|accepted_cookies }}
     """
     return [c.varname for c in get_accepted_cookies(request)]

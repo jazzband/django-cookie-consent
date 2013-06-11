@@ -32,6 +32,23 @@ class CookieGroupTest(TestCase):
         )
 
 
+class CookieTest(TestCase):
+
+    def setUp(self):
+        self.cookie_group = CookieGroup.objects.create(
+            varname="optional",
+            name="Optional",
+        )
+        self.cookie = Cookie.objects.create(
+            cookiegroup=self.cookie_group,
+            name="foo",
+            domain=".example.com",
+        )
+
+    def test_varname(self):
+        self.assertEqual(self.cookie.varname, "optional=foo:.example.com")
+
+
 class ValidateCookieNameTest(TestCase):
 
     def test_valid(self):
