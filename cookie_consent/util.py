@@ -159,3 +159,19 @@ def get_cookie_string(cookie_dic):
         expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
     )
     return cookie_str
+
+
+def get_accepted_cookies(request):
+    """
+    Returns all accepted cookies.
+    """
+    cookie_dic = get_cookie_dict_from_request(request)
+    accepted_cookies = []
+    for cookie_group in all_cookie_groups().values():
+        version = cookie_dic.get(cookie_group.varname, None)
+        if not version or version == settings.COOKIE_CONSENT_DECLINE:
+            continue
+        for cookie in cookie_group.cookie_set.all():
+            if version >= cookie.get_version():
+                accepted_cookies.append(cookie)
+    return accepted_cookies

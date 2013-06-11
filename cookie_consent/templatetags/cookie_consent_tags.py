@@ -5,6 +5,7 @@ from django import template
 from django.core.urlresolvers import reverse
 
 from cookie_consent.util import (
+    get_accepted_cookies,
     get_cookie_string,
     get_cookie_value_from_request,
     get_cookie_dict_from_request,
@@ -12,7 +13,6 @@ from cookie_consent.util import (
     get_not_accepted_or_declined_cookie_groups,
     is_cookie_consent_enabled,
 )
-
 from cookie_consent.conf import settings
 
 
@@ -133,3 +133,11 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         else:
             res = value
     return "text/javascript" if res else "x/cookie_consent"
+
+
+@register.filter
+def accepted_cookies(request):
+    """
+    Filter returns accepted cookies varnames.
+    """
+    return [c.varname for c in get_accepted_cookies(request)]
