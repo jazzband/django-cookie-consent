@@ -18,6 +18,8 @@ Features:
 
 * easy adding new cookies and seamlessly re-asking for consent for new cookies
 
+The latest version of Django cookie consent is available at https://github.com/bmihelac/django-cookie-consent/
+
 User Guide
 ----------
 
