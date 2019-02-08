@@ -1,3 +1,3 @@
 -r base.txt
 sphinx
-south
+django-bootstrap4==0.0.4

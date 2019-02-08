@@ -62,7 +62,8 @@ class CookieGroup(models.Model):
 class Cookie(models.Model):
     cookiegroup = models.ForeignKey(
         CookieGroup,
-        verbose_name=CookieGroup._meta.verbose_name)
+        verbose_name=CookieGroup._meta.verbose_name,
+        on_delete=models.CASCADE)
     name = models.CharField(_('Name'), max_length=250)
     description = models.TextField(_('Description'), blank=True)
     path = models.TextField(_('Path'), blank=True, default="/")
@@ -105,7 +106,8 @@ class LogItem(models.Model):
     action = models.IntegerField(_('Action'), choices=ACTION_CHOICES)
     cookiegroup = models.ForeignKey(
         CookieGroup,
-        verbose_name=CookieGroup._meta.verbose_name)
+        verbose_name=CookieGroup._meta.verbose_name,
+        on_delete=models.CASCADE)
     version = models.CharField(_('Version'), max_length=32)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
 

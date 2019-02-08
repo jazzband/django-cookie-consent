@@ -1,4 +1,4 @@
-from models_tests import *  # NOQA
-from views_tests import *  # NOQA
-from util_tests import *  # NOQA
-from cache_tests import *  # NOQA
+from core.tests.cache_tests import *
+from core.tests.models_tests import *
+from core.tests.views_tests import *
+from core.tests.util_tests import *
