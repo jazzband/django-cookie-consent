@@ -41,7 +41,7 @@ class CookieGroup(models.Model):
         verbose_name_plural = _('Cookie Groups')
         ordering = ['ordering']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_version(self):
@@ -75,7 +75,7 @@ class Cookie(models.Model):
         verbose_name_plural = _('Cookies')
         ordering = ['-created']
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s %s%s" % (self.name, self.domain, self.path)
 
     @property
@@ -110,6 +110,8 @@ class LogItem(models.Model):
         on_delete=models.CASCADE)
     version = models.CharField(_('Version'), max_length=32)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
+    def __str__(self):
+        return "%s %s" % (self.cookiegroup.name, self.version)
 
     class Meta:
         verbose_name = _('Log item')
