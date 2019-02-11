@@ -61,10 +61,3 @@ MIDDLEWARE = [
 
 COOKIE_CONSENT_NAME = "cookie_consent"
 COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365 * 1  # 1 year
-DECLINE = "-1"
-
-ENABLED = True
-
-OPT_OUT = False
-
-CACHE_BACKEND = "default"
