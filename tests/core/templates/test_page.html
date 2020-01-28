@@ -55,7 +55,7 @@
       <a href="{% url "cookie_consent_cookie_group_list" %}">Cookies policy</a>
     </p>
 
-    <script type="text/javascript" src={% static "admin/js/jquery.js" %}></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
     <script type="text/javascript" src={% static "cookie_consent/cookiebar.js" %}></script>
 
     <script type="{% js_type_for_cookie_consent request "social" "*:.google.com" %}" data-varname="social">

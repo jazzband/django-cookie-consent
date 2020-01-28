@@ -3,10 +3,13 @@ matrix:
   include:
     - name: "python 2 tests"
       python: "2.7"
-      env: DJANGO_VERSION=1.7
+      env: DJANGO_VERSION=1.9
     - name: "python 3 tests"
       python: "3.6"
       env: DJANGO_VERSION=2.1
+    - name: "python 3 tests"
+      python: "3.7"
+      env: DJANGO_VERSION=3.0
 install:
   - pip install -q Django==$DJANGO_VERSION
   - python setup.py -q install

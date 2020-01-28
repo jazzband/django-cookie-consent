@@ -7,12 +7,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'bootstrap4',
+    'django.contrib.messages',
 
     'cookie_consent',
 
     'core',
 ]
-
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
 SITE_ID = 1
 
 ROOT_URLCONF = "urls"
@@ -48,6 +53,9 @@ DATABASES = {
         'NAME': os.path.join(os.path.dirname(__file__), 'database.db'),
     }
 }
+
+MIDDLEWARE_CLASSES = []
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
