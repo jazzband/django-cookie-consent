@@ -1,6 +1,8 @@
 Django cookie consent
 =====================
 
+[![Build Status](https://travis-ci.com/JonHerr/django-cookie-consent.svg?branch=master)](https://travis-ci.com/JonHerr/django-cookie-consent)
+
 django-cookie-consent is a reusable application for managing various
 cookies and visitors consent for their use in Django project.
 

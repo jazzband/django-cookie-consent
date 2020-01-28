@@ -13,11 +13,6 @@ INSTALLED_APPS = [
 
     'core',
 ]
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
 SITE_ID = 1
 
 ROOT_URLCONF = "urls"
