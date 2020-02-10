@@ -19,8 +19,7 @@ class CleanCookiesMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
 
-    def __call__(self, request):
-        response = self.get_response
+    def process_response(self, request, response):
         if not is_cookie_consent_enabled(request):
             return response
         cookie_dic = get_cookie_dict_from_request(request)

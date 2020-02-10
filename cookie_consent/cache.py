@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from cookie_consent.conf import settings
 try:
     from django.core.cache import get_cache
+    cache = get_cache(settings.COOKIE_CONSENT_CACHE_BACKEND)
 except ImportError:
-    from django.core.cache import cache
+    from django.core.cache import caches
+    cache = caches[settings.COOKIE_CONSENT_CACHE_BACKEND]
 
-from cookie_consent.conf import settings
+
 
 CACHE_KEY = 'cookie_consent_cache'
 CACHE_TIMEOUT = 60 * 60
