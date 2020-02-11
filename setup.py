@@ -2,7 +2,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 
-VERSION = __import__("cookie_consent").__version__
+version = '0.2.0'
 
 CLASSIFIERS = [
     'Framework :: Django',
@@ -20,7 +20,7 @@ install_requires = [
 setup(
     name="django-cookie-consent",
     description="Django cookie consent application",
-    version=VERSION,
+    version=version,
     author="Informatika Mihelac",
     author_email="bmihelac@mihelac.org",
     url="https://github.com/bmihelac/django-cookie-consent",
