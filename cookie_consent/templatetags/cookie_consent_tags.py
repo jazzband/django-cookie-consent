@@ -2,7 +2,10 @@
 from __future__ import unicode_literals
 
 from django import template
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 from cookie_consent.util import (
     get_accepted_cookies,
@@ -51,7 +54,7 @@ def all_cookies_accepted(request):
     return are_all_cookies_accepted(request)
 
 
-@register.assignment_tag
+@register.simple_tag
 def not_accepted_or_declined_cookie_groups(request):
     """
     Assignement tag returns cookie groups that does not yet given consent
@@ -68,7 +71,7 @@ def cookie_consent_enabled(request):
     return is_cookie_consent_enabled(request)
 
 
-@register.assignment_tag
+@register.simple_tag
 def cookie_consent_accept_url(cookie_groups):
     """
     Assignement tag returns url for accepting given concept groups.
@@ -78,7 +81,7 @@ def cookie_consent_accept_url(cookie_groups):
     return url
 
 
-@register.assignment_tag
+@register.simple_tag
 def cookie_consent_decline_url(cookie_groups):
     """
     Assignement tag returns url for declining given concept groups.

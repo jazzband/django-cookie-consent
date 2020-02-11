@@ -7,3 +7,6 @@ build/
 dist/
 *.egg-info/
 .tox/
+.vscode
+.history
+.sonarlint

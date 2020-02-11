@@ -1,3 +1,4 @@
 -r base.txt
 sphinx
-south
+django-bootstrap4==1.1.1; python_version > '2.7'
+django-bootstrap4==0.0.4; python_version < '3.0'
