@@ -2,8 +2,8 @@
 Change Log
 ===========
 
-0.2.0 (dev)
-------------
+0.2.0 (2020-02-11)
+------------------
 
 * support ranges from django 1.9 to 3.0 and python 2.7 to 3.7 (JonHerr)
 
