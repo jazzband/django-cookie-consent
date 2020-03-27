@@ -29,11 +29,17 @@ class CookieGroupListView(ListView):
 class CookieGroupBaseProcessView(View):
 
     def get_success_url(self):
-        if hasattr(self.request, 'next'):
-            url = self.request.get("next")
-        else:
-            url = reverse('cookie_consent_cookie_group_list')
-        return url
+        """
+        If user adds a 'next' as URL parameter or hidden input, 
+        redirect to the value of 'next'. Otherwise, redirect to 
+        cookie consent group list
+        """
+        return (
+            self.request.POST.get('next') or self.request.GET.get(
+                'next', reverse('cookie_consent_cookie_group_list')
+            )
+	    )
+
 
     def process(self, request, response, varname):
         raise NotImplementedError()
