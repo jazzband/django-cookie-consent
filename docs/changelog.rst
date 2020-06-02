@@ -2,7 +2,7 @@
 Change Log
 ===========
 
-0.2.1 (unreleased)
+0.2.1 (2020-06-02)
 ------------------
 
 * fix: Set max version for django-appconf (#18)
