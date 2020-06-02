@@ -5,7 +5,11 @@ Change Log
 0.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* fix: Set max version for django-appconf (#18)
+
+* fix: Views ignore 'next' url parameter (#12)
+
+* Update configuration.rst
 
 
 0.2.0 (2020-02-11)
