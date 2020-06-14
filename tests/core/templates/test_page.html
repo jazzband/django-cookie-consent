@@ -80,8 +80,21 @@
             cookie_groups.push("{{ cookie_group.varname }}");
           {% endfor %}
 
-          $(document).ready(function() {
-            $.showCookieBar({
+          function ready(fn) {
+	          if (document.readyState != 'loading') {
+	            fn();
+	          } else if (document.addEventListener) {
+	            document.addEventListener('DOMContentLoaded', fn);
+	          } else {
+	            document.attachEvent('onreadystatechange', function() {
+		          if (document.readyState != 'loading')
+		            fn();
+	            });
+	          }
+          }
+
+          ready(function() {
+	          showCookieBar({
               content: "{% filter escapejs %}{% with cookie_groups=cookie_groups|join:", " %}<div class="cookie-bar">This site uses {{ cookie_groups }} cookies for better performance and user experience. Do you agree to use cookies? <a href="{{ url_accept }}" class="cc-cookie-accept">Accept</a> <a href="{{ url_decline }}" class="cc-cookie-decline">Decline</a> <a href="{{ url_cookies }}">Cookies info</a></div>{% endwith %}{% endfilter %}",
               cookie_groups: cookie_groups,
               cookie_decline: "{% get_decline_cookie_groups_cookie_string request cookie_groups %}",
