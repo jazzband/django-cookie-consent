@@ -5,7 +5,7 @@ Change Log
 0.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* 8732949 Remove jquery (#20)
 
 
 0.2.1 (2020-06-02)
