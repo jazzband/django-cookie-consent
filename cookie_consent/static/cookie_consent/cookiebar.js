@@ -1,58 +1,64 @@
-(function ($) {
+function evalXCookieConsent(script) {
+  var src = script.getAttribute("src")
+  if (src) {
+      var newScript = document.createElement('script');
+      newScript.src = src;
+      document.getElementsByTagName("head")[0].appendChild(newScript);
+  } else {
+      eval(script.innerHTML);
+  }
+  script.remove();
+}
 
-  $.fn.evalXCookieConsent = function() {
-    return this.each(function() {
-      var src = $(this).attr('src');
-      if (src) {
-        var script = document.createElement('script');
-        script.src = src;
-        document.getElementsByTagName("head")[0].appendChild(script);
-      } else {
-        $.globalEval(this.innerHTML);
-      }
-      $(this).remove();
-    });
+function showCookieBar (options) {
+  const defaults = {
+    content: '',
+    cookie_groups: [],
+
+    cookie_decline: null, // set cookie_consent decline on client immediately
+    beforeDeclined: null
   };
 
-  $.showCookieBar = function (options) {
-    var defaults = {
-      content: '',
-      cookie_groups: [],
+  const opts = Object.assign(defaults, options);
+  
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML= opts.content;
+  const content = wrapper.firstChild;
 
-      cookie_decline: null, // set cookie_consent decline on client immediately
-      beforeDeclined: null
-    };
+  const body = document.querySelector('body');
+  body.appendChild(content);
+  body.classList.add('with-cookie-bar');
 
-    var opts = $.extend(defaults, options);
-    var $content = $(opts.content);
-
-    $('body').append($content).addClass('with-cookie-bar');
-
-    $('.cc-cookie-accept', $content).click(function() {
-      $.post($(this).attr('href'));
-      // document.cookie = cookie_accept;
-      $content.hide();
-      $('body').removeClass('with-cookie-bar');
-      $("script[type='x/cookie_consent']").each(function() {
-        if (cookie_groups.indexOf($(this).attr('data-varname')) != -1) {
-          $(this).evalXCookieConsent();
+  document
+  .querySelector(".cc-cookie-accept", content)
+  .addEventListener('click', (e) => {
+    e.preventDefault();
+    fetch(e.target.getAttribute("href"), {method: "POST"})
+    .then(() => {
+      content.style.display = "none";
+      body.classList.remove('with-cookie-bar');
+      scripts = document.querySelectorAll("script[type='x/cookie_consent']");
+      scripts.forEach( (script) => {
+        if (cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
+          evalXCookieConsent(script);
         }
       });
-      return false;
-    });
+    })  
+  });
 
-    $('.cc-cookie-decline', $content).click(function() {
-      if ($.isFunction(opts.declined)) {
-          opts.declined();
-        }
-      $.post($(this).attr('href'));
+  document
+  .querySelector(".cc-cookie-decline", content)
+  .addEventListener('click', (e) => {
+    e.preventDefault();
+    if (typeof opts.declined === "function") {
+      opts.declined();
+    }
+    fetch(e.target.getAttribute("href"), {method: "POST"})
+    .then(() => {
       if (opts.cookie_decline) {
         document.cookie = opts.cookie_decline;
       }
-      $content.hide();
-      $('body').removeClass('with-cookie-bar');
-      return false;
-    });
+    })  
+  });
+}
 
- };
-})(jQuery);
