@@ -55,6 +55,8 @@ function showCookieBar (options) {
     }
     fetch(e.target.getAttribute("href"), {method: "POST"})
     .then(() => {
+      content.style.display = "none";
+      body.classList.remove('with-cookie-bar');
       if (opts.cookie_decline) {
         document.cookie = opts.cookie_decline;
       }
