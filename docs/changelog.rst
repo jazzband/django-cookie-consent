@@ -2,7 +2,7 @@
 Change Log
 ===========
 
-0.2.3 (unreleased)
+0.2.3 (2020-06-15)
 ------------------
 
 * Update package classifiers
