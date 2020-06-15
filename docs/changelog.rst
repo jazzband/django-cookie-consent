@@ -5,7 +5,7 @@ Change Log
 0.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Update package classifiers
 
 
 0.2.2 (2020-06-15)
