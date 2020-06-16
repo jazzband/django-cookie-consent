@@ -2,10 +2,22 @@
 Change Log
 ===========
 
-0.2.2 (unreleased)
+0.2.4 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+0.2.3 (2020-06-15)
+------------------
+
+* Update package classifiers
+
+
+0.2.2 (2020-06-15)
+------------------
+
+* 8732949 Remove jquery (#20)
 
 
 0.2.1 (2020-06-02)
