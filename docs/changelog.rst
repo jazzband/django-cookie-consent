@@ -5,8 +5,9 @@ Change Log
 0.2.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* Cookie Bar Choosing Decline Not Disappearing Right Away (#22)
 
+* 📦 NEW: pt_BR (#23)
 
 0.2.3 (2020-06-15)
 ------------------
