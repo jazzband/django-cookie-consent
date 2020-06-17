@@ -2,7 +2,7 @@
 Change Log
 ===========
 
-0.2.6 (unreleased)
+0.2.6 (2020-06-17)
 ------------------
 
 * fix: setup for python 2.7
