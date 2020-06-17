@@ -2,6 +2,11 @@ Django cookie consent
 =====================
 
 [![Build Status](https://travis-ci.com/bmihelac/django-cookie-consent.svg?branch=master)](https://travis-ci.com/bmihelac/django-cookie-consent)
+![PyPI - License](https://img.shields.io/pypi/l/django-cookie-consent)
+![PyPI](https://img.shields.io/pypi/v/django-cookie-consent)
+![PyPI](https://img.shields.io/pypi/pyversions/django-cookie-consent)
+![PyPI](https://img.shields.io/pypi/djversions/django-cookie-consent)
+
 
 django-cookie-consent is a reusable application for managing various
 cookies and visitors consent for their use in Django project.
