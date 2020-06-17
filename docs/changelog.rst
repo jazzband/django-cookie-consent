@@ -2,7 +2,7 @@
 Change Log
 ===========
 
-0.2.4 (unreleased)
+0.2.4 (2020-06-17)
 ------------------
 
 * Cookie Bar Choosing Decline Not Disappearing Right Away (#22)
