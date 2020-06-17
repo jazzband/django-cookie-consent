@@ -1,0 +1,124 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-16 08:40+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: .\django-cookie-consent\cookie_consent\models.py:16
+msgid ""
+"Enter a valid 'varname' consisting of letters, numbers, underscores or "
+"hyphens."
+msgstr ""
+"Insira um 'varname' válido, composto por letras, números, underscores ou "
+"hífens."
+
+#: .\django-cookie-consent\cookie_consent\models.py:23
+msgid "Variable name"
+msgstr "Nome da variável"
+
+#: .\django-cookie-consent\cookie_consent\models.py:26
+#: .\django-cookie-consent\cookie_consent\models.py:67
+msgid "Name"
+msgstr "Nome"
+
+#: .\django-cookie-consent\cookie_consent\models.py:27
+#: .\django-cookie-consent\cookie_consent\models.py:68
+msgid "Description"
+msgstr "Descrição"
+
+#: .\django-cookie-consent\cookie_consent\models.py:29
+msgid "Is required"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:30
+msgid "Are cookies in this group required."
+msgstr "Se os cookies deste grupo são necessários."
+
+#: .\django-cookie-consent\cookie_consent\models.py:33
+msgid "Is deletable?"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:34
+msgid "Can cookies in this group be deleted."
+msgstr "Se os cookies deste grupo podem serem apagados."
+
+#: .\django-cookie-consent\cookie_consent\models.py:36
+msgid "Ordering"
+msgstr "Ordem"
+
+#: .\django-cookie-consent\cookie_consent\models.py:37
+#: .\django-cookie-consent\cookie_consent\models.py:71
+#: .\django-cookie-consent\cookie_consent\models.py:112
+msgid "Created"
+msgstr "Criado em"
+
+#: .\django-cookie-consent\cookie_consent\models.py:40
+msgid "Cookie Group"
+msgstr "Grupo de Cookies"
+
+#: .\django-cookie-consent\cookie_consent\models.py:41
+msgid "Cookie Groups"
+msgstr "Grupos de Cookies"
+
+#: .\django-cookie-consent\cookie_consent\models.py:69
+msgid "Path"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:70
+msgid "Domain"
+msgstr "Domínio"
+
+#: .\django-cookie-consent\cookie_consent\models.py:74
+msgid "Cookie"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:75
+msgid "Cookies"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:100
+#: .\django-cookie-consent\cookie_consent\templates\cookie_consent\_cookie_group.html:21
+msgid "Declined"
+msgstr "Rejeitado"
+
+#: .\django-cookie-consent\cookie_consent\models.py:101
+#: .\django-cookie-consent\cookie_consent\templates\cookie_consent\_cookie_group.html:12
+msgid "Accepted"
+msgstr "Aceito"
+
+#: .\django-cookie-consent\cookie_consent\models.py:106
+msgid "Action"
+msgstr "Ação"
+
+#: .\django-cookie-consent\cookie_consent\models.py:111
+msgid "Version"
+msgstr "Versão"
+
+#: .\django-cookie-consent\cookie_consent\models.py:117
+msgid "Log item"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\models.py:118
+msgid "Log items"
+msgstr ""
+
+#: .\django-cookie-consent\cookie_consent\templates\cookie_consent\_cookie_group.html:16
+msgid "Accept"
+msgstr "Aceitar"
+
+#: .\django-cookie-consent\cookie_consent\templates\cookie_consent\_cookie_group.html:25
+msgid "Decline"
+msgstr "Recusar"
