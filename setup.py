@@ -29,7 +29,7 @@ install_requires = [
 
 
 def read(f):
-    return open(f, 'r', encoding='utf-8').read()
+    return open(f, 'r').read()
 
 
 setup(
