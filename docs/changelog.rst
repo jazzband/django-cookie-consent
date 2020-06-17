@@ -5,7 +5,7 @@ Change Log
 0.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* chore: add package descriptions
 
 
 0.2.4 (2020-06-17)
