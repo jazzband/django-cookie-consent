@@ -43,7 +43,6 @@ setup(
     include_package_data=True,
     install_requires=install_requires,
     classifiers=CLASSIFIERS,
-    description='Cookies and visitors consent in Django project.',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
 )
