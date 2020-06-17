@@ -3,7 +3,7 @@ Django cookie consent
 
 [![Build Status](https://travis-ci.com/bmihelac/django-cookie-consent.svg?branch=master)](https://travis-ci.com/bmihelac/django-cookie-consent)
 ![PyPI - License](https://img.shields.io/pypi/l/django-cookie-consent)
-![PyPI](https://img.shields.io/pypi/v/django-cookie-consent)
+[![PyPI](https://img.shields.io/pypi/v/django-cookie-consent)](https://pypi.python.org/pypi/django-cookie-consent)
 ![PyPI](https://img.shields.io/pypi/pyversions/django-cookie-consent)
 ![PyPI](https://img.shields.io/pypi/djversions/django-cookie-consent)
 
