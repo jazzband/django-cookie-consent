@@ -13,4 +13,10 @@ Configuration
     # or for older Django versions:
     url(r'^cookies/', include('cookie_consent.urls'))
 
-4. Run ``syncdb`` or ``migrate`` django management command.
+4. Add ``COOKIE_CONSENT_NAME`` and ``COOKIE_CONSENT_MAX_AGE`` under ``settings.py``::
+   
+    COOKIE_CONSENT_NAME = "cookie_consent"
+    COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365 * 1  # 1 year
+   
+
+5. Run ``syncdb`` or ``migrate`` django management command.
