@@ -40,7 +40,9 @@ def get_cookie_dict_from_request(request):
 def set_cookie_dict_to_response(response, dic):
     response.set_cookie(settings.COOKIE_CONSENT_NAME,
                         dict_to_cookie_str(dic),
-                        settings.COOKIE_CONSENT_MAX_AGE)
+                        settings.COOKIE_CONSENT_MAX_AGE,
+                        secure=settings.COOKIE_CONSENT_COOKIE_SECURE,
+                        samesite=settings.COOKIE_CONSENT_SAMESITE)
 
 
 def get_cookie_value_from_request(request, varname, cookie=None):
