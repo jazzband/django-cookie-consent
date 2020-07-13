@@ -18,5 +18,9 @@ class CookieConsentConf(AppConf):
     CACHE_BACKEND = "default"
     
     COOKIE_SECURE = settings.SESSION_COOKIE_SECURE
-    SAMESITE = settings.SESSION_COOKIE_SAMESITE
+    try:
+        SAMESITE = settings.SESSION_COOKIE_SAMESITE
+    except AttributeError:
+        SAMESITE = "Lax"
+    
     
