@@ -16,3 +16,5 @@ class CookieConsentConf(AppConf):
     OPT_OUT = False
 
     CACHE_BACKEND = "default"
+
+    LOG_ENABLED = True
