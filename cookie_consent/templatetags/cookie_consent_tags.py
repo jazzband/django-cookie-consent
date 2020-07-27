@@ -107,10 +107,13 @@ def get_decline_cookie_groups_cookie_string(request, cookie_groups):
     """
     Tag returns decline cookie string suitable to use in javascript.
     """
-    cookie_dic = get_cookie_dict_from_request(request)
-    for cookie_group in cookie_groups:
-        cookie_dic[cookie_group.varname] = settings.COOKIE_CONSENT_DECLINE
-    return get_cookie_string(cookie_dic)
+    try:
+        cookie_dic = get_cookie_dict_from_request(request)
+        for cookie_group in cookie_groups:
+            cookie_dic[cookie_group.varname] = settings.COOKIE_CONSENT_DECLINE
+        return get_cookie_string(cookie_dic)
+    except:
+        pass
 
 
 @register.simple_tag
