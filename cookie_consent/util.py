@@ -33,9 +33,11 @@ def dict_to_cookie_str(dic):
 
 
 def get_cookie_dict_from_request(request):
-    cookie_str = request.COOKIES.get(settings.COOKIE_CONSENT_NAME)
-    return parse_cookie_str(cookie_str)
-
+    try:
+        cookie_str = request.COOKIES.get(settings.COOKIE_CONSENT_NAME)
+        return parse_cookie_str(cookie_str)
+    except:
+        pass
 
 def set_cookie_dict_to_response(response, dic):
     response.set_cookie(settings.COOKIE_CONSENT_NAME,
