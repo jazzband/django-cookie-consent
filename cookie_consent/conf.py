@@ -22,5 +22,5 @@ class CookieConsentConf(AppConf):
         SAMESITE = settings.SESSION_COOKIE_SAMESITE
     except AttributeError:
         SAMESITE = "Lax"
-    
-    
+
+    LOG_ENABLED = True

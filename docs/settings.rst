@@ -36,3 +36,8 @@ Settings
   Alias for backend to use for caching.
 
   Default: ``default``
+
+``COOKIE_CONSENT_LOG_ENABLED``
+  Boolean value represents if user actions when they accepting and declining cookies will be logged. Turning it off might be useful for preventing your database from getting filled up with log items.
+
+  Default: ``True`` 
