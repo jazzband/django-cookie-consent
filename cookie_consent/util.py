@@ -16,6 +16,7 @@ from cookie_consent.models import (
     LogItem,
 )
 from cookie_consent.conf import settings
+from cookie_consent.signals import accept_cookie, decline_cookie
 
 
 def parse_cookie_str(cookie):
@@ -96,6 +97,7 @@ def accept_cookies(request, response, varname=None):
             LogItem.objects.create(action=ACTION_ACCEPTED,
                                 cookiegroup=cookie_group,
                                 version=cookie_group.get_version())
+        accept_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_ACCEPTED)
     set_cookie_dict_to_response(response, cookie_dic)
 
 
@@ -118,6 +120,7 @@ def decline_cookies(request, response, varname=None):
             LogItem.objects.create(action=ACTION_DECLINED,
                                 cookiegroup=cookie_group,
                                 version=cookie_group.get_version())
+        decline_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_DECLINED)
     set_cookie_dict_to_response(response, cookie_dic)
 
 
