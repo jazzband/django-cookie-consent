@@ -5,7 +5,7 @@ from django.conf.urls import url
 from django.views.decorators.csrf import csrf_exempt
 
 from .views import (
-    CookieGroupListView,
+    CookieGroupFormView,
     CookieGroupAcceptView,
     CookieGroupDeclineView,
 )
@@ -24,6 +24,6 @@ urlpatterns = [
         csrf_exempt(CookieGroupDeclineView.as_view()),
         name='cookie_consent_decline_all'),
     url(r'^$',
-        CookieGroupListView.as_view(),
+        CookieGroupFormView.as_view(),
         name='cookie_consent_cookie_group_list'),
 ]
