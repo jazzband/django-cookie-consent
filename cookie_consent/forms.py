@@ -5,11 +5,14 @@ from django import forms
 
 from .models import CookieGroup, ACTION_DECLINED, ACTION_ACCEPTED
 from .util import get_accepted_cookie_groups, get_not_accepted_or_declined_cookie_groups
+from .widgets import CookieGroupWidget
 
 
 class CookieGroupField(forms.IntegerField):
     def __init__(self, *args, **kwargs):
         self.cookie_group = kwargs.pop("cookie_group")
+        self.initial = kwargs.pop("initial")
+        self.widget = CookieGroupWidget({"initial": self.initial, "cookie_group": self.cookie_group})
         super().__init__(*args, **kwargs)
 
 
