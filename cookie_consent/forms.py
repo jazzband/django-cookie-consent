@@ -22,7 +22,12 @@ class CookieGroupForm(forms.Form):
         super().__init__(*args, **kwargs)
         initials = self._get_form_initials()
         for cookie_group in CookieGroup.objects.all():
-            self.fields[cookie_group.varname] = CookieGroupField(cookie_group=cookie_group, required=False, initial=initials.get(cookie_group.varname))
+            self.fields[cookie_group.varname] = CookieGroupField(
+                cookie_group=cookie_group,
+                required=False,
+                initial=initials.get(cookie_group.varname),
+                label=False,
+            )
 
     def _get_form_initials(self):
         accepted_cookie_groups = get_accepted_cookie_groups(self.request)
