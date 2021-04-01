@@ -2,7 +2,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 
-version = '0.2.7.dev0'
+version = '1.0.0'
 
 CLASSIFIERS = [
     'Framework :: Django',
@@ -36,7 +36,7 @@ setup(
     name="django-cookie-consent",
     description="Django cookie consent application",
     version=version,
-    author="Informatika Mihelac",
+    author="Informatika Mihelac, Brief.me",
     author_email="bmihelac@mihelac.org",
     url="https://github.com/bmihelac/django-cookie-consent",
     packages=find_packages(exclude=["tests"]),
