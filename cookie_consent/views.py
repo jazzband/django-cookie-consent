@@ -91,10 +91,10 @@ class CookieGroupFormView(FormView):
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        cleaned_data = form.cleaned_data
-
-        declined_cookie_groups = ",".join([key for key, val in cleaned_data.items() if val == ACTION_DECLINED])
-        accepted_cookie_groups = ",".join([key for key, val in cleaned_data.items() if val == ACTION_ACCEPTED])
-        accept_and_decline_cookies(self.request, response, accepted_cookie_groups, declined_cookie_groups)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            declined_cookie_groups = ",".join([key for key, val in cleaned_data.items() if val == ACTION_DECLINED])
+            accepted_cookie_groups = ",".join([key for key, val in cleaned_data.items() if val == ACTION_ACCEPTED])
+            accept_and_decline_cookies(self.request, response, accepted_cookie_groups, declined_cookie_groups)
 
         return response

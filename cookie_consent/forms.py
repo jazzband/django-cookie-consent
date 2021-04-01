@@ -12,29 +12,39 @@ class CookieGroupField(forms.IntegerField):
     def __init__(self, *args, **kwargs):
         self.cookie_group = kwargs.pop("cookie_group")
         self.initial = kwargs.pop("initial")
-        self.widget = CookieGroupWidget({"initial": self.initial, "cookie_group": self.cookie_group})
+        self.widget = CookieGroupWidget({"cookie_group": self.cookie_group, "initial": self.initial})
         super().__init__(*args, **kwargs)
 
 
 class CookieGroupForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        request = kwargs.pop("request", None)
+        self.request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
-
-        accepted_cookie_groups = get_accepted_cookie_groups(request)
-        not_accepeted_or_declined_cookie_groups = get_not_accepted_or_declined_cookie_groups(request)
-
+        initials = self._get_form_initials()
         for cookie_group in CookieGroup.objects.all():
-            initial = ACTION_DECLINED
+            self.fields[cookie_group.varname] = CookieGroupField(cookie_group=cookie_group, required=False, initial=initials.get(cookie_group.varname))
+
+    def _get_form_initials(self):
+        accepted_cookie_groups = get_accepted_cookie_groups(self.request)
+        not_accepeted_or_declined_cookie_groups = get_not_accepted_or_declined_cookie_groups(self.request)
+
+        initial = {}
+        for cookie_group in CookieGroup.objects.all():
+            action = ACTION_DECLINED
 
             if (cookie_group.varname in accepted_cookie_groups) or cookie_group.is_required:
-                initial = ACTION_ACCEPTED
+                action = ACTION_ACCEPTED
             elif cookie_group in not_accepeted_or_declined_cookie_groups:
-                initial = None
+                action = None
 
-            self.fields[f"{cookie_group.varname}"] = CookieGroupField(initial=initial, cookie_group=cookie_group)
+            initial[cookie_group.varname] = action
 
-    @property
-    def cookie_group_fields(self):
-        for field_name in self.fields:
-            yield self[field_name]
+        return initial
+
+    def clean(self):
+        # The checkbox typpe won't send any value if not checked. We need to set a cookie group to -1 if not in the request.POST
+        cleaned_data = super().clean()
+        cookie_groups = CookieGroup.objects.values_list("varname", flat=True)
+        declined_cookie_groups = set(cookie_groups) - set(cleaned_data.keys())
+        cleaned_data.update({cookie_group: ACTION_DECLINED for cookie_group in declined_cookie_groups})
+        return cleaned_data

@@ -95,8 +95,8 @@ def accept_cookies(request, response, varname=None):
         cookie_dic[cookie_group.varname] = cookie_group.get_version()
         if settings.COOKIE_CONSENT_LOG_ENABLED:
             LogItem.objects.create(action=ACTION_ACCEPTED,
-                                cookiegroup=cookie_group,
-                                version=cookie_group.get_version())
+                                   cookiegroup=cookie_group,
+                                   version=cookie_group.get_version())
         accept_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_ACCEPTED)
     set_cookie_dict_to_response(response, cookie_dic)
 
@@ -118,8 +118,8 @@ def decline_cookies(request, response, varname=None):
         delete_cookies(response, cookie_group)
         if settings.COOKIE_CONSENT_LOG_ENABLED:
             LogItem.objects.create(action=ACTION_DECLINED,
-                                cookiegroup=cookie_group,
-                                version=cookie_group.get_version())
+                                   cookiegroup=cookie_group,
+                                   version=cookie_group.get_version())
         decline_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_DECLINED)
     set_cookie_dict_to_response(response, cookie_dic)
 
@@ -132,21 +132,21 @@ def accept_and_decline_cookies(request, response, accepted_cookie_group=None, de
         delete_cookies(response, cookie_group)
         if settings.COOKIE_CONSENT_LOG_ENABLED:
             LogItem.objects.create(action=ACTION_DECLINED,
-                                cookiegroup=cookie_group,
-                                version=cookie_group.get_version())
+                                   cookiegroup=cookie_group,
+                                   version=cookie_group.get_version())
         decline_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_DECLINED)
 
     for cookie_group in get_cookie_groups(accepted_cookie_group):
         cookie_dic[cookie_group.varname] = cookie_group.get_version()
         if settings.COOKIE_CONSENT_LOG_ENABLED:
             LogItem.objects.create(action=ACTION_ACCEPTED,
-                                cookiegroup=cookie_group,
-                                version=cookie_group.get_version())
+                                   cookiegroup=cookie_group,
+                                   version=cookie_group.get_version())
         accept_cookie.send(sender=None, cookie_group=cookie_group, request=request, action=ACTION_ACCEPTED)
 
     set_cookie_dict_to_response(response, cookie_dic)
 
-    
+
 def are_all_cookies_accepted(request):
     """
     Returns if all cookies are accepted.
@@ -161,7 +161,7 @@ def get_not_accepted_or_declined_cookie_groups(request):
     """
     return [cookie_group for cookie_group in get_cookie_groups()
             if get_cookie_value_from_request(
-                request, cookie_group.varname) is None]
+            request, cookie_group.varname) is None]
 
 
 def is_cookie_consent_enabled(request):
@@ -209,4 +209,5 @@ def get_accepted_cookie_groups(request):
     """
     Returns all accepted cookie groups varname.
     """
-    return [cookie_group.varname for cookie_group in get_cookie_groups() if get_cookie_value_from_request(request, cookie_group.varname)]
+    return [cookie_group.varname for cookie_group in get_cookie_groups() if
+            get_cookie_value_from_request(request, cookie_group.varname)]
