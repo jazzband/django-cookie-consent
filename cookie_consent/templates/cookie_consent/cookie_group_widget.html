@@ -3,6 +3,7 @@
     <div class="toggle-item">
         <div class="IconToggle {% if widget.attrs.initial %}has-value{% endif %}">
             <input {% if widget.attrs.initial == 1 %}checked{% endif %}
+                   {% if widget.attrs.cookie_group.is_required %}disabled{% endif %}
                    required="required" type="checkbox" name="{{ widget.name }}"
                     tabindex="0"
                     id="{{ widget.attrs.id }}"
