@@ -47,9 +47,15 @@ class CookieGroupForm(forms.Form):
         return initial
 
     def clean(self):
-        # The checkbox typpe won't send any value if not checked. We need to set a cookie group to -1 if not in the request.POST
+        # The checkbox typpe won't send any value if not checked or if disabled.
+        # We need to set a cookie group to -1 if not in the request.POST or if set to None
         cleaned_data = super().clean()
-        cookie_groups = CookieGroup.objects.values_list("varname", flat=True)
-        declined_cookie_groups = set(cookie_groups) - set(cleaned_data.keys())
+        cookie_groups_not_required = CookieGroup.objects.filter(is_required=False).values_list("varname", flat=True)
+        declined_cookie_groups = set(cookie_groups_not_required) - set([key for key, value in cleaned_data.items() if value])
         cleaned_data.update({cookie_group: ACTION_DECLINED for cookie_group in declined_cookie_groups})
+
+        # If the checkbox is disabled the data is not sent to the server. We should always ACCEPT required cookies
+        cookie_groups_required = CookieGroup.objects.filter(is_required=True).values_list("varname", flat=True)
+        cleaned_data.update({cookie_group: ACTION_ACCEPTED for cookie_group in cookie_groups_required})
+
         return cleaned_data
