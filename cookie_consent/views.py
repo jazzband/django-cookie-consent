@@ -90,7 +90,6 @@ class CookieGroupDeclineView(CookieGroupBaseProcessView):
 class CookieGroupFormView(FormView):
     template_name = "cookie_consent/cookiegroup_list.html"
     form_class = CookieGroupForm
-    success_url = "/cookies/"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -107,3 +106,6 @@ class CookieGroupFormView(FormView):
             accept_and_decline_cookies(self.request, response, accepted_cookie_groups, declined_cookie_groups)
 
         return response
+
+    def get_success_url(self):
+        return self.request.GET.get("next", "/")
