@@ -27,7 +27,7 @@ Use ``cookie_group_accepted`` or ``cookie_group_declined`` template filters.
 
   {% load cookie_consent_tags %}
   {% if request|cookie_group_accepted:"analytics" %}
-    {# load 3rd party analytics %}
+    {# load 3rd party analytics #}
   {% endif %}
 
 Bot filters takes cookie group ``varname`` and optional cookie name with
