@@ -2,10 +2,10 @@
 Change Log
 ===========
 
-0.2.7 (unreleased)
+0.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+* support ranges from django 2.2 to 4.0 and python 3.6 to 3.9
 
 
 0.2.6 (2020-06-17)
