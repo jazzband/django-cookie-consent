@@ -47,6 +47,7 @@ DATABASES = {
         'NAME': os.path.join(os.path.dirname(__file__), 'database.db'),
     }
 }
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 MIDDLEWARE_CLASSES = MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
