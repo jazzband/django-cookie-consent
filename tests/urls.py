@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
@@ -7,9 +7,9 @@ admin.autodiscover()
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^cookies/', include('cookie_consent.urls')),
-    url(r'', include('core.urls')),
+    path('admin/', admin.site.urls),
+    path('cookies/', include('cookie_consent.urls')),
+    path('', include('core.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
