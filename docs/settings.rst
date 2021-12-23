@@ -19,7 +19,7 @@ Settings
 ``COOKIE_CONSENT_ENABLED``
   boolean or callable that receives request and return boolean.
 
-  IE if you want to enable cookie consent for debug ot staff only::
+  IE if you want to enable cookie consent for debug or staff only::
 
     COOKIE_CONSENT_ENABLED = lambda r: DEBUG or (r.user.is_authenticated() and r.user.is_staff)
 

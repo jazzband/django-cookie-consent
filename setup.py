@@ -2,28 +2,30 @@ from distutils.core import setup
 from setuptools import find_packages
 
 
-version = '0.2.7.dev0'
+version = '0.3.1.dev0'
 
 CLASSIFIERS = [
     'Framework :: Django',
-    'Framework :: Django :: 1.9',
-    'Framework :: Django :: 2.1',
     'Framework :: Django :: 2.2',
-    'Framework :: Django :: 3.0',    
+    'Framework :: Django :: 3.0',
+    'Framework :: Django :: 3.1',     
+    'Framework :: Django :: 3.2',     
+    'Framework :: Django :: 4.0',     
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Topic :: Software Development',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
 ]
 
 install_requires = [
-    'Django>=1.9',
+    'Django>=2.2',
     'django-appconf',
 ]
 

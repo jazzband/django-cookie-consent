@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from django.views.generic import (
     ListView,
     View,
@@ -46,7 +42,7 @@ class CookieGroupBaseProcessView(View):
 
     def post(self, request, *args, **kwargs):
         varname = kwargs.get('varname', None)
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             response = HttpResponse()
         else:
             response = HttpResponseRedirect(self.get_success_url())

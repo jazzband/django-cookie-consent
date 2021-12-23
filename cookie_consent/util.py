@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-import sys
 import datetime
 
 from django.utils.encoding import smart_str
