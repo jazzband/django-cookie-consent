@@ -2,7 +2,6 @@
 from django.test import (
     TestCase,
 )
-from django.core.exceptions import SuspiciousOperation
 from django.test.utils import override_settings
 from django.urls import reverse
 
@@ -33,8 +32,8 @@ class CookieGroupBaseProcessViewTests(TestCase):
         url = "{}?next=https://evil.com".format(
             reverse('cookie_consent_accept_all')
         )
-        with self.assertRaises(SuspiciousOperation):
-            self.client.post(url, follow=True)
+        response = self.client.post(url, follow=True)
+        self.assertEqual(response.status_code, 400)  # result of SupiciousOperation
 
 
 class IntegrationTest(TestCase):
