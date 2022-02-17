@@ -2,7 +2,7 @@
 Change Log
 ===========
 
-0.3.1 (unreleased)
+0.3.1 (2022-02-17)
 ------------------
 
 - Protect against open redirect after accepting cookies (#48)
