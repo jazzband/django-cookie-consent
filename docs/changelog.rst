@@ -5,7 +5,7 @@ Change Log
 0.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Protect against open redirect after accepting cookies (#48)
 
 
 0.3.0 (2021-12-08)
