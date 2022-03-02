@@ -47,6 +47,7 @@ DATABASES = {
         'NAME': os.path.join(os.path.dirname(__file__), 'database.db'),
     }
 }
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 MIDDLEWARE_CLASSES = MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,3 +61,4 @@ MIDDLEWARE_CLASSES = MIDDLEWARE = [
 
 COOKIE_CONSENT_NAME = "cookie_consent"
 COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365 * 1  # 1 year
+COOKIE_CONSENT_LOG_ENABLED = True

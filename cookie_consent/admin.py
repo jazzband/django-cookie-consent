@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
-
+from .conf import settings
 from .models import (
     Cookie,
     CookieGroup,
@@ -35,4 +33,5 @@ class LogItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Cookie, CookieAdmin)
 admin.site.register(CookieGroup, CookieGroupAdmin)
-admin.site.register(LogItem, LogItemAdmin)
+if settings.COOKIE_CONSENT_LOG_ENABLED:
+    admin.site.register(LogItem, LogItemAdmin)

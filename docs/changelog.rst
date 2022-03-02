@@ -2,10 +2,22 @@
 Change Log
 ===========
 
-0.2.7 (unreleased)
+0.3.2 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+0.3.1 (2022-02-17)
+------------------
+
+- Protect against open redirect after accepting cookies (#48)
+
+
+0.3.0 (2021-12-08)
+------------------
+
+* support ranges from django 2.2 to 4.0 and python 3.6 to 3.9
 
 
 0.2.6 (2020-06-17)

@@ -19,7 +19,7 @@ Settings
 ``COOKIE_CONSENT_ENABLED``
   boolean or callable that receives request and return boolean.
 
-  IE if you want to enable cookie consent for debug ot staff only::
+  IE if you want to enable cookie consent for debug or staff only::
 
     COOKIE_CONSENT_ENABLED = lambda r: DEBUG or (r.user.is_authenticated() and r.user.is_staff)
 
@@ -36,3 +36,8 @@ Settings
   Alias for backend to use for caching.
 
   Default: ``default``
+
+``COOKIE_CONSENT_LOG_ENABLED``
+  Boolean value represents if user actions when they accepting and declining cookies will be logged. Turning it off might be useful for preventing your database from getting filled up with log items.
+
+  Default: ``True`` 

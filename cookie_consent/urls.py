@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.conf.urls import url
+from django.urls import re_path
 from django.views.decorators.csrf import csrf_exempt
 
 from .views import (
@@ -11,19 +9,19 @@ from .views import (
 )
 
 urlpatterns = [
-    url(r'^accept/$',
+    re_path(r'^accept/$',
         csrf_exempt(CookieGroupAcceptView.as_view()),
         name='cookie_consent_accept_all'),
-    url(r'^accept/(?P<varname>.*)/$',
+    re_path(r'^accept/(?P<varname>.*)/$',
         csrf_exempt(CookieGroupAcceptView.as_view()),
         name='cookie_consent_accept'),
-    url(r'^decline/(?P<varname>.*)/$',
+    re_path(r'^decline/(?P<varname>.*)/$',
         csrf_exempt(CookieGroupDeclineView.as_view()),
         name='cookie_consent_decline'),
-    url(r'^decline/$',
+    re_path(r'^decline/$',
         csrf_exempt(CookieGroupDeclineView.as_view()),
         name='cookie_consent_decline_all'),
-    url(r'^$',
+    re_path(r'^$',
         CookieGroupListView.as_view(),
         name='cookie_consent_cookie_group_list'),
 ]

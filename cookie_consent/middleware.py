@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.utils.encoding import smart_str
 
 from cookie_consent.cache import all_cookie_groups

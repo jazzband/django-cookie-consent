@@ -11,7 +11,7 @@ Django cookie consent
 django-cookie-consent is a reusable application for managing various
 cookies and visitors consent for their use in Django project.
 
-support ranges from django 1.9 to 3.0 and python 2.7 to 3.7
+Support ranges from django 2.2 to 4.0 and python 3.6 to 3.9
 
 Features:
 
