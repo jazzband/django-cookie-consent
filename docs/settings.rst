@@ -26,9 +26,9 @@ Settings
   Default: ``True``
 
 ``COOKIE_CONSENT_OPT_OUT``
-  Boolean value represents if cookies are opt-in or opt-out
-  opt-out cookies are set until declined
-  opt-in cookies are set only if accepted
+  Boolean value represents if cookies are opt-in or opt-out.
+  Opt-out cookies are set until declined.
+  Opt-in cookies are set only if accepted.
 
   Default: ``False``
 
