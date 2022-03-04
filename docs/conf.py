@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, os
+import sys, os, django
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -7,7 +7,10 @@ import sys, os
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 sys.path.append(os.path.abspath('../tests'))
+sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'cookie_consent')))
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+django.setup()
 
 # -- General configuration -----------------------------------------------------
 
