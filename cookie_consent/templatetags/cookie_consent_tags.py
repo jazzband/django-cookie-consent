@@ -141,6 +141,7 @@ def accepted_cookies(request):
     """
     Filter returns accepted cookies varnames.
 
+    Example:
     ::
         {{ request|accepted_cookies }}
     """
