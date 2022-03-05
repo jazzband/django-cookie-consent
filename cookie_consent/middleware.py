@@ -11,11 +11,16 @@ from cookie_consent.conf import settings
 
 class CleanCookiesMiddleware(object):
     """
-    Clean declined cookies or non accepted cookies if not
-    COOKIE_CONSENT_OPT_OUT set.
+    Clean declined cookies or non accepted cookies if
+    COOKIE_CONSENT_OPT_OUT is not set.
     """
     def __init__(self, get_response):
         self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        self.process_response(request, response)
+        return response
 
     def process_response(self, request, response):
         if not is_cookie_consent_enabled(request):
@@ -26,7 +31,13 @@ class CleanCookiesMiddleware(object):
                 continue
             group_version = cookie_dic.get(cookie_group.varname, None)
             for cookie in cookie_group.cookie_set.all():
-                if cookie.name not in request.COOKIES:
+                if cookie.name not in str(request.COOKIES):
+                    continue
+                if group_version == None and not settings.COOKIE_CONSENT_OPT_OUT:
+                    response.delete_cookie(
+                        smart_str(cookie.name),
+                        cookie.path, cookie.domain
+                    )
                     continue
                 if group_version == settings.COOKIE_CONSENT_DECLINE:
                     response.delete_cookie(smart_str(cookie.name),
