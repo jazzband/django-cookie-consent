@@ -151,12 +151,10 @@ def get_cookie_string(cookie_dic):
     """
     Returns cookie in format suitable for use in javascript.
     """
-    expires = datetime.datetime.now() + datetime.timedelta(
-        seconds=settings.COOKIE_CONSENT_MAX_AGE)
     cookie_str = "%s=%s; expires=%s; path=/" % (
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(cookie_dic),
-        expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
+        settings.COOKIE_CONSENT_MAX_AGE
     )
     return cookie_str
 
