@@ -58,7 +58,7 @@ Settings
   Default: ``True``
 
 ``COOKIE_CONSENT_HTTPONLY``
-  Boolean value representing the httponly attribute for the consent cookie. A value of True causes the consent cookie to be inaccessible to the JavaScript Document.cookoie API and it will instead only be sent to the server which helps against XSS attacks. 
+  Boolean value representing the httponly attribute for the consent cookie. A value of True causes the consent cookie to be inaccessible to the JavaScript Document.cookie API and it will instead only be sent to the server which helps against XSS attacks. 
 
   Default: ``True``
 
