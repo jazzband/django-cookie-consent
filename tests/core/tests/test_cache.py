@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.test import (
     TestCase,
+    override_settings,
 )
 
 from cookie_consent.models import (
@@ -52,3 +53,22 @@ class CacheTest(TestCase):
         with self.assertNumQueries(2):
             cookie_group = get_cookie_group("optional")
         self.assertEqual(cookie_group.name, "Bar")
+
+    @override_settings(
+        CACHES={"tests": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}},
+        COOKIE_CONSENT_CACHE_BACKEND="tests"
+    )
+    def test_can_override_cache_settings(self):
+        """
+        Assert that the cache backend/settings can be swapped out in tests.
+
+        Regression test for #41
+        """
+        CookieGroup.objects.create(
+            varname="foo",
+            name="Foo",
+        )
+        # expect multiple calls to not be cached because of the no-op cache
+        with self.assertNumQueries(2 + 2):
+            get_cookie_group("optional")
+            get_cookie_group("foo")
