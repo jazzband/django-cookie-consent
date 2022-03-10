@@ -36,9 +36,24 @@ def get_cookie_dict_from_request(request):
 
 
 def set_cookie_dict_to_response(response, dic):
-    response.set_cookie(settings.COOKIE_CONSENT_NAME,
-                        dict_to_cookie_str(dic),
-                        settings.COOKIE_CONSENT_MAX_AGE)
+    if settings.COOKIE_CONSENT_SIGNED:
+        response.set_signed_cookie(settings.COOKIE_CONSENT_NAME,
+                            dict_to_cookie_str(dic),
+                            expires=settings.COOKIE_CONSENT_MAX_AGE,
+                            domain=settings.COOKIE_CONSENT_DOMAIN,
+                            samesite=settings.COOKIE_CONSENT_SAMESITE,
+                            secure=settings.COOKIE_CONSENT_SECURE,
+                            httponly=settings.COOKIE_CONSENT_HTTPONLY
+                            )
+    else:
+        response.set_cookie(settings.COOKIE_CONSENT_NAME,
+                            dict_to_cookie_str(dic),
+                            expires=settings.COOKIE_CONSENT_MAX_AGE,
+                            domain=settings.COOKIE_CONSENT_DOMAIN,
+                            samesite=settings.COOKIE_CONSENT_SAMESITE,
+                            secure=settings.COOKIE_CONSENT_SECURE,
+                            httponly=settings.COOKIE_CONSENT_HTTPONLY
+                            )
 
 
 def get_cookie_value_from_request(request, varname, cookie=None):
