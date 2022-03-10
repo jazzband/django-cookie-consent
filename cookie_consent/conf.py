@@ -16,3 +16,13 @@ class CookieConsentConf(AppConf):
     CACHE_BACKEND = "default"
 
     LOG_ENABLED = True
+
+    SAMESITE = 'strict'
+
+    DOMAIN = '127.0.0.1'
+
+    SECURE = True
+
+    HTTPONLY = True
+
+    SIGNED = True
