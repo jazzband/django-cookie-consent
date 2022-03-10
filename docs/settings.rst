@@ -38,6 +38,31 @@ Settings
   Default: ``default``
 
 ``COOKIE_CONSENT_LOG_ENABLED``
-  Boolean value represents if user actions when they accepting and declining cookies will be logged. Turning it off might be useful for preventing your database from getting filled up with log items.
+  Boolean value representing if logging is turned on or off for when users accept/decline cookies. Turning it off might be useful for preventing your database from getting filled up with log items.
 
   Default: ``True`` 
+
+``COOKIE_CONSENT_SAMESITE``
+  Boolean value representing the samesite attribute for the consent cookie which should be restricted to a first-party or same-site context. 
+
+  Default: ``True`` 
+
+``COOKIE_CONSENT_DOMAIN``
+  String value representing the domain attribute for the consent cookie. This value should be the root domain. All subdomains part of the root domain will also have the consent cookie. 
+
+  Default: ``127.0.0.1``
+
+``COOKIE_CONSENT_SECURE``
+  Boolean value representing the secure attribute for the consent cookie. A value of True means the cookie will be sent to the server over an encrypted request over HTTPS. 
+
+  Default: ``True``
+
+``COOKIE_CONSENT_HTTPONLY``
+  Boolean value representing the httponly attribute for the consent cookie. A value of True causes the consent cookie to be inaccessible to the JavaScript Document.cookoie API and it will instead only be sent to the server which helps against XSS attacks. 
+
+  Default: ``True``
+
+``COOKIE_CONSENT_SIGNED``
+  Boolean value representing whether the consent cookie is signed or unsigned. A signed cookie has a signature to detect if the client modified the cookie. 
+
+  Default: ``True``
