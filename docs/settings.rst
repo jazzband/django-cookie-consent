@@ -43,9 +43,9 @@ Settings
   Default: ``True`` 
 
 ``COOKIE_CONSENT_SAMESITE``
-  Boolean value representing the samesite attribute for the consent cookie which should be restricted to a first-party or same-site context. 
+  String value representing the samesite attribute for the consent cookie which should be restricted to a first-party or same-site context. 
 
-  Default: ``True`` 
+  Default: ``strict`` 
 
 ``COOKIE_CONSENT_DOMAIN``
   String value representing the domain attribute for the consent cookie. This value should be the root domain. All subdomains part of the root domain will also have the consent cookie. 
