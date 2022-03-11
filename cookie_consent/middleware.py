@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.utils.encoding import smart_str
-
 from cookie_consent.cache import all_cookie_groups
 from cookie_consent.util import (
     get_cookie_dict_from_request,
@@ -33,18 +31,18 @@ class CleanCookiesMiddleware(object):
             for cookie in cookie_group.cookie_set.all():
                 if cookie.name not in str(request.COOKIES):
                     continue
-                if group_version == None and not settings.COOKIE_CONSENT_OPT_OUT:
+                if group_version is None and not settings.COOKIE_CONSENT_OPT_OUT:
                     response.delete_cookie(
-                        smart_str(cookie.name),
+                        cookie.name,
                         cookie.path, cookie.domain
                     )
                     continue
                 if group_version == settings.COOKIE_CONSENT_DECLINE:
-                    response.delete_cookie(smart_str(cookie.name),
+                    response.delete_cookie(cookie.name,
                                            cookie.path, cookie.domain)
                 if group_version < cookie.get_version() and not settings.COOKIE_CONSENT_OPT_OUT:
                     response.delete_cookie(
-                        smart_str(cookie.name),
+                        cookie.name,
                         cookie.path, cookie.domain
                     )
         return response
