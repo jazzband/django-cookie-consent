@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-import sys, os, django
+import sys, os, django, pathlib
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+root_dir = pathlib.Path(__file__).parent.parent
+sys.path.insert(0, root_dir.resolve())
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 sys.path.append(os.path.abspath('../tests'))
-sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'cookie_consent')))
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 django.setup()
