@@ -24,5 +24,3 @@ class CookieConsentConf(AppConf):
     SECURE = True
 
     HTTPONLY = True
-
-    SIGNED = True
