@@ -61,8 +61,3 @@ Settings
   Boolean value representing the httponly attribute for the consent cookie. A value of True causes the consent cookie to be inaccessible to the JavaScript Document.cookie API and it will instead only be sent to the server which helps against XSS attacks. 
 
   Default: ``True``
-
-``COOKIE_CONSENT_SIGNED``
-  Boolean value representing whether the consent cookie is signed or unsigned. A signed cookie has a signature to detect if the client modified the cookie. 
-
-  Default: ``True``
