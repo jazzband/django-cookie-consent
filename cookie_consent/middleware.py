@@ -29,7 +29,7 @@ class CleanCookiesMiddleware(object):
                 continue
             group_version = cookie_dic.get(cookie_group.varname, None)
             for cookie in cookie_group.cookie_set.all():
-                if cookie.name not in str(request.COOKIES):
+                if cookie.name not in request.COOKIES.keys():
                     continue
                 if group_version is None and not settings.COOKIE_CONSENT_OPT_OUT:
                     response.delete_cookie(
