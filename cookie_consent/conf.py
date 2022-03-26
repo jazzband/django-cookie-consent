@@ -5,7 +5,7 @@ from appconf import AppConf
 
 
 class CookieConsentConf(AppConf):
-    NAME = b"cookie_consent"
+    NAME = "cookie_consent"
     MAX_AGE = 60 * 60 * 24 * 365 * 1  # 1 year
     DECLINE = "-1"
 
