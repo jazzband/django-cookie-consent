@@ -33,6 +33,7 @@ class CookieGroup(models.Model):
         default=True)
     ordering = models.IntegerField(_('Ordering'), default=0)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
+    updated = models.DateTimeField(_('Updated'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Cookie Group')
@@ -57,15 +58,34 @@ class CookieGroup(models.Model):
         delete_cache()
 
 
+class CookieType(models.Model):
+    name = models.CharField(max_length=20, blank=True, null=True)
+ 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Cookie Type'
+        verbose_name_plural = 'Cookie Types'
+        ordering = ('name',)
+
+
 class Cookie(models.Model):
     cookiegroup = models.ForeignKey(
         CookieGroup,
         verbose_name=CookieGroup._meta.verbose_name,
         on_delete=models.CASCADE)
+    cookietype = models.ForeignKey( #new
+        CookieType, 
+        verbose_name=CookieType._meta.verbose_name,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE)
     name = models.CharField(_('Name'), max_length=250)
     description = models.TextField(_('Description'), blank=True)
     path = models.TextField(_('Path'), blank=True, default="/")
     domain = models.CharField(_('Domain'), max_length=250, blank=True)
+    duration = models.CharField('Duration', max_length=250, blank=True)
     created = models.DateTimeField(_('Created'), auto_now_add=True, blank=True)
 
     class Meta:
