@@ -1,15 +1,23 @@
 language: python
+
+python:
+  - '3.6'
+  - '3.7'
+  - '3.8'
+  - '3.9'
+
+env:
+  - DJANGO_VERSION=2.2
+  - DJANGO_VERSION=3.2
+  - DJANGO_VERSION=4.0
+
 matrix:
-  include:
-    - name: "python 3 tests"
-      python: "3.6"
-      env: DJANGO_VERSION=2.2
-    - name: "python 3 tests"
-      python: "3.7"
-      env: DJANGO_VERSION=3.0
-    - name: "python 3 tests"
-      python: "3.9"
+  exclude:
+    - python: '3.6'
       env: DJANGO_VERSION=4.0
+    - python: '3.7'
+      env: DJANGO_VERSION=4.0
+
 install:
   - pip install -q Django==$DJANGO_VERSION
   - python setup.py -q install
