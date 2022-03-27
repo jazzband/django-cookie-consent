@@ -5,13 +5,14 @@ from .models import (
     Cookie,
     CookieGroup,
     LogItem,
+    CookieType,
 )
 
 
 class CookieAdmin(admin.ModelAdmin):
-    list_display = ('varname', 'name', 'cookiegroup', 'path', 'domain',
+    list_display = ('varname', 'name', 'cookiegroup', 'cookietype', 'path', 'domain',
                     'get_version')
-    search_fields = ('name', 'domain', 'cookiegroup__varname',
+    search_fields = ('name', 'domain', 'cookietype__name', 'cookiegroup__varname',
                      'cookiegroup__name')
     readonly_fields = ('varname',)
     list_filter = ('cookiegroup',)
@@ -19,7 +20,7 @@ class CookieAdmin(admin.ModelAdmin):
 
 class CookieGroupAdmin(admin.ModelAdmin):
     list_display = ('varname', 'name', 'is_required', 'is_deletable',
-                    'get_version')
+                    'get_version', 'updated')
     search_fields = ('varname', 'name',)
     list_filter = ('is_required', 'is_deletable',)
 
@@ -31,7 +32,12 @@ class LogItemAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
 
 
+class CookieTypeAdmin(admin.ModelAdmin):
+    list_display = ('name',) 
+    search_fields = ('name',)
+
 admin.site.register(Cookie, CookieAdmin)
 admin.site.register(CookieGroup, CookieGroupAdmin)
+admin.site.register(CookieType, CookieTypeAdmin)
 if settings.COOKIE_CONSENT_LOG_ENABLED:
     admin.site.register(LogItem, LogItemAdmin)
