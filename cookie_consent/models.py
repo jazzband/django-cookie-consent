@@ -75,7 +75,7 @@ class Cookie(models.Model):
         CookieGroup,
         verbose_name=CookieGroup._meta.verbose_name,
         on_delete=models.CASCADE)
-    cookietype = models.ForeignKey( #new
+    cookietype = models.ForeignKey(
         CookieType, 
         verbose_name=CookieType._meta.verbose_name,
         blank=True,
