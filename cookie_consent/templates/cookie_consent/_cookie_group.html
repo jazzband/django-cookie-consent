@@ -5,7 +5,9 @@
 <div class="cookie-group">
   <div class="cookie-group-title">
     <h3>{{ cookie_group.name }}</h3>
+    {% if cookie_group.updated %}
     <p> Last updated: {{ cookie_group.updated|date:"m/d/Y" }} </p>
+    {% endif %}
 
     {% if not cookie_group.is_required %}
       <div class="cookie-group-form">
