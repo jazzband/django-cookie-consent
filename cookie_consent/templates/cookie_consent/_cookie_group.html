@@ -5,6 +5,9 @@
 <div class="cookie-group">
   <div class="cookie-group-title">
     <h3>{{ cookie_group.name }}</h3>
+    {% if cookie_group.updated %}
+    <p> Last updated: {{ cookie_group.updated|date:"m/d/Y" }} </p>
+    {% endif %}
 
     {% if not cookie_group.is_required %}
       <div class="cookie-group-form">
@@ -34,7 +37,8 @@
     {{ cookie_group.description }}
   </p>
 
-
+<details open>
+  <summary>View cookies</summary>
   <table>
   {% for cookie in cookie_group.cookie_set.all %}
    <tr>
@@ -45,6 +49,16 @@
         {% endif %}
      </th>
      <td>
+       {% if cookie.cookietype %}
+        {{ cookie.cookietype }}
+       {% endif %}
+     </td>
+     <td>
+       {% if cookie.duration %}
+        {{ cookie.duration }}
+       {% endif %}
+     </td>
+     <td>
        {% if cookie.description %}
         {{ cookie.description }}
        {% endif %}
@@ -52,5 +66,6 @@
    </tr>
   {% endfor %}
   </table>
+</details>
 
 </div>
