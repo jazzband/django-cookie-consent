@@ -57,6 +57,7 @@ MIDDLEWARE_CLASSES = MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cookie_consent.middleware.CleanCookiesMiddleware',
 ]
 
 COOKIE_CONSENT_NAME = "cookie_consent"
