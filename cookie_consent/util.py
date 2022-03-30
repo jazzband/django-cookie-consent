@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from django.utils.encoding import smart_str
-
 from cookie_consent.cache import (
     get_cookie_group,
     all_cookie_groups,
@@ -100,7 +98,7 @@ def accept_cookies(request, response, varname=None):
 def delete_cookies(response, cookie_group):
     if cookie_group.is_deletable:
         for cookie in cookie_group.cookie_set.all():
-            response.delete_cookie(smart_str(cookie.name),
+            response.delete_cookie(str(cookie.name),
                                    cookie.path, cookie.domain)
 
 
