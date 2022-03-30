@@ -2,8 +2,6 @@
 import datetime
 from typing import Union
 
-from django.utils.encoding import smart_str
-
 from .cache import all_cookie_groups, get_cookie, get_cookie_group
 from .conf import settings
 from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
@@ -101,7 +99,7 @@ def accept_cookies(request, response, varname=None):
 def delete_cookies(response, cookie_group):
     if cookie_group.is_deletable:
         for cookie in cookie_group.cookie_set.all():
-            response.delete_cookie(smart_str(cookie.name), cookie.path, cookie.domain)
+            response.delete_cookie(cookie.name, cookie.path, cookie.domain)
 
 
 def decline_cookies(request, response, varname=None):
