@@ -2,7 +2,7 @@
 Configuration
 =============
 
-1. Add ``cookie_consent`` to your ``INSTALLED_APPS`` and add the required COOKIE_CONSENT_NAME setting.
+1. Add ``cookie_consent`` to your ``INSTALLED_APPS`` and add the required ``COOKIE_CONSENT_NAME`` setting.
 
 2. Add ``django.template.context_processors.request``
    to ``TEMPLATE_CONTEXT_PROCESSORS`` if it is not already added.
