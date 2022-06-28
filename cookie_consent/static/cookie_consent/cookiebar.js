@@ -37,6 +37,7 @@ function showCookieBar (options) {
     .then(() => {
       content.style.display = "none";
       body.classList.remove('with-cookie-bar');
+      window.location.reload();
       scripts = document.querySelectorAll("script[type='x/cookie_consent']");
       scripts.forEach( (script) => {
         if (cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
