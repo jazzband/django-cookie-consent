@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import SuspiciousOperation
-from django.contrib.auth.views import RedirectURLMixin
+from .compat import redirect_url
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views.generic import (
@@ -25,7 +25,7 @@ class CookieGroupListView(ListView):
     model = CookieGroup
 
 
-class CookieGroupBaseProcessView(RedirectURLMixin, View):
+class CookieGroupBaseProcessView(redirect_url, View):
 
     def get_success_url(self):
         """
