@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+from pathlib import Path
+
+import django
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.append(os.path.abspath("."))
-sys.path.append(os.path.abspath(".."))
-sys.path.append(os.path.abspath("../tests"))
-os.environ["DJANGO_SETTINGS_MODULE"] = "settings"
+root_dir = Path(__file__).parent.parent.resolve()
+sys.path.insert(0, str(root_dir))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "testapp.settings")
+
+django.setup()
 
 # -- General configuration -----------------------------------------------------
 
@@ -88,7 +92,7 @@ pygments_style = "sphinx"
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "default"
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -117,7 +121,7 @@ html_theme = "default"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
