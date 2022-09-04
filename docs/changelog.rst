@@ -1,12 +1,41 @@
-===========
-Change Log
-===========
+=========
+Changelog
+=========
 
-0.3.2 (unreleased)
-------------------
+0.4.0 (in development)
+----------------------
 
-- Nothing changed yet.
+.. note:: These release notes are incomplete!
 
+.. note:: The 0.4.0 release has had a project management overhaul. There are no
+   functional changes (yet) to the project, but things _around the project_ have changed.
+   Please check the release notes carefully.
+
+
+**Breaking changes**
+
+* Dropped support for Django 2.2, 3.0 and 3.1
+* Dropped support for Python 3.6
+
+These versions are end-of-life and no longer supported by their upstream teams.
+
+**Bugfixes**
+
+* Cache instance resolution is now lazy (#41)
+* Fixed support for Django 4.1 (#73) - thanks @alahdal
+
+**Project maintenance**
+
+* Transferred project to Jazzband (#38, #64, #75)
+* Replaced Travis CI with Github Actions (#64, #75)
+* Set up correct test matrix for python/django versions (#75)
+* Code is now ``isort`` and ``black`` formatted (#75)
+* Set up ``tox`` and ``pytest`` for testing (#64, #75)
+* 'Removed' the example app - the ``testapp`` in the repository is still a good example
+
+**Documentation**
+
+Did some initial restructuring to make the docs easier to digest, more to come.
 
 0.3.1 (2022-02-17)
 ------------------
