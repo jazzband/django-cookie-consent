@@ -141,7 +141,9 @@ def accepted_cookies(request):
     """
     Filter returns accepted cookies varnames.
 
-    ::
+    .. code-block:: django
+
         {{ request|accepted_cookies }}
+
     """
     return [c.varname for c in get_accepted_cookies(request)]
