@@ -2,18 +2,18 @@ name: Code quality checks
 
 # Run this workflow every time a new commit pushed to your repository
 on:
-  # push:
-  #   branches:
-  #     - master
-  #   tags:
-  #     - '*'
-  #   paths:
-  #     - '**.py'
-  #     - '**.cfg'
-  # pull_request:
-  #   paths:
-  #     - '**.py'
-  #     - '**.cfg'
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths:
+      - '**.py'
+      - '**.cfg'
+  pull_request:
+    paths:
+      - '**.py'
+      - '**.cfg'
   workflow_dispatch:
 
 jobs:
@@ -25,8 +25,8 @@ jobs:
         toxenv:
           - isort
           - black
-          - flake8
-          - docs
+          # - flake8
+          # - docs
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4

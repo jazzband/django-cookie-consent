@@ -1,52 +1,44 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import SuspiciousOperation
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import (
-    ListView,
-    View,
-)
+from django.views.generic import ListView, View
 
 from .compat import RedirectURLMixin, url_has_allowed_host_and_scheme
-from .models import (
-    CookieGroup,
-)
-from .util import (
-    accept_cookies,
-    decline_cookies,
-)
+from .models import CookieGroup
+from .util import accept_cookies, decline_cookies
 
 
 class CookieGroupListView(ListView):
     """
     Display all cookies.
     """
+
     model = CookieGroup
 
 
 class CookieGroupBaseProcessView(RedirectURLMixin, View):
-
     def get_success_url(self):
         """
-        If user adds a 'next' as URL parameter or hidden input, 
-        redirect to the value of 'next'. Otherwise, redirect to 
+        If user adds a 'next' as URL parameter or hidden input,
+        redirect to the value of 'next'. Otherwise, redirect to
         cookie consent group list
         """
-        redirect_to = self.request.POST.get('next', self.request.GET.get('next'))
+        redirect_to = self.request.POST.get("next", self.request.GET.get("next"))
         if redirect_to and not url_has_allowed_host_and_scheme(
             url=redirect_to,
             allowed_hosts=self.get_success_url_allowed_hosts(),
             require_https=self.request.is_secure(),
         ):
-            raise SuspiciousOperation('Unsafe open redirect suspected.')
-        return redirect_to or reverse('cookie_consent_cookie_group_list')
+            raise SuspiciousOperation("Unsafe open redirect suspected.")
+        return redirect_to or reverse("cookie_consent_cookie_group_list")
 
     def process(self, request, response, varname):
         raise NotImplementedError()
 
     def post(self, request, *args, **kwargs):
-        varname = kwargs.get('varname', None)
-        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        varname = kwargs.get("varname", None)
+        if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
             response = HttpResponse()
         else:
             response = HttpResponseRedirect(self.get_success_url())
