@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import ValidationError
-from django.test import (
-    TestCase,
-)
+from django.test import TestCase
 
-from cookie_consent.models import (
-    Cookie,
-    CookieGroup,
-    validate_cookie_name,
-)
+from cookie_consent.models import Cookie, CookieGroup, validate_cookie_name
 
 
 class CookieGroupTest(TestCase):
-
     def setUp(self):
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
@@ -25,13 +18,11 @@ class CookieGroupTest(TestCase):
 
     def test_get_version(self):
         self.assertEqual(
-            self.cookie_group.get_version(),
-            self.cookie.created.isoformat()
+            self.cookie_group.get_version(), self.cookie.created.isoformat()
         )
 
 
 class CookieTest(TestCase):
-
     def setUp(self):
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
@@ -48,7 +39,6 @@ class CookieTest(TestCase):
 
 
 class ValidateCookieNameTest(TestCase):
-
     def test_valid(self):
         validate_cookie_name("_foo-bar")
 

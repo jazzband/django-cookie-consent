@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.test import (
-    TestCase,
-    override_settings,
-)
+from django.test import TestCase, override_settings
 
-from cookie_consent.models import (
-    Cookie,
-    CookieGroup,
-)
-from cookie_consent.cache import (
-    get_cookie_group,
-    get_cookie,
-)
+from cookie_consent.cache import get_cookie, get_cookie_group
+from cookie_consent.models import Cookie, CookieGroup
 
 
 class CacheTest(TestCase):
-
     def setUp(self):
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
@@ -56,7 +46,7 @@ class CacheTest(TestCase):
 
     @override_settings(
         CACHES={"tests": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}},
-        COOKIE_CONSENT_CACHE_BACKEND="tests"
+        COOKIE_CONSENT_CACHE_BACKEND="tests",
     )
     def test_can_override_cache_settings(self):
         """

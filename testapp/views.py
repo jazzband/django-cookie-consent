@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
+
 from cookie_consent.util import get_cookie_value_from_request
 
 

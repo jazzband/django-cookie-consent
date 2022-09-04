@@ -1,0 +1,39 @@
+name: Code quality checks
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths:
+      - '**.py'
+      - '**.cfg'
+  pull_request:
+    paths:
+      - '**.py'
+      - '**.cfg'
+  workflow_dispatch:
+
+jobs:
+  linting:
+    name: Code-quality checks
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toxenv:
+          - isort
+          - black
+          # - flake8
+          - docs
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install tox
+      - run: tox
+        env:
+          TOXENV: ${{ matrix.toxenv }}
