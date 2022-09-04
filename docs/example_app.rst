@@ -2,8 +2,4 @@
 Example app
 ===========
 
-::
-
-    cd tests && ./manage.py runserver
-
-Username and password for admin are 'administrator', 'password'.
+See ``testapp`` and ``tests`` directories for an example app structure and usage.

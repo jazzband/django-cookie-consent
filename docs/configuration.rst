@@ -7,10 +7,20 @@ Configuration
 2. Add ``django.template.context_processors.request``
    to ``TEMPLATE_CONTEXT_PROCESSORS`` if it is not already added.
 
-3. Include django-cookie-consent urls in ``urls.py``::
+3. Include django-cookie-consent urls in ``urls.py``
 
-    path('cookies/', include('cookie_consent.urls'))
-    # or for older Django versions:
-    url(r'^cookies/', include('cookie_consent.urls'))
+    .. code-block:: python
 
-4. Run ``syncdb`` or ``migrate`` django management command.
+        from django.urls import path
+
+        urlpatterns = [
+            ...,
+            path("cookies/", include("cookie_consent.urls")),
+            ...,
+        ]
+
+4. Run the ``migrate`` management command to update your database tables:
+
+    .. code-block:: bash
+
+        python manage.py migrate

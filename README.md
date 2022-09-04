@@ -1,57 +1,50 @@
 Django cookie consent
 =====================
 
-[![Build Status](https://travis-ci.com/bmihelac/django-cookie-consent.svg?branch=master)](https://travis-ci.com/bmihelac/django-cookie-consent)
-![PyPI - License](https://img.shields.io/pypi/l/django-cookie-consent)
-[![PyPI](https://img.shields.io/pypi/v/django-cookie-consent)](https://pypi.python.org/pypi/django-cookie-consent)
-![PyPI](https://img.shields.io/pypi/pyversions/django-cookie-consent)
-![PyPI](https://img.shields.io/pypi/djversions/django-cookie-consent)
+Manage cookie information and let visitors give or reject consent for them.
 
+[![Jazzband][badge:jazzband]][jazzband]
 
-django-cookie-consent is a reusable application for managing various
-cookies and visitors consent for their use in Django project.
+![License](https://img.shields.io/pypi/l/django-cookie-consent)
+[![Build status][badge:GithubActions:CI]][GithubActions:CI]
+[![Code Quality][badge:GithubActions:CQ]][GithubActions:CQ]
+[![Code style: black][badge:black]][black]
+[![Test coverage][badge:codecov]][codecov]
+[![Documentation][badge:docs]][docs]
 
-Support ranges from django 2.2 to 4.0 and python 3.6 to 3.9
+![Supported python versions](https://img.shields.io/pypi/pyversions/django-cookie-consent)
+![Supported Django versions](https://img.shields.io/pypi/djversions/django-cookie-consent)
+[![PyPI version][badge:pypi]][pypi]
 
-Features:
+**Features**
 
 * cookies and cookie groups are stored in models for easy management
   through Django admin interface
-
 * support for both opt-in and opt-out cookie consent schemes
-
 * removing declined cookies (or non accepted when opt-in scheme is used)
-
 * logging user actions when they accept and decline various cookies
-
 * easy adding new cookies and seamlessly re-asking for consent for new cookies
 
 Documentation
 -------------
 
-https://django-cookie-consent.readthedocs.org/en/latest/
+The documentation is hosted on [readthedocs][docs] and contains all instructions
+to get started.
 
+Alternatively, if the documentation is not available, you can consult or build the docs
+from the `docs` directory in this repository.
 
-Configuration
--------------
-
-1. Add ``cookie_consent`` to your ``INSTALLED_APPS``.
-
-2. Add ``django.template.context_processors.request``
-   to ``TEMPLATE_CONTEXT_PROCESSORS`` if it is not already added.
-
-3. Include django-cookie-consent urls in ``urls.py``::
-
-    url(r'^cookies/', include('cookie_consent.urls'))
-
-4. Run ``migrate`` django management command.
-
-
-Example app
------------
-
-::
-
-    cd tests && ./manage.py runserver
-
-Username and password for admin are 'administrator', 'password'.
+[jazzband]: https://jazzband.co/
+[badge:jazzband]: https://jazzband.co/static/img/badge.svg
+[GithubActions:CI]: https://github.com/jazzband/django-cookie-consent/actions?query=workflow%3A%22Run+CI%22
+[badge:GithubActions:CI]: https://github.com/jazzband/django-cookie-consent/workflows/Run%20CI/badge.svg
+[GithubActions:CQ]: https://github.com/jazzband/django-cookie-consent/actions?query=workflow%3A%22Code+quality+checks%22
+[badge:GithubActions:CQ]: https://github.com/jazzband/django-cookie-consent/workflows/Code%20quality%20checks/badge.svg
+[black]: https://github.com/psf/black
+[badge:black]: https://img.shields.io/badge/code%20style-black-000000.svg
+[codecov]: https://codecov.io/gh/jazzband/django-cookie-consent
+[badge:codecov]: https://codecov.io/gh/jazzband/django-cookie-consent/branch/master/graph/badge.svg
+[docs]: https://django-cookie-consent.readthedocs.io/en/latest/?badge=latest
+[badge:docs]: https://readthedocs.org/projects/django-cookie-consent/badge/?version=latest
+[pypi]: https://pypi.org/project/django-cookie-consent/
+[badge:pypi]: https://img.shields.io/pypi/v/django-cookie-consent.svg
