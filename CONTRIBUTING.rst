@@ -91,3 +91,16 @@ Should be sufficient. Consider using a pre-commit hook to automate this.
    make html
 
 You can now open the file ``_build/html/index.html`` in your browser.
+
+**Generating message catalogs**
+
+.. code-block:: bash
+
+    export DJANGO_SETTINGS_MODULE=testapp.settings
+    django-admin makemessages --all
+
+After translating the message, you need to compile the message catalogs:
+
+.. code-block:: bash
+
+    django-admin compilemessages
