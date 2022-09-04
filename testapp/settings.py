@@ -57,6 +57,6 @@ MIDDLEWARE_CLASSES = MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-COOKIE_CONSENT_NAME = "cookie_consent"
-COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 365 * 1  # 1 year
-COOKIE_CONSENT_LOG_ENABLED = True
+# Use the default appconf settings. In tests, use @override_settings if you need
+# some specific setting values.
+# COOKIE_CONSENT_NAME = "cookie_consent"

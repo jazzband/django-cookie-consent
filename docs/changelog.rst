@@ -8,7 +8,7 @@ Changelog
 .. note:: These release notes are incomplete!
 
 .. note:: The 0.4.0 release has had a project management overhaul. There are no
-   functional changes (yet) to the project, but things _around the project_ have changed.
+   functional changes (yet) to the project, but things *around the project* have changed.
    Please check the release notes carefully.
 
 
