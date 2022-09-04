@@ -4,6 +4,8 @@ Django cookie consent
 
 Manage cookie information and let visitors give or reject consent for them.
 
+|jazzband|
+
 |build-status| |code-quality| |black| |coverage| |docs|
 
 |python-versions| |django-versions| |pypi-version|
@@ -54,6 +56,9 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. |jazzband| image:: https://jazzband.co/static/img/badge.svg
+   :target: https://jazzband.co/
+   :alt: Jazzband
 
 .. |build-status| image:: https://github.com/jazzband/django-cookie-consent/workflows/Run%20CI/badge.svg
     :alt: Build status
