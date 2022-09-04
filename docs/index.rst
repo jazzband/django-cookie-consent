@@ -26,10 +26,9 @@ User Guide
 .. toctree::
    :maxdepth: 2
 
-   installation
-   configuration
+   quickstart
    concept
-   getting_started
+   usage
    example_app
    settings
    contributing

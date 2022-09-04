@@ -1,6 +1,6 @@
-===============
-Getting started
-===============
+=====
+Usage
+=====
 
 Checking for cookie consent in views
 ------------------------------------
