@@ -1,1 +1,0 @@
-./tests/manage.py test

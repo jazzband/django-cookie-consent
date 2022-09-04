@@ -10,11 +10,11 @@ INSTALLED_APPS = [
 
     'cookie_consent',
 
-    'core',
+    'testapp',
 ]
 SITE_ID = 1
 
-ROOT_URLCONF = "urls"
+ROOT_URLCONF = "testapp.urls"
 
 DEBUG = True
 
