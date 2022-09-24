@@ -31,7 +31,11 @@ def set_cookie_dict_to_response(response, dic):
     response.set_cookie(
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(dic),
-        settings.COOKIE_CONSENT_MAX_AGE,
+        max_age=settings.COOKIE_CONSENT_MAX_AGE,
+        domain=settings.COOKIE_CONSENT_DOMAIN,
+        secure=settings.COOKIE_CONSENT_SECURE or None,
+        httponly=settings.COOKIE_CONSENT_HTTPONLY or None,
+        samesite=settings.COOKIE_CONSENT_SAMESITE,
     )
 
 
