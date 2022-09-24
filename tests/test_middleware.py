@@ -2,13 +2,14 @@ from django.test import TestCase, override_settings
 from django.test.client import RequestFactory
 from django.urls import reverse
 
+from cookie_consent.cache import delete_cache
 from cookie_consent.models import Cookie, CookieGroup
 
 factory = RequestFactory()
 
 
 @override_settings(COOKIE_CONSENT_OPT_OUT=False)
-class MiddlewareDeclineTest(TestCase):
+class CleanCookiesMiddlewareTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -23,6 +24,10 @@ class MiddlewareDeclineTest(TestCase):
             domain="127.0.0.1",
             path="/",
         )
+
+    def setUp(self):
+        super().setUp()
+        self.addCleanup(delete_cache)
 
     def _accept_and_set_cookie(self):
         with self.subTest("initial setup"):
@@ -81,3 +86,22 @@ class MiddlewareDeclineTest(TestCase):
 
         # Check if cookie_consent cookie is deleted
         self.assertCookieDeleted("optional_test_cookie")
+
+    def test_cookie_consent_disabled(self):
+        self._accept_and_set_cookie()
+
+        with override_settings(COOKIE_CONSENT_ENABLED=False):
+            self.client.get(reverse("test_page"))
+
+        cookie = self.client.cookies["optional_test_cookie"]
+        self.assertEqual(cookie.value, "optional cookie set from django")
+
+    def test_cookie_group_not_deletable(self):
+        self.cookie_group.is_deletable = False
+        self.cookie_group.save()
+        self._accept_and_set_cookie()
+
+        self.client.get(reverse("test_page"))
+
+        cookie = self.client.cookies["optional_test_cookie"]
+        self.assertEqual(cookie.value, "optional cookie set from django")
