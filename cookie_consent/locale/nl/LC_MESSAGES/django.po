@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-04 15:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Sergei Maertens <sergei@maykinmedia.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: cookie_consent/models.py:14
+msgid ""
+"Enter a valid 'varname' consisting of letters, numbers, underscores or "
+"hyphens."
+msgstr ""
+"Geef een geldige 'variabelenaam' op die bestaat uit letters, getallen, liggende "
+"streepjes of koppeltekens."
+
+#: cookie_consent/models.py:23
+msgid "Variable name"
+msgstr "Variabelenaam"
+
+#: cookie_consent/models.py:25 cookie_consent/models.py:69
+msgid "Name"
+msgstr "Naam"
+
+#: cookie_consent/models.py:26 cookie_consent/models.py:70
+msgid "Description"
+msgstr "Omschrijving"
+
+#: cookie_consent/models.py:28
+msgid "Is required"
+msgstr "Is verplicht"
+
+#: cookie_consent/models.py:29
+msgid "Are cookies in this group required."
+msgstr "Of cookies in deze groep verplicht zijn."
+
+#: cookie_consent/models.py:33
+msgid "Is deletable?"
+msgstr "Kan worden verwijderd?"
+
+#: cookie_consent/models.py:34
+msgid "Can cookies in this group be deleted."
+msgstr "Of cookies in deze groep verwijderd kunnen worden."
+
+#: cookie_consent/models.py:37
+msgid "Ordering"
+msgstr "Volgorde"
+
+#: cookie_consent/models.py:38 cookie_consent/models.py:73
+#: cookie_consent/models.py:115
+msgid "Created"
+msgstr "Aangemaakt"
+
+#: cookie_consent/models.py:41
+msgid "Cookie Group"
+msgstr "Cookiegroep"
+
+#: cookie_consent/models.py:42
+msgid "Cookie Groups"
+msgstr "Cookiegroepen"
+
+#: cookie_consent/models.py:71
+msgid "Path"
+msgstr "Pad"
+
+#: cookie_consent/models.py:72
+msgid "Domain"
+msgstr "Domein"
+
+#: cookie_consent/models.py:76
+msgid "Cookie"
+msgstr "Cookie"
+
+#: cookie_consent/models.py:77
+msgid "Cookies"
+msgstr "Cookies"
+
+#: cookie_consent/models.py:102
+#: cookie_consent/templates/cookie_consent/_cookie_group.html:21
+msgid "Declined"
+msgstr "Afgewezen"
+
+#: cookie_consent/models.py:103
+#: cookie_consent/templates/cookie_consent/_cookie_group.html:12
+msgid "Accepted"
+msgstr "Aanvaard"
+
+#: cookie_consent/models.py:108
+msgid "Action"
+msgstr "Actie"
+
+#: cookie_consent/models.py:114
+msgid "Version"
+msgstr "Versie"
+
+#: cookie_consent/models.py:121
+msgid "Log item"
+msgstr "Logitem"
+
+#: cookie_consent/models.py:122
+msgid "Log items"
+msgstr "Logitems"
+
+#: cookie_consent/templates/cookie_consent/_cookie_group.html:16
+msgid "Accept"
+msgstr "Aanvaarden"
+
+#: cookie_consent/templates/cookie_consent/_cookie_group.html:25
+msgid "Decline"
+msgstr "Weigeren"
