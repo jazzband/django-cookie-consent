@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "cookie_consent.middleware.CleanCookiesMiddleware",
 ]
 
 # Use the default appconf settings. In tests, use @override_settings if you need
