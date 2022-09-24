@@ -105,3 +105,14 @@ class CleanCookiesMiddlewareTests(TestCase):
 
         cookie = self.client.cookies["optional_test_cookie"]
         self.assertEqual(cookie.value, "optional cookie set from django")
+
+    @override_settings(COOKIE_CONSENT_OPT_OUT=True)
+    def test_with_opt_out_behaviour(self):
+        # set the cookie
+        self.client.get(reverse("test_page"), {"force": "1"})
+
+        # call view to run middleware
+        self.client.get(reverse("test_page"))
+
+        cookie = self.client.cookies["optional_test_cookie"]
+        self.assertEqual(cookie.value, "optional cookie set from django")
