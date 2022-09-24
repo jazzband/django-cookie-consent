@@ -1,135 +1,83 @@
-from unittest import mock
-
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.test.client import RequestFactory
 from django.urls import reverse
 
-from cookie_consent.middleware import CleanCookiesMiddleware
 from cookie_consent.models import Cookie, CookieGroup
 
+factory = RequestFactory()
 
+
+@override_settings(COOKIE_CONSENT_OPT_OUT=False)
 class MiddlewareDeclineTest(TestCase):
-    def setUp(self):
-        def get_response(request):
-            response = mock.MagicMock()
-            return response
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
 
-        self.middleware = CleanCookiesMiddleware(get_response)
-
-        self.cookie_group = CookieGroup.objects.create(
+        cls.cookie_group = CookieGroup.objects.create(
             varname="optional",
             name="Optional (test) cookies",
         )
-        self.cookie = Cookie.objects.create(
-            cookiegroup=self.cookie_group,
+        cls.cookie = Cookie.objects.create(
+            cookiegroup=cls.cookie_group,
             name="optional_test_cookie",
             domain="127.0.0.1",
             path="/",
         )
 
-    def test_middleware_decline(self):
-        # Accept optional cookie
-        response = self.client.post(
-            reverse("cookie_consent_accept", kwargs={"varname": "optional"}),
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, '<span class="cookie-consent-accepted">Accepted</span>'
-        )
+    def _accept_and_set_cookie(self):
+        with self.subTest("initial setup"):
+            # ensure we start with cookies first being accepted
+            endpoint = reverse("cookie_consent_accept", kwargs={"varname": "optional"})
 
-        # Check if optional cookie accepted
-        url = reverse("test_page")
-        response = self.client.get(url)
-        self.assertContains(response, '"optional" cookies accepted')
-        self.assertEqual(
-            self.client.cookies.get("optional_test_cookie").value,
-            "optional cookie set from django",
-        )
+            consent_response = self.client.post(
+                endpoint,
+                follow=True,
+                HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+            )
+            self.assertEqual(consent_response.status_code, 200)
 
-        # Decline optional cookie
-        response = self.client.post(
-            reverse("cookie_consent_decline", kwargs={"varname": "optional"}),
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, '<span class="cookie-consent-declined">Declined</span>'
-        )
+            # hit the test page to set the cookie
+            self.client.get(reverse("test_page"))
+            self.assertIn("optional_test_cookie", self.client.cookies)
 
-        # Check if optional cookie declined
-        url = reverse("test_page")
-        response = self.client.get(url)
-        self.assertContains(response, '"optional" cookies declined')
-        self.assertFalse(
-            self.client.cookies.get("optional_test_cookie").value,
-            "optional cookie set from django",
-        )
+    def assertCookieDeleted(self, name: str):
+        if name not in self.client.cookies:
+            self.fail(
+                "Cookie not present in client cookies, which is required to delete it"
+            )
 
-        # Test the middleware
-        factory = RequestFactory()
-        request = factory.get(url)
-        self.middleware.__call__(request)
+        # deleting a cookie is done by setting the expiry date to the past/max-age 0
+        # so that the browser effectively is instructed to delete the cookie
+        cookie = self.client.cookies[name]
+        cookie_dict = dict(cookie)
+        self.assertEqual(cookie_dict["max-age"], 0)
+        self.assertIn("1970", cookie_dict["expires"])
+        self.assertEqual(cookie.value, "")
 
-        print(self.client.cookies)
+    def test_middleware_decline_previously_accepted_cookiegroup_cookies_are_deleted(
+        self,
+    ):
+        self._accept_and_set_cookie()
 
-        self.assertEqual(self.client.cookies.get("optional_test_cookie").value, "")
+        with self.subTest("decline prevously accepted group"):
+            url = reverse("cookie_consent_decline", kwargs={"varname": "optional"})
 
+            decline_response = self.client.post(url, follow=True)
 
-class MiddlewareDeleteTest(TestCase):
-    def setUp(self):
-        def get_response(request):
-            response = mock.MagicMock()
-            return response
+            self.assertEqual(decline_response.status_code, 200)
 
-        self.middleware = CleanCookiesMiddleware(get_response)
+        # fetch the test page and assert the middleware deleted the cookie
+        self.client.get(reverse("test_page"))
 
-        self.cookie_group = CookieGroup.objects.create(
-            varname="optional",
-            name="Optional (test) cookies",
-        )
-        self.cookie = Cookie.objects.create(
-            cookiegroup=self.cookie_group,
-            name="optional_test_cookie",
-            domain="127.0.0.1",
-            path="/",
-        )
+        self.assertCookieDeleted("optional_test_cookie")
 
-    def test_middleware_delete(self):
-        # Accept optional cookie
-        response = self.client.post(
-            reverse("cookie_consent_accept", kwargs={"varname": "optional"}),
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, '<span class="cookie-consent-accepted">Accepted</span>'
-        )
-
-        # Check if optional cookie accepted
-        url = reverse("test_page")
-        response = self.client.get(url)
-        self.assertContains(response, '"optional" cookies accepted')
-        self.assertEqual(
-            self.client.cookies.get("optional_test_cookie").value,
-            "optional cookie set from django",
-        )
-
+    def test_middleware_no_cookie_consent_cookie_present_cookies_are_deleted(self):
+        self._accept_and_set_cookie()
         # Delete cookie_consent cookie
-        url = reverse("cookie_consent_cookie_group_list")
-        response = self.client.get(url)
-        cookie_consent_key = self.client.cookies.get("cookie_consent", None).key
         del self.client.cookies["cookie_consent"]
 
+        # fetch the test page and assert the middleware deleted the cookie
+        self.client.get(reverse("test_page"))
+
         # Check if cookie_consent cookie is deleted
-        url = reverse("test_page")
-        response = self.client.get(url)
-        self.assertContains(response, '"optional" cookies not accepted or declined')
-
-        factory = RequestFactory()
-        request = factory.get(url)
-        self.middleware.__call__(request)
-
-        print(self.client.cookies)
-
-        self.assertEqual(self.client.cookies.get("optional_test_cookie").value, "")
+        self.assertCookieDeleted("optional_test_cookie")
