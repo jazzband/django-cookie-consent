@@ -104,3 +104,14 @@ After translating the message, you need to compile the message catalogs:
 .. code-block:: bash
 
     django-admin compilemessages
+
+**Bumping the version/releasing**
+
+After updating changelogs etc.
+
+.. code-block:: bash
+
+    tbump {new-version} --only-patch
+    git commit -am ":bookmark: Bump to version <X.Y.Z>"
+    git tag -s X.Y.Z
+    git push origin master --tags
