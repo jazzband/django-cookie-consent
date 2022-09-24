@@ -1,0 +1,22 @@
+[version]
+current = "0.3.2-dev.1"
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  (\-(?P<pre>.+))?
+'''
+
+[git]
+message_template = ":bookmark: Bump to {new_version}"
+tag_template = "{new_version}"
+
+[[file]]
+src = "setup.cfg"
+version_template = "{major}.{minor}.{patch}-{pre}"
+
+[[file]]
+src = "cookie_consent/__init__.py"
+version_template = "{major}.{minor}.{patch}-{pre}"
