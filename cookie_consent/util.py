@@ -151,7 +151,7 @@ def get_cookie_string(cookie_dic):
     """
     Returns cookie in format suitable for use in javascript.
     """
-    cookie_str = "%s=%s; expires=%s; path=/" % (
+    cookie_str = "%s=%s; max-age=%s; path=/" % (
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(cookie_dic),
         settings.COOKIE_CONSENT_MAX_AGE
