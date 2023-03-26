@@ -51,3 +51,77 @@ without reloading page.
   <script type="{% js_type_for_cookie_consent request "social" "*:.google.com" %}" data-varname="social">
     alert("Social cookie accepted");
   </script>
+
+
+Asking users for cookie consent in templates
+--------------------------------------------
+
+``django-cookie-consent`` can website visitors a cookie consent message. This
+message informs users that the website uses cookies and requests their consent
+to store them. The script responsible for displaying the message is
+``cookiebar.js``. You can see an example of its usage in the testapp.
+ 
+In order to display the cookie consent message on your website:
+
+1. Load the ``cookiebar.js`` script in your HTML template. You can do this by
+   adding the following line to the ``<head>`` section of your template:
+
+.. code-block:: html
+  <script type="text/javascript" src={% static "cookie_consent/cookiebar.js" %}></script>
+  
+2. In your JavaScript code, call the showCookieBar function with the
+   appropriate options object:
+
+.. code-block:: javascript
+
+  showCookieBar({
+    content: 'your-cookie-bar-html',
+    cookie_groups: ['your-cookie-group'],
+    cookie_decline: 'your-decline-cookie-setting',
+    beforeDeclined: function () {
+    // your code to run before the user declines
+    },
+  });
+
+Options
+=======
+
+The ``showCookieBar`` function accepts an options object with the following
+properties:
+
+* `content` (required): A string containing the HTML for your cookie consent
+    message.
+* `cookie_groups` (optional): An array of strings representing the cookie
+    consent groups. The script will only execute the scripts associated with
+    these groups when the user accepts cookies.
+* `cookie_decline` (optional): A string representing the cookie value to be set
+    when the user declines cookies.
+* `beforeDeclined` (optional): A callback function that runs before the user
+    declines cookies. If you don't want to run any callbacks, set this to
+    ``null``.
+
+Example
+=======
+
+Here's an example of how to use the showCookieBar function:
+
+.. code-block:: javascript
+
+  showCookieBar({
+    content: '<div class="cookie-bar"> <p>We use cookies to improve your browsing experience. By continuing to use our site, you agree to our use of cookies.</p> <a href="/accept_cookies" class="cc-cookie-accept">Accept</a> <a href="/decline_cookies" class="cc-cookie-decline">Decline</a> </div>',
+    cookie_groups: ['analytics'],
+    cookie_decline: '{% get_decline_cookie_groups_cookie_string request analytics %}',
+    beforeDeclined: function () {
+      console.log('User is about to decline cookies');
+    },
+  });
+
+One thing to keep in mind is that the showCookieBar function only adds the HTML
+template for the banner to your page - you still need to style it with CSS to
+make it work properly.
+
+Notes
+=====
+
+* Ensure that the elements with the class names ``cc-cookie-accept`` and
+``cc-cookie-decline`` are present within the content HTML string.
