@@ -50,8 +50,8 @@ function showCookieBar (options) {
   .querySelector(".cc-cookie-decline", content)
   .addEventListener('click', (e) => {
     e.preventDefault();
-    if (typeof opts.declined === "function") {
-      opts.declined();
+    if (typeof opts.beforeDeclined === "function") {
+      opts.beforeDeclined();
     }
     fetch(e.target.getAttribute("href"), {method: "POST"})
     .then(() => {
