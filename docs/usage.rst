@@ -56,7 +56,7 @@ without reloading page.
 Asking users for cookie consent in templates
 --------------------------------------------
 
-``django-cookie-consent`` can website visitors a cookie consent message. This
+``django-cookie-consent`` can show website visitors a cookie consent message. This
 message informs users that the website uses cookies and requests their consent
 to store them. The script responsible for displaying the message is
 ``cookiebar.js``. You can see an example of its usage in the testapp.
@@ -67,14 +67,15 @@ In order to display the cookie consent message on your website:
    adding the following line to the ``<head>`` section of your template:
 
 .. code-block:: html
-  <script type="text/javascript" src={% static "cookie_consent/cookiebar.js" %}></script>
+
+  <script type="text/javascript" src="{% static 'cookie_consent/cookiebar.js' %}"></script>
   
-2. In your JavaScript code, call the showCookieBar function with the
+2. In your JavaScript code, call the ``showCookieBar`` function with the
    appropriate options object:
 
 .. code-block:: javascript
 
-  showCookieBar({
+  window.showCookieBar({
     content: 'your-cookie-bar-html',
     cookie_groups: ['your-cookie-group'],
     cookie_decline: 'your-decline-cookie-setting',
@@ -89,14 +90,14 @@ Options
 The ``showCookieBar`` function accepts an options object with the following
 properties:
 
-* `content` (required): A string containing the HTML for your cookie consent
+* ``content`` (required): A string containing the HTML for your cookie consent
     message.
-* `cookie_groups` (optional): An array of strings representing the cookie
+* ``cookie_groups`` (optional): An array of strings representing the cookie
     consent groups. The script will only execute the scripts associated with
     these groups when the user accepts cookies.
-* `cookie_decline` (optional): A string representing the cookie value to be set
+* ``cookie_decline`` (optional): A string representing the cookie value to be set
     when the user declines cookies.
-* `beforeDeclined` (optional): A callback function that runs before the user
+* ``beforeDeclined`` (optional): A callback function that runs before the user
     declines cookies. If you don't want to run any callbacks, set this to
     ``null``.
 
