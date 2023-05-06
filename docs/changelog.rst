@@ -14,15 +14,23 @@ Changelog
 
 **Breaking changes**
 
-* Dropped support for Django 2.2, 3.0 and 3.1
-* Dropped support for Python 3.6
+* Dropped support for Django 2.2, 3.0, 3.1 and 4.0
+* Dropped support for Python 3.6 and 3.7
 
-These versions are end-of-life and no longer supported by their upstream teams.
+These versions are (nearly) end-of-life and no longer supported by their upstream teams.
+
+**New features**
+
+* Implemented settings for cookie flags: SameSite, HttpOnly, Secure, domain (#27, #60,
+  #36, #88)
+* Added Dutch translations
 
 **Bugfixes**
 
 * Cache instance resolution is now lazy (#41)
 * Fixed support for Django 4.1 (#73) - thanks @alahdal
+* Fixed default settings being bytestrings (#24, #55, #69)
+* Fixed the middleware to clean cookies (#13) - thanks @some1ataplace
 
 **Project maintenance**
 
@@ -32,10 +40,16 @@ These versions are end-of-life and no longer supported by their upstream teams.
 * Code is now ``isort`` and ``black`` formatted (#75)
 * Set up ``tox`` and ``pytest`` for testing (#64, #75)
 * 'Removed' the example app - the ``testapp`` in the repository is still a good example
+* Configured tbump for the release flow
+* Confirmed support for Python 3.11 and Django 4.2
 
 **Documentation**
 
 Did some initial restructuring to make the docs easier to digest, more to come.
+
+* Added documentation on how to contribute
+* Corrected settings documentation (#53, #14)
+* Documented ``cookiebar.js`` usage (#90) - thanks @MrCordeiro
 
 0.3.1 (2022-02-17)
 ------------------
