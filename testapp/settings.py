@@ -16,6 +16,8 @@ ROOT_URLCONF = "testapp.urls"
 
 DEBUG = True
 
+USE_TZ = True
+
 STATIC_URL = "/static/"
 TEMPLATES = [
     {

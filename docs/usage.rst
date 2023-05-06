@@ -5,7 +5,7 @@ Usage
 Checking for cookie consent in views
 ------------------------------------
 
-::
+.. code-block:: python
 
   from cookie_consent.util import get_cookie_value_from_request
 
@@ -14,7 +14,9 @@ Checking for cookie consent in views
     if cc:
       # add cookie
 
-Checking if specific cookie in Cookie group is accepted is possible::
+Checking if specific cookie in Cookie group is accepted is possible:
+
+.. code-block:: python
 
     cc = get_cookie_value_from_request(request, "mycookies", "mycookie1")
 
@@ -23,7 +25,7 @@ Checking for cookie consent in templates
 
 Use ``cookie_group_accepted`` or ``cookie_group_declined`` template filters.
 
-::
+.. code-block:: django
 
   {% load cookie_consent_tags %}
   {% if request|cookie_group_accepted:"analytics" %}
@@ -45,7 +47,7 @@ of javascript code.
 When consent for using specific cookies is given, code can be evaluated
 without reloading page.
 
-::
+.. code-block:: django
 
   {% load cookie_consent_tags %}
   <script type="{% js_type_for_cookie_consent request "social" "*:.google.com" %}" data-varname="social">
@@ -125,4 +127,4 @@ Notes
 =====
 
 * Ensure that the elements with the class names ``cc-cookie-accept`` and
-``cc-cookie-decline`` are present within the content HTML string.
+  ``cc-cookie-decline`` are present within the content HTML string.
