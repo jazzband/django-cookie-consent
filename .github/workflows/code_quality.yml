@@ -7,13 +7,7 @@ on:
       - master
     tags:
       - '*'
-    paths:
-      - '**.py'
-      - '**.cfg'
   pull_request:
-    paths:
-      - '**.py'
-      - '**.cfg'
   workflow_dispatch:
 
 jobs:
