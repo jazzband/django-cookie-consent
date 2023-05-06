@@ -19,3 +19,4 @@ dist/
 .pytest_cache
 .coverage
 reports/
+testapp/*.db

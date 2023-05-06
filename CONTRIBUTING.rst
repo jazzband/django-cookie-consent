@@ -46,13 +46,28 @@ You can then install the project with all the dev-tools:
 
    pip install -e .[tests,pep8,coverage,docs,release]
 
+**Running the testapp as dev environment**
+
+In Django project's, you are typically expecting a ``manage.py`` file. This is less
+common in libraries, but it's fairly straightforward to emulate this:
+
+.. code-block:: bash
+
+    export DJANGO_SETTINGS_MODULE=testapp.settings
+
+    django-admin migrate
+    django-admin createsuperuser
+    django-admin runserver
+
+You can now start working on your contribution!
+
+**Running the tests**
+
 Run the tests locally using ``tox`` to verify everything is okay:
 
 .. code-block:: bash
 
    tox
-
-You can now start working on your contribution!
 
 Cheat sheet
 -----------
