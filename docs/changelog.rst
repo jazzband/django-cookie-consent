@@ -2,14 +2,17 @@
 Changelog
 =========
 
-0.4.0 (in development)
-----------------------
+0.4.0 (2023-06-11)
+------------------
 
-.. note:: These release notes are incomplete!
+.. note::
 
-.. note:: The 0.4.0 release has had a project management overhaul. There are no
-   functional changes (yet) to the project, but things *around the project* have changed.
-   Please check the release notes carefully.
+    The 0.4.0 release mainly has had a project management overhaul. The project has
+    transferred to the Jazzband organization. This release mostly focuses on Python/Django
+    version compatibility and organization of tests, CI etc.
+
+    Many thanks for people who reported bugs, and especially, your patience for getting
+    this release on PyPI.
 
 
 **Breaking changes**
@@ -31,6 +34,7 @@ These versions are (nearly) end-of-life and no longer supported by their upstrea
 * Fixed support for Django 4.1 (#73) - thanks @alahdal
 * Fixed default settings being bytestrings (#24, #55, #69)
 * Fixed the middleware to clean cookies (#13) - thanks @some1ataplace
+* Fixed bug in JS ``beforeDeclined`` attribute
 
 **Project maintenance**
 
@@ -42,6 +46,7 @@ These versions are (nearly) end-of-life and no longer supported by their upstrea
 * 'Removed' the example app - the ``testapp`` in the repository is still a good example
 * Configured tbump for the release flow
 * Confirmed support for Python 3.11 and Django 4.2
+* Added explicit template tag tests (#39)
 
 **Documentation**
 
@@ -50,6 +55,8 @@ Did some initial restructuring to make the docs easier to digest, more to come.
 * Added documentation on how to contribute
 * Corrected settings documentation (#53, #14)
 * Documented ``cookiebar.js`` usage (#90) - thanks @MrCordeiro
+* Added better contributor documentation and example app documentation based on the
+  ``testapp`` in the repository.
 
 0.3.1 (2022-02-17)
 ------------------
