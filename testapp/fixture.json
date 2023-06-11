@@ -1,0 +1,77 @@
+[
+{
+    "model": "cookie_consent.cookiegroup",
+    "pk": 1,
+    "fields": {
+        "varname": "social",
+        "name": "Social",
+        "description": "",
+        "is_required": false,
+        "is_deletable": true,
+        "ordering": 1,
+        "created": "2023-06-11T13:31:03.677Z"
+    }
+},
+{
+    "model": "cookie_consent.cookiegroup",
+    "pk": 2,
+    "fields": {
+        "varname": "optional",
+        "name": "Optional",
+        "description": "",
+        "is_required": false,
+        "is_deletable": true,
+        "ordering": 2,
+        "created": "2023-06-11T13:40:26.842Z"
+    }
+},
+{
+    "model": "cookie_consent.cookiegroup",
+    "pk": 3,
+    "fields": {
+        "varname": "required",
+        "name": "Required",
+        "description": "",
+        "is_required": true,
+        "is_deletable": false,
+        "ordering": 0,
+        "created": "2023-06-11T13:40:58.798Z"
+    }
+},
+{
+    "model": "cookie_consent.cookie",
+    "pk": 1,
+    "fields": {
+        "cookiegroup": 3,
+        "name": "sessionid",
+        "description": "Session ID to stay logged in.",
+        "path": "/",
+        "domain": "",
+        "created": "2023-06-11T13:41:39.982Z"
+    }
+},
+{
+    "model": "cookie_consent.cookie",
+    "pk": 2,
+    "fields": {
+        "cookiegroup": 1,
+        "name": "dummy",
+        "description": "",
+        "path": "/",
+        "domain": ".google.com",
+        "created": "2023-06-11T13:43:26.360Z"
+    }
+},
+{
+    "model": "cookie_consent.cookie",
+    "pk": 3,
+    "fields": {
+        "cookiegroup": 2,
+        "name": "sample",
+        "description": "",
+        "path": "/",
+        "domain": "",
+        "created": "2023-06-11T13:43:43.888Z"
+    }
+}
+]

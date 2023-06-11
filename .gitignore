@@ -2,8 +2,9 @@
 *.pot
 *.pyc
 local_settings.py
+env/
 
-# build artificats
+# build artifacts
 docs/_build
 build/
 dist/
