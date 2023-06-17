@@ -10,7 +10,7 @@ function evalXCookieConsent(script) {
   script.remove();
 }
 
-function showCookieBar (options) {
+function lecacyShowCookieBar (options) {
   const defaults = {
     content: '',
     cookie_groups: [],
@@ -64,3 +64,4 @@ function showCookieBar (options) {
   });
 }
 
+window.legacyShowCookieBar = window.showCookieBar = lecacyShowCookieBar;
