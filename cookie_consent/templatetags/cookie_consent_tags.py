@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
 from django import template
+from django.urls import reverse
+from django.utils.html import json_script
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-from cookie_consent.conf import settings
-from cookie_consent.util import (
+from ..cache import all_cookie_groups as get_all_cookie_groups
+from ..conf import settings
+from ..util import (
     are_all_cookies_accepted,
     get_accepted_cookies,
     get_cookie_dict_from_request,
@@ -124,6 +121,7 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         alert("Social cookie accepted");
       </script>
     """
+    # FIXME: clean up the script types?
     enabled = is_cookie_consent_enabled(request)
     if not enabled:
         res = True
@@ -147,3 +145,17 @@ def accepted_cookies(request):
 
     """
     return [c.varname for c in get_accepted_cookies(request)]
+
+
+@register.simple_tag
+def all_cookie_groups(element_id: str):
+    """
+    Serialize all cookie groups to JSON and output them in a script tag.
+
+    :param element_id: The ID for the script tag so you can look it up in JS later.
+
+    This uses Django's core json_script filter under the hood.
+    """
+    groups = get_all_cookie_groups()
+    value = [group.for_json() for group in groups.values()]
+    return json_script(value, element_id)

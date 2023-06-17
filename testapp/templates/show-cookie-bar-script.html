@@ -1,0 +1,10 @@
+{% load static cookie_consent_tags %}
+{% static "cookie_consent/cookiebar-module.js" as cookiebar_src %}
+<script type="module">
+    import {showCookieBar} from '{{ cookiebar_src }}';
+    showCookieBar({
+      templateSelector: '#cookie-consent__cookie-bar',
+      cookieGroupsSelector: '#cookie-consent__cookie-groups',
+      onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
+    });
+</script>

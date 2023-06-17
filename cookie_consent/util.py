@@ -3,9 +3,9 @@ import datetime
 
 from django.utils.encoding import smart_str
 
-from cookie_consent.cache import all_cookie_groups, get_cookie, get_cookie_group
-from cookie_consent.conf import settings
-from cookie_consent.models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
+from .cache import all_cookie_groups, get_cookie, get_cookie_group
+from .conf import settings
+from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
 
 
 def parse_cookie_str(cookie):

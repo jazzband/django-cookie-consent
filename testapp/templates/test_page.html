@@ -1,104 +1,74 @@
 {% load static %}
 {% load cookie_consent_tags %}
+{% url "cookie_consent_cookie_group_list" as url_cookies %}
 <html>
-  <head>
-    <style type="text/css" media="screen">
-      body.with-cookie-bar {
-        padding-top: 35px;
-      }
-      .cookie-bar {
-        position: fixed;
-        width: 100%;
-        top:0;
-        text-align:center;
-        height:25px;
-        line-height: 25px;
-        background: #eee;
-      }
-    </style>
-  </head>
-  <body>
+    <head>
+        <style type="text/css" media="screen">
+          body.with-cookie-bar {
+            padding-top: 35px;
+          }
+          .cookie-bar {
+            position: fixed;
+            width: 100%;
+            top:0;
+            text-align:center;
+            height:25px;
+            line-height: 25px;
+            background: #eee;
+          }
+        </style>
+    </head>
 
+  <body>
     <h1>Test page</h1>
 
-    <h2>
-      Social cookies
-    </h2>
+    <h2>Social cookies</h2>
     <p>
-      sharing button is displayed below only if "Social" cookies are accepted.
+        sharing button is displayed below only if "Social" cookies are accepted.
+        <button id="share-button" type="button" style="display:none">SHARE</button>
     </p>
-    <div class="share-gplus"><g:plusone size="small" count="false"></g:plusone></div>
 
     <h2>Optional cookies</h2>
     {% if request|cookie_group_accepted:"optional" %}
-      <p>
-        "optional" cookies accepted
-      </p>
+        <p>"optional" cookies accepted</p>
     {% elif request|cookie_group_declined:"optional" %}
-      <p>
-        "optional" cookies declined
-      </p>
+        <p>"optional" cookies declined</p>
     {% else %}
-      <p>
-        "optional" cookies not accepted or declined
-      </p>
+        <p>"optional" cookies not accepted or declined</p>
     {% endif %}
 
     {# not existing cookie group #}
     {% if request|cookie_group_accepted:"foo=*:.foo.com" %}
-      <p>
-        None existing cookies
-      </p>
+        <p>None existing cookies</p>
     {% endif %}
 
     <p>
-      <a href="{% url "cookie_consent_cookie_group_list" %}">Cookies policy</a>
+        <a href="{{ url_cookies }}">Cookies policy</a>
     </p>
 
-    <script type="text/javascript" src={% static "cookie_consent/cookiebar.js" %}></script>
-
-    <script type="{% js_type_for_cookie_consent request "social" "*:.google.com" %}" data-varname="social">
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-    </script>
-
+    {% include "./share-button-script.html" %}
 
     {% if request|cookie_consent_enabled %}
-      {% not_accepted_or_declined_cookie_groups request as cookie_groups %}
+        {% not_accepted_or_declined_cookie_groups request as cookie_groups %}
 
-      {% if cookie_groups %}
-        {% url "cookie_consent_cookie_group_list" as url_cookies %}
         {% cookie_consent_accept_url cookie_groups as url_accept %}
         {% cookie_consent_decline_url cookie_groups as url_decline %}
-        <script type="text/javascript">
-          var cookie_groups = [];
-          {% for cookie_group in cookie_groups %}
-            cookie_groups.push("{{ cookie_group.varname }}");
-          {% endfor %}
 
-          function ready(fn) {
-	        if (document.readyState != 'loading') {
-	          fn();
-	        } else {
-	          document.addEventListener('DOMContentLoaded', fn);
-	        }
-          }
+        {# Set up the data and template for dynamic JS cookie bar #}
+        {% all_cookie_groups 'cookie-consent__cookie-groups' %}
+        <template id="cookie-consent__cookie-bar">
+            {% with cookie_groups=cookie_groups|join:", " %}
+            <div class="cookie-bar">
+                This site uses {{ cookie_groups }} cookies for better performance and user experience.
+                Do you agree to use these cookies?
+                <a href="{{ url_accept }}" class="cc-cookie-accept">Accept</a>
+                <a href="{{ url_decline }}" class="cc-cookie-decline">Decline</a>
+                <a href="{{ url_cookies }}">Cookies info</a>
+            </div>
+            {% endwith %}
+        </template>
+        {% include "./show-cookie-bar-script.html" %}
 
-          ready(function() {
-	          showCookieBar({
-              content: "{% filter escapejs %}{% with cookie_groups=cookie_groups|join:", " %}<div class="cookie-bar">This site uses {{ cookie_groups }} cookies for better performance and user experience. Do you agree to use cookies? <a href="{{ url_accept }}" class="cc-cookie-accept">Accept</a> <a href="{{ url_decline }}" class="cc-cookie-decline">Decline</a> <a href="{{ url_cookies }}">Cookies info</a></div>{% endwith %}{% endfilter %}",
-              cookie_groups: cookie_groups,
-              cookie_decline: "{% get_decline_cookie_groups_cookie_string request cookie_groups %}",
-              beforeDeclined: function() {
-                document.cookie = "{% get_decline_cookie_groups_cookie_string request cookie_groups %}";
-              }
-            });
-          });
-        </script>
-      {% endif %}
     {% endif %}
 
   </body>

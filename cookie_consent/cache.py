@@ -31,7 +31,10 @@ def all_cookie_groups():
 
         qs = CookieGroup.objects.filter(is_required=False)
         qs = qs.prefetch_related("cookie_set")
-        items = dict([(g.varname, g) for g in qs])
+        # items = qs.in_bulk(field_name="varname")
+        # FIXME -> doesn't work because varname is not a unique fieldl, we need to
+        # make this unique
+        items = {group.varname: group for group in qs}
         cache.set(CACHE_KEY, items, CACHE_TIMEOUT)
     return items
 
