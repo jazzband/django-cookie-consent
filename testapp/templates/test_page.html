@@ -56,13 +56,25 @@
 
         {# Set up the data and template for dynamic JS cookie bar #}
         {% all_cookie_groups 'cookie-consent__cookie-groups' %}
+        {% comment %}
+            NOTE: to make this work with page caches, you'd typically leave out the
+            dynamic parts (such as {{ cookie_groups }}) and handle that dynamically
+            in JS.
+
+            For example, by getting the information dynamically from a template, putting
+            that in the template fragment and eventually calling the code from
+            cookiebar.module.js.
+
+            FIXME: add this to the docs
+        {% endcomment %}
         <template id="cookie-consent__cookie-bar">
             {% with cookie_groups=cookie_groups|join:", " %}
             <div class="cookie-bar">
                 This site uses {{ cookie_groups }} cookies for better performance and user experience.
                 Do you agree to use these cookies?
-                <a href="{{ url_accept }}" class="cc-cookie-accept">Accept</a>
-                <a href="{{ url_decline }}" class="cc-cookie-decline">Decline</a>
+                {# Button is the more accessible role, but an anchor tag would also work #}
+                <button type="button" class="cookie-consent__accept">Accept</button>
+                <button type="button" class="cookie-consent__decline">Decline</button>
                 <a href="{{ url_cookies }}">Cookies info</a>
             </div>
             {% endwith %}

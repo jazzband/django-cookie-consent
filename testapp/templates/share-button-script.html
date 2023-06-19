@@ -1,4 +1,5 @@
 {% load cookie_consent_tags %}
+{# TODO: find a way to output this without busting page caches -> fetch accepted cookies async? #}
 <script type="{% js_type_for_cookie_consent request 'social' '*:.google.com' %}" data-varname="social">
   const btn = document.getElementById('share-button');
   btn.style.display = 'block';

@@ -2,10 +2,14 @@
  * New cookiebar functionality, as a Javascript module.
  *
  * About modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+ *
  */
 const DEFAULTS = {
+  // TODO: also accept element rather than selector?
   templateSelector: '#cookie-consent__cookie-bar',
   cookieGroupsSelector: '#cookie-consent__cookie-groups',
+  acceptSelector: '.cookie-consent__accept',
+  declineSelector: '.cookie-consent__decline',
   /**
    * Either a string (selector), DOMNode or null.
    *
@@ -14,7 +18,8 @@ const DEFAULTS = {
    */
   insertBefore: null,
   onShow: null, // callback when the cookie bar is being shown -> add class to body...
-  onDecline: null, // callback when cookies are declined TODO: selector for accept/decline
+  onAccept: null, // callback when cookies are accepted
+  onDecline: null, // callback when cookies are declined
 };
 
 export const loadCookieGroups = (selector) => {
@@ -31,7 +36,21 @@ const doInsertBefore = (beforeNode, newNode) => {
 }
 
 const registerEvents = (cookieBarNode, options) => {
+  cookieBarNode
+    .querySelector(options.acceptSelector)
+    .addEventListener('click', event => {
+      event.preventDefault();
+      console.log('accept clicked');
+      options.onAccept?.(event);
+    });
 
+  cookieBarNode
+    .querySelector(options.declineSelector)
+    .addEventListener('click', event => {
+      event.preventDefault();
+      console.log('decline clicked');
+      options.onDecline?.(event);
+    });
 };
 
 export const showCookieBar = (options={}) => {
