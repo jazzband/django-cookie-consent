@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.core.exceptions import SuspiciousOperation
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
+from django.middleware.csrf import get_token as get_csrf_token
 from django.urls import reverse
 from django.views.generic import ListView, View
 
 from .compat import RedirectURLMixin, url_has_allowed_host_and_scheme
 from .models import CookieGroup
-from .util import accept_cookies, decline_cookies
+from .util import (
+    accept_cookies,
+    decline_cookies,
+    get_not_accepted_or_declined_cookie_groups,
+)
 
 
 class CookieGroupListView(ListView):
@@ -65,3 +70,29 @@ class CookieGroupDeclineView(CookieGroupBaseProcessView):
 
     def delete(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+class CookieStatusView(View):
+    """
+    Check the current accept/decline status for cookies.
+
+    The returned accept and decline URLs are specific to this user and include the
+    cookie groups that weren't accepted or declined yet.
+
+    Note that this endpoint also returns a CSRF Token to be used by the frontend,
+    as baking a CSRFToken into a cached page will not reliably work.
+    """
+
+    def get(self, request: HttpRequest) -> JsonResponse:
+        not_accepted_or_declined = get_not_accepted_or_declined_cookie_groups(request)
+        # TODO: change this csv URL param into proper POST params
+        varnames = ",".join([group.varname for group in not_accepted_or_declined])
+        data = {
+            "csrftoken": get_csrf_token(request),
+            "acceptUrl": reverse("cookie_consent_accept", kwargs={"varname": varnames}),
+            "declineUrl": reverse(
+                "cookie_consent_decline", kwargs={"varname": varnames}
+            ),
+            "cookieGroups": [group.for_json() for group in not_accepted_or_declined],
+        }
+        return JsonResponse(data)

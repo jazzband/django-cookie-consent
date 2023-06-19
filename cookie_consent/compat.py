@@ -9,3 +9,5 @@ except ImportError:
     from django.contrib.auth.views import (
         SuccessURLAllowedHostsMixin as RedirectURLMixin,
     )
+
+__all__ = ["url_has_allowed_host_and_scheme", "RedirectURLMixin"]

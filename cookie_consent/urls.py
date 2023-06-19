@@ -2,7 +2,12 @@
 from django.urls import path, re_path
 from django.views.decorators.csrf import csrf_exempt
 
-from .views import CookieGroupAcceptView, CookieGroupDeclineView, CookieGroupListView
+from .views import (
+    CookieGroupAcceptView,
+    CookieGroupDeclineView,
+    CookieGroupListView,
+    CookieStatusView,
+)
 
 urlpatterns = [
     path(
@@ -27,5 +32,6 @@ urlpatterns = [
         csrf_exempt(CookieGroupDeclineView.as_view()),
         name="cookie_consent_decline_all",
     ),
+    path("status/", CookieStatusView.as_view(), name="status"),
     path("", CookieGroupListView.as_view(), name="cookie_consent_cookie_group_list"),
 ]

@@ -35,6 +35,16 @@ const doInsertBefore = (beforeNode, newNode) => {
   parent.insertBefore(newNode, beforeNode);
 }
 
+/**
+ * Register the accept/decline event handlers.
+ *
+ * Note that we can't just set the decline or accept cookie purely client-side, as the
+ * cookie possibly has the httpOnly flag set.
+ *
+ * @param  {HTMLEelement} cookieBarNode The DOM node containing the cookiebar markup.
+ * @param  {Object} options       The options as passed to showCookieBar, containing the selectors
+ * @return {Void}
+ */
 const registerEvents = (cookieBarNode, options) => {
   cookieBarNode
     .querySelector(options.acceptSelector)
@@ -42,6 +52,8 @@ const registerEvents = (cookieBarNode, options) => {
       event.preventDefault();
       console.log('accept clicked');
       options.onAccept?.(event);
+      // TODO: discover scripts to toggle to text/javascript or module type
+      // TODO: make backend call to accept cookies
     });
 
   cookieBarNode
@@ -50,6 +62,9 @@ const registerEvents = (cookieBarNode, options) => {
       event.preventDefault();
       console.log('decline clicked');
       options.onDecline?.(event);
+      // TODO: provide beforeDeclined hook?
+      // TODO: discover scripts to disable
+      // TODO: make backend call to decline cookies
     });
 };
 
