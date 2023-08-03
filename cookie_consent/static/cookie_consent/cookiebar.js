@@ -1,16 +1,17 @@
-function evalXCookieConsent(script) {
-  var src = script.getAttribute("src")
+export function evalXCookieConsent(script) {
+  const src = script.getAttribute("src")
   if (src) {
-      var newScript = document.createElement('script');
+      const newScript = document.createElement('script');
       newScript.src = src;
       document.getElementsByTagName("head")[0].appendChild(newScript);
   } else {
-      eval(script.innerHTML);
+      const fxn = new Function();
+      fxn(script);
   }
   script.remove();
 }
 
-function showCookieBar (options) {
+export function showCookieBar (options) {
   const defaults = {
     content: '',
     cookie_groups: [],
@@ -21,11 +22,10 @@ function showCookieBar (options) {
 
   const opts = Object.assign(defaults, options);
   
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML= opts.content;
-  const content = wrapper.firstChild;
+  const wrapper = new DOMParser().parseFromString(opts.content, 'text/html');
+  const content = wrapper.body.firstChild;
 
-  const body = document.querySelector('body');
+  const body = document.body;
   body.appendChild(content);
   body.classList.add('with-cookie-bar');
 
@@ -37,22 +37,23 @@ function showCookieBar (options) {
     .then(() => {
       content.style.display = "none";
       body.classList.remove('with-cookie-bar');
-      scripts = document.querySelectorAll("script[type='x/cookie_consent']");
+      const scripts = document.querySelectorAll("script[type='x/cookie_consent']");
       scripts.forEach( (script) => {
-        if (cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
+        if (opts.cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
           evalXCookieConsent(script);
         }
       });
     })  
   });
 
+    if (typeof opts.beforeDeclined === "function") {
+      opts.beforeDeclined();
+    }
+  
   document
   .querySelector(".cc-cookie-decline", content)
   .addEventListener('click', (e) => {
     e.preventDefault();
-    if (typeof opts.beforeDeclined === "function") {
-      opts.beforeDeclined();
-    }
     fetch(e.target.getAttribute("href"), {method: "POST"})
     .then(() => {
       content.style.display = "none";
@@ -63,4 +64,3 @@ function showCookieBar (options) {
     })  
   });
 }
-
