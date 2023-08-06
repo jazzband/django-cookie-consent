@@ -28,6 +28,7 @@
         <button id="share-button" type="button" style="display:none">SHARE</button>
     </p>
 
+    {# NOTE - this section is not compatible with django's full page cache #}
     <h2>Optional cookies</h2>
     {% if request|cookie_group_accepted:"optional" %}
         <p>"optional" cookies accepted</p>
@@ -41,6 +42,7 @@
     {% if request|cookie_group_accepted:"foo=*:.foo.com" %}
         <p>None existing cookies</p>
     {% endif %}
+    {# END of section not compatible with page cache #}
 
     <p>
         <a href="{{ url_cookies }}">Cookies policy</a>

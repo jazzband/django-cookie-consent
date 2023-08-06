@@ -3,6 +3,23 @@
  *
  * About modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
  *
+ * The code is organized here in a way to make the templates work with Django's page
+ * cache. This means that anything user-specific (so different django session and even
+ * cookie consent cookies) cannot be baked into the templates, as that breaks caches.
+ *
+ * The cookie bar operates on the following principles:
+ *
+ * - The developer using the library includes the desired template in their django
+ *   templates, using the HTML <template> element. This contains the content for the
+ *   cookie bar.
+ * - The developer is responsible for loading some Javascript that loads this script.
+ * - The main export of this script needs to be called (showCookieBar), with the
+ *   appropriate options.
+ * - The options include the backend URLs where the retrieve data, which selectors/DOM
+ *   nodes to use for various functionality and the hooks to tap into the accept/decline
+ *   life-cycle.
+ * - When a user accepts or declines (all) cookies, the call to the backend is made via
+ *   a fetch request, bypassing any page caches and preventing full-page reloads.
  */
 const DEFAULTS = {
   statusUrl: undefined,
@@ -62,21 +79,19 @@ const registerEvents = (cookieBarNode) => {
     .querySelector(acceptSelector)
     .addEventListener('click', event => {
       event.preventDefault();
-      console.log('accept clicked');
-      onAccept?.(event);
-      // TODO: discover scripts to toggle to text/javascript or module type
+      onAccept?.(event, COOKIE_STATUS.cookieGroups);
       acceptCookiesBackend();
+      cookieBarNode.parentNode.removeChild(cookieBarNode);
     });
 
   cookieBarNode
     .querySelector(declineSelector)
     .addEventListener('click', event => {
       event.preventDefault();
-      console.log('decline clicked');
-      onDecline?.(event);
+      onDecline?.(event, COOKIE_STATUS.cookieGroups);
       // TODO: provide beforeDeclined hook?
-      // TODO: discover scripts to disable
       declineCookiesBackend();
+      cookieBarNode.parentNode.removeChild(cookieBarNode);
     });
 };
 

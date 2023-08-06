@@ -58,6 +58,9 @@ without reloading page.
 Asking users for cookie consent in templates
 --------------------------------------------
 
+.. warning:: The instructions below refer to the legacy integration. See
+   :ref:`javascript` for an updated approach.
+
 ``django-cookie-consent`` can show website visitors a cookie consent message. This
 message informs users that the website uses cookies and requests their consent
 to store them. The script responsible for displaying the message is
