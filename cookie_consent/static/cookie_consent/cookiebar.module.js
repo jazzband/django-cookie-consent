@@ -161,6 +161,9 @@ export const showCookieBar = async (options={}) => {
       : (cookieBarNode) => doInsertBefore(insertBefore, cookieBarNode)
   ;
   await loadCookieStatus();
+  // there are no (more) cookie groups to accept, don't show the bar
+  if (!COOKIE_STATUS.cookieGroups.length) return;
+
   // grab the contents from the template node and add them to the DOM, optionally
   // calling the onShow callback
   const cookieBarNode = templateNode.content.firstElementChild.cloneNode(true);
