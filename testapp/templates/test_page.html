@@ -79,7 +79,8 @@
             </div>
             {% endwith %}
         </template>
-        {% include "./show-cookie-bar-script.html" %}
+        {% url 'cookie_consent_status' as status_url %}
+        {% include "./show-cookie-bar-script.html" with status_url=status_url %}
 
     {% endif %}
 

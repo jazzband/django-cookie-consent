@@ -32,6 +32,6 @@ urlpatterns = [
         csrf_exempt(CookieGroupDeclineView.as_view()),
         name="cookie_consent_decline_all",
     ),
-    path("status/", CookieStatusView.as_view(), name="status"),
+    path("status/", CookieStatusView.as_view(), name="cookie_consent_status"),
     path("", CookieGroupListView.as_view(), name="cookie_consent_cookie_group_list"),
 ]

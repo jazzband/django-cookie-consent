@@ -5,6 +5,7 @@
  *
  */
 const DEFAULTS = {
+  statusUrl: undefined,
   // TODO: also accept element rather than selector?
   templateSelector: '#cookie-consent__cookie-bar',
   cookieGroupsSelector: '#cookie-consent__cookie-groups',
@@ -20,7 +21,17 @@ const DEFAULTS = {
   onShow: null, // callback when the cookie bar is being shown -> add class to body...
   onAccept: null, // callback when cookies are accepted
   onDecline: null, // callback when cookies are declined
+  csrfHeaderName: 'X-CSRFToken', // Django's default, can be overridden with settings.CSRF_HEADER_NAME
 };
+
+const DEFAULT_HEADERS = {'X-Cookie-Consent-Fetch': '1'};
+
+let CONFIGURATION = DEFAULTS;
+/**
+ * Cookie accept status, including the accept/decline URLs, csrftoken... See
+ * backend view CookieStatusView.
+ */
+let COOKIE_STATUS = null;
 
 export const loadCookieGroups = (selector) => {
   const node = document.querySelector(selector);
@@ -42,41 +53,84 @@ const doInsertBefore = (beforeNode, newNode) => {
  * cookie possibly has the httpOnly flag set.
  *
  * @param  {HTMLEelement} cookieBarNode The DOM node containing the cookiebar markup.
- * @param  {Object} options       The options as passed to showCookieBar, containing the selectors
  * @return {Void}
  */
-const registerEvents = (cookieBarNode, options) => {
+const registerEvents = (cookieBarNode) => {
+  const {acceptSelector, onAccept, declineSelector, onDecline} = CONFIGURATION;
+
   cookieBarNode
-    .querySelector(options.acceptSelector)
+    .querySelector(acceptSelector)
     .addEventListener('click', event => {
       event.preventDefault();
       console.log('accept clicked');
-      options.onAccept?.(event);
+      onAccept?.(event);
       // TODO: discover scripts to toggle to text/javascript or module type
-      // TODO: make backend call to accept cookies
+      acceptCookiesBackend();
     });
 
   cookieBarNode
-    .querySelector(options.declineSelector)
+    .querySelector(declineSelector)
     .addEventListener('click', event => {
       event.preventDefault();
       console.log('decline clicked');
-      options.onDecline?.(event);
+      onDecline?.(event);
       // TODO: provide beforeDeclined hook?
       // TODO: discover scripts to disable
-      // TODO: make backend call to decline cookies
+      declineCookiesBackend();
     });
 };
 
-export const showCookieBar = (options={}) => {
+const loadCookieStatus = async () => {
+  const {statusUrl} = CONFIGURATION;
+  if (!statusUrl) console.error('Missing status URL option, did you forget to pass the statusUrl option?');
+  const response = await window.fetch(
+    CONFIGURATION.statusUrl,
+    {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: DEFAULT_HEADERS
+    }
+  );
+  // assign to module level variable, once the page is loaded these details should
+  // not change.
+  COOKIE_STATUS = await response.json();
+};
+
+const saveCookiesStatusBackend = async (urlProperty) => {
+  const status = COOKIE_STATUS || {};
+  const url = status[urlProperty];
+  if (!url) {
+    console.error(`Missing url for ${urlProperty} - was the cookie status not loaded properly?`);
+    return;
+  }
+  await window.fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      ...DEFAULT_HEADERS,
+      [CONFIGURATION.csrfHeaderName]: status.csrftoken
+    }
+  });
+}
+
+/**
+ * Make the call to the backend to accept the cookies.
+ */
+const acceptCookiesBackend = async () => await saveCookiesStatusBackend('acceptUrl');
+/**
+ * Make the call to the backend to decline the cookies.
+ */
+const declineCookiesBackend = async () => await saveCookiesStatusBackend('declineUrl');
+
+export const showCookieBar = async (options={}) => {
   // merge defaults and provided options
-  options = {...DEFAULTS, ...options};
+  CONFIGURATION = {...DEFAULTS, ...options};
   const {
     cookieGroupsSelector,
     templateSelector,
     insertBefore,
     onShow,
-  } = options;
+  } = CONFIGURATION;
   const cookieGroups = loadCookieGroups(cookieGroupsSelector);
 
   // no cookie groups -> abort
@@ -91,10 +145,11 @@ export const showCookieBar = (options={}) => {
       ? (cookieBarNode) => doInsertBefore(document.querySelector(insertBefore), cookieBarNode)
       : (cookieBarNode) => doInsertBefore(insertBefore, cookieBarNode)
   ;
+  await loadCookieStatus();
   // grab the contents from the template node and add them to the DOM, optionally
   // calling the onShow callback
   const cookieBarNode = templateNode.content.firstElementChild.cloneNode(true);
-  registerEvents(cookieBarNode, options);
+  registerEvents(cookieBarNode);
   onShow?.();
   doInsert(cookieBarNode);
 };

@@ -14,6 +14,16 @@ from .util import (
 )
 
 
+def is_ajax_like(request: HttpRequest) -> bool:
+    # legacy ajax, removed in Django 4.0 (used to be request.is_ajax())
+    ajax_header = request.headers.get("X-Requested-With")
+    if ajax_header == "XMLHttpRequest":
+        return True
+
+    # module-js uses fetch and a custom header
+    return bool(request.headers.get("X-Cookie-Consent-Fetch"))
+
+
 class CookieGroupListView(ListView):
     """
     Display all cookies.
@@ -43,7 +53,7 @@ class CookieGroupBaseProcessView(RedirectURLMixin, View):
 
     def post(self, request, *args, **kwargs):
         varname = kwargs.get("varname", None)
-        if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+        if is_ajax_like(request):
             response = HttpResponse()
         else:
             response = HttpResponseRedirect(self.get_success_url())
