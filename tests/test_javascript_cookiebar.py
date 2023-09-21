@@ -65,11 +65,12 @@ def test_cookiebar_not_shown_anymore_after_accept_or_decline(btn_text: str, page
     expect(page.get_by_text(COOKIE_BAR_CONTENT)).not_to_be_visible()
 
 
-def test_on_accept_handler_runs_on_load(page: Page):
+def test_on_accept_handler_runs_on_load(page: Page, live_server):
     accept_button = page.get_by_role("button", name="Accept")
     accept_button.click()
 
-    page.reload()
+    test_page_url = f"{live_server.url}{reverse('test_page')}"
+    page.goto(test_page_url)
 
     share_button = page.get_by_role("button", name="SHARE")
     expect(share_button).to_be_visible()
