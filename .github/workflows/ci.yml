@@ -43,3 +43,26 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: reports/
+
+  e2e_tests:
+    runs-on: ubuntu-latest
+    name: Run the end-to-end tests
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install tox tox-gh-actions pytest-playwright
+          playwright install --with-deps
+
+      - name: Run tests
+        run: tox -e e2e
+
+      - name: Publish coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          directory: reports/
