@@ -10,6 +10,8 @@ from .models import CookieGroup
 from .util import (
     accept_cookies,
     decline_cookies,
+    get_accepted_cookie_groups,
+    get_declined_cookie_groups,
     get_not_accepted_or_declined_cookie_groups,
 )
 
@@ -94,6 +96,8 @@ class CookieStatusView(View):
     """
 
     def get(self, request: HttpRequest) -> JsonResponse:
+        accepted = get_accepted_cookie_groups(request)
+        declined = get_declined_cookie_groups(request)
         not_accepted_or_declined = get_not_accepted_or_declined_cookie_groups(request)
         # TODO: change this csv URL param into proper POST params
         varnames = ",".join([group.varname for group in not_accepted_or_declined])
@@ -103,6 +107,10 @@ class CookieStatusView(View):
             "declineUrl": reverse(
                 "cookie_consent_decline", kwargs={"varname": varnames}
             ),
-            "cookieGroups": [group.for_json() for group in not_accepted_or_declined],
+            "acceptedCookieGroups": [group.varname for group in accepted],
+            "declinedCookieGroups": [group.varname for group in declined],
+            "notAcceptedOrDeclinedCookieGroups": [
+                group.varname for group in not_accepted_or_declined
+            ],
         }
         return JsonResponse(data)

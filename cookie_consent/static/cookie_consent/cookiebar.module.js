@@ -1,5 +1,5 @@
 /**
- * New cookiebar functionality, as a Javascript module.
+ * Cookiebar functionality, as a Javascript module.
  *
  * About modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
  *
@@ -70,16 +70,23 @@ const doInsertBefore = (beforeNode, newNode) => {
  * cookie possibly has the httpOnly flag set.
  *
  * @param  {HTMLEelement} cookieBarNode The DOM node containing the cookiebar markup.
+ * @param  {Array}        cookieGroups  The array of all configured cookie groups.
  * @return {Void}
  */
-const registerEvents = (cookieBarNode) => {
+const registerEvents = (cookieBarNode, cookieGroups) => {
   const {acceptSelector, onAccept, declineSelector, onDecline} = CONFIGURATION;
+  const {
+    acceptedCookieGroups: accepted,
+    declinedCookieGroups: declined,
+    notAcceptedOrDeclinedCookieGroups: undecided,
+} = COOKIE_STATUS;
 
   cookieBarNode
     .querySelector(acceptSelector)
     .addEventListener('click', event => {
       event.preventDefault();
-      onAccept?.(event, COOKIE_STATUS.cookieGroups);
+      const acceptedGroups = filterCookieGroups(cookieGroups, accepted.concat(undecided));
+      onAccept?.(acceptedGroups, event);
       acceptCookiesBackend();
       cookieBarNode.parentNode.removeChild(cookieBarNode);
     });
@@ -88,8 +95,8 @@ const registerEvents = (cookieBarNode) => {
     .querySelector(declineSelector)
     .addEventListener('click', event => {
       event.preventDefault();
-      onDecline?.(event, COOKIE_STATUS.cookieGroups);
-      // TODO: provide beforeDeclined hook?
+      const declinedGroups = filterCookieGroups(cookieGroups, declined.concat(undecided));
+      onDecline?.(declinedGroups, event);
       declineCookiesBackend();
       cookieBarNode.parentNode.removeChild(cookieBarNode);
     });
@@ -137,6 +144,13 @@ const acceptCookiesBackend = async () => await saveCookiesStatusBackend('acceptU
  */
 const declineCookiesBackend = async () => await saveCookiesStatusBackend('declineUrl');
 
+/**
+ * Filter the cookie groups down to a subset of specified varnames.
+ */
+const filterCookieGroups = (cookieGroups, varNames) => {
+  return cookieGroups.filter(group => varNames.includes(group.varname));
+};
+
 export const showCookieBar = async (options={}) => {
   // merge defaults and provided options
   CONFIGURATION = {...DEFAULTS, ...options};
@@ -145,6 +159,8 @@ export const showCookieBar = async (options={}) => {
     templateSelector,
     insertBefore,
     onShow,
+    onAccept,
+    onDecline,
   } = CONFIGURATION;
   const cookieGroups = loadCookieGroups(cookieGroupsSelector);
 
@@ -161,13 +177,27 @@ export const showCookieBar = async (options={}) => {
       : (cookieBarNode) => doInsertBefore(insertBefore, cookieBarNode)
   ;
   await loadCookieStatus();
+
+  // calculate the cookie groups to invoke the callbacks. We deliberately fire those
+  // without awaiting so that our cookie bar is shown/hidden as soon as possible.
+  const {
+    acceptedCookieGroups: accepted,
+    declinedCookieGroups: declined,
+    notAcceptedOrDeclinedCookieGroups
+  } = COOKIE_STATUS;
+
+  const acceptedGroups = filterCookieGroups(cookieGroups, accepted);
+  if (acceptedGroups.length) onAccept?.(acceptedGroups);
+  const declinedGroups = filterCookieGroups(cookieGroups, declined);
+  if (declinedGroups.length) onDecline?.(declinedGroups);
+
   // there are no (more) cookie groups to accept, don't show the bar
-  if (!COOKIE_STATUS.cookieGroups.length) return;
+  if (!notAcceptedOrDeclinedCookieGroups.length) return;
 
   // grab the contents from the template node and add them to the DOM, optionally
   // calling the onShow callback
   const cookieBarNode = templateNode.content.firstElementChild.cloneNode(true);
-  registerEvents(cookieBarNode);
+  registerEvents(cookieBarNode, cookieGroups);
   onShow?.();
   doInsert(cookieBarNode);
 };

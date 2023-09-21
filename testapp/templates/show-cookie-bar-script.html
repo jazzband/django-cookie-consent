@@ -14,7 +14,7 @@
       templateSelector: '#cookie-consent__cookie-bar',
       cookieGroupsSelector: '#cookie-consent__cookie-groups',
       onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
-      onAccept: (event, cookieGroups) => {
+      onAccept: (cookieGroups) => {
         document.querySelector('body').classList.remove('with-cookie-bar');
         const hasSocial = cookieGroups.find(g => g.varname == 'social') !== undefined;
         hasSocial && showShareButton();

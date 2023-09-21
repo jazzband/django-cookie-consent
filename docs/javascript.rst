@@ -61,6 +61,10 @@ The ``<template>`` node is cloned and injected in the configured location. For e
 This lets you, the developer, control the exact layout, styling and content of the
 cookie notice.
 
+.. note:: Avoid using (most) of the built in template tags if you want to use
+   template/view caching. For more background information, see:
+   :ref:`javascript_design_considerations`.
+
 **Include a script that calls the ``showCookieBar`` function**
 
 The most straight-forward way is to include this in your Django template:
@@ -133,10 +137,12 @@ should provide them. Please check the source code for their default values.
   added to the document.
 
 * ``onAccept`` - an optional callback, called when the "cookies accept" element is
-  clicked. It receives the click event and list of cookie groups that were accepted.
+  clicked and when the cookie status is initially loaded. It receives the list of
+  all cookie groups that are (now) accepted and the click event (if there was one).
 
 * ``onDecline`` - an optional callback, called when the "cookies decline" element is
-  clicked. It receives the click event and list of cookie groups that were declined.
+  clicked and when the cookie status is initially loaded. It receives the list of
+  all cookie groups that are (now) declined and the click event (if there was one).
 
 * ``csrfHeaderName`` - HTTP header name for the CSRF Token. Defaults to Django's default
   value, so if you have a non-default ``settings.CSRF_HEADER_NAME``, you must provide
@@ -180,6 +186,8 @@ and the Javascript function:
 
 Passing this ``onAccept`` callback then adds the scripts after the user accepted the
 cookies, causing them to execute. This way, there's no reliance on ``unsafe-eval``.
+
+.. _javascript_design_considerations:
 
 Considerations and design decisions made for the JS integration
 ===============================================================
@@ -253,6 +261,9 @@ module in Webpack-based builds (or similar). Likely the most challenging aspect 
 getting the frontend-stack to pick up your files. Running ``manage.py collectstatic``
 could help in ensuring that the source files are in a deterministic location, like
 ``<PROJECT_ROOT>/static/cookie_consent/cookiebar.module.js``.
+
+.. note:: We're looking into possibly publishing an NPM package *somewhere* to make this
+   easier to work with.
 
 Let us know how we can improve this though!
 

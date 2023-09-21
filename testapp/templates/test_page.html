@@ -48,8 +48,6 @@
         <a href="{{ url_cookies }}">Cookies policy</a>
     </p>
 
-    {% include "./share-button-script.html" %}
-
     {% if request|cookie_consent_enabled %}
         {% not_accepted_or_declined_cookie_groups request as cookie_groups %}
 
