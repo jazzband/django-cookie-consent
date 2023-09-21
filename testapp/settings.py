@@ -6,6 +6,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "django.contrib.staticfiles",
     "django.contrib.messages",
     "cookie_consent",
     "testapp",

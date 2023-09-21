@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase, override_settings
 
-from cookie_consent.cache import get_cookie, get_cookie_group
+from cookie_consent.cache import delete_cache, get_cookie, get_cookie_group
 from cookie_consent.models import Cookie, CookieGroup
 
 
 class CacheTest(TestCase):
     def setUp(self):
+        super().setUp()
+        self.addCleanup(delete_cache)
+
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
             name="Optional",
