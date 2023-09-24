@@ -2,6 +2,53 @@
 Changelog
 =========
 
+0.5.0b0 (2023-09-24)
+--------------------
+
+A django-cookie-consent version to test the new Javascript integration.
+
+You can install this using:
+
+.. code-block:: bash
+
+    pip install django-cookie-consent --pre
+
+The new cookiebar JS uses a modern approach and should resolve issues with page caches
+and Content Security Policies. Please try it out and report any issues or suggestion on
+Github!
+
+**Breaking changes**
+
+None
+
+**New features**
+
+* Implemented ``cookie_consent/cookiebar.module.js`` as a new Javascript integration.
+  Please review the updated documentation for usage instructions. (#15, #49, #99)
+
+**Deprecations**
+
+Deprecated functionality is scheduled for removal in django-cookie-consent 1.0.
+
+* Deprecated ``cookie_consent/cookiebar.js`` and added an alias ``legacyShowCookieBar``.
+  Existing users are advised to upgrade to the new module approach, or at the very
+  least substitute ``showCookieBar`` with ``window.legacyShowCookieBar`` to better keep
+  track of this deprecation.
+
+* Deprecated template tags that build up cookie strings suitable for Javascript.
+
+**Bugfixes**
+
+None
+
+**Project maintenance**
+
+* Extensively documented the new cookiebar JS usage.
+* Added Playwright for end-to-end testing (covers both the new and legacy cookie bar)
+* Removed unnecessary ``smart_str`` usage - thanks @some1ataplace
+* Test app and tests themselves are now excluded from coverage measuring for more a
+  more accurate reflection of the coverage status.
+
 0.4.0 (2023-06-11)
 ------------------
 
