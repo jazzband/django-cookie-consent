@@ -65,6 +65,18 @@ cookie notice.
    template/view caching. For more background information, see:
    :ref:`javascript_design_considerations`.
 
+**Emit the cookie groups for the Javascript**
+
+The cookiebar module needs to know which cookie groups exist to decide whether a bar
+has to be shown at all. A template tag exists which emits this as JSON serialized
+data (in a page-cache compatible manner):
+
+.. code-block:: django
+
+    {# Set up the data and template for dynamic JS cookie bar #}
+    {% all_cookie_groups 'cookie-consent__cookie-groups' %}
+    {# Emits a <script type="application/json" id="cookie-consent__cookie-groups">...</script> tag #}
+
 **Include a script that calls the ``showCookieBar`` function**
 
 The most straight-forward way is to include this in your Django template:
