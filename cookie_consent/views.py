@@ -50,7 +50,7 @@ class CookieGroupBaseProcessView(RedirectURLMixin, View):
             raise SuspiciousOperation("Unsafe open redirect suspected.")
         return redirect_to or reverse("cookie_consent_cookie_group_list")
 
-    def process(self, request, response, varname):
+    def process(self, request, response, varname):  # pragma: no cover
         raise NotImplementedError()
 
     def post(self, request, *args, **kwargs):

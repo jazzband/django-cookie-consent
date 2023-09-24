@@ -1,22 +1,10 @@
 {% load static %}
 {% load cookie_consent_tags %}
 {% url "cookie_consent_cookie_group_list" as url_cookies %}
+<!DOCTYPE html>
 <html>
     <head>
-        <style type="text/css" media="screen">
-          body.with-cookie-bar {
-            padding-top: 35px;
-          }
-          .cookie-bar {
-            position: fixed;
-            width: 100%;
-            top:0;
-            text-align:center;
-            height:25px;
-            line-height: 25px;
-            background: #eee;
-          }
-        </style>
+        <link href="{% static 'styles.css' %}" rel="stylesheet" />
     </head>
 
   <body>

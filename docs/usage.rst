@@ -40,6 +40,14 @@ domain. If cookie name with domain is used, format is
 Checking for 3rd party cookies dynamically
 ------------------------------------------
 
+.. warning::
+
+    .. deprecated:: 0.5.0
+
+    This approach does not work well with page-level caches and (strict) content
+    security policies. Instead, use the new :ref:`Javascript <javascript>` approach
+    with ``<template>`` nodes.
+
 Using ``js_type_for_cookie_consent`` templatetag for script type attribute
 would set ``x/cookie_consent`` thus making browser skip executing this block
 of javascript code.
@@ -58,8 +66,15 @@ without reloading page.
 Asking users for cookie consent in templates
 --------------------------------------------
 
-.. warning:: The instructions below refer to the legacy integration. See
-   :ref:`javascript` for an updated approach.
+.. warning::
+
+   The instructions below refer to the legacy integration. See :ref:`javascript` for
+   an updated approach.
+
+   .. deprecated:: 0.5.0
+
+   The legacy integration is deprecated and will be removed in django-cookie-consent
+   1.0.0.
 
 ``django-cookie-consent`` can show website visitors a cookie consent message. This
 message informs users that the website uses cookies and requests their consent
@@ -71,16 +86,19 @@ In order to display the cookie consent message on your website:
 1. Load the ``cookiebar.js`` script in your HTML template. You can do this by
    adding the following line to the ``<head>`` section of your template:
 
-.. code-block:: html
+   .. code-block:: html
 
-  <script type="text/javascript" src="{% static 'cookie_consent/cookiebar.js' %}"></script>
+      <script type="text/javascript" src="{% static 'cookie_consent/cookiebar.js' %}"></script>
+
+   This script assigns ``window.legacyShowCookieBar`` and the alias ``showCookieBar`` (
+   the latter is for backwards compatibility).
   
-2. In your JavaScript code, call the ``showCookieBar`` function with the
+2. In your JavaScript code, call the ``legacyShowCookieBar`` function with the
    appropriate options object:
 
 .. code-block:: javascript
 
-  window.showCookieBar({
+  window.legacyShowCookieBar({
     content: 'your-cookie-bar-html',
     cookie_groups: ['your-cookie-group'],
     cookie_decline: 'your-decline-cookie-setting',
@@ -92,7 +110,7 @@ In order to display the cookie consent message on your website:
 Options
 =======
 
-The ``showCookieBar`` function accepts an options object with the following
+The ``legacyShowCookieBar`` function accepts an options object with the following
 properties:
 
 * ``content`` (required): A string containing the HTML for your cookie consent
@@ -109,11 +127,11 @@ properties:
 Example
 =======
 
-Here's an example of how to use the showCookieBar function:
+Here's an example of how to use the legacyShowCookieBar function:
 
 .. code-block:: javascript
 
-  showCookieBar({
+  legacyShowCookieBar({
     content: '<div class="cookie-bar"> <p>We use cookies to improve your browsing experience. By continuing to use our site, you agree to our use of cookies.</p> <a href="/accept_cookies" class="cc-cookie-accept">Accept</a> <a href="/decline_cookies" class="cc-cookie-decline">Decline</a> </div>',
     cookie_groups: ['analytics'],
     cookie_decline: '{% get_decline_cookie_groups_cookie_string request analytics %}',
@@ -122,7 +140,7 @@ Here's an example of how to use the showCookieBar function:
     },
   });
 
-One thing to keep in mind is that the showCookieBar function only adds the HTML
+One thing to keep in mind is that the legacyShowCookieBar function only adds the HTML
 template for the banner to your page - you still need to style it with CSS to
 make it work properly.
 
