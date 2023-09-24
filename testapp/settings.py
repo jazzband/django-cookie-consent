@@ -1,4 +1,7 @@
 import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -6,6 +9,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "django.contrib.staticfiles",
     "django.contrib.messages",
     "cookie_consent",
     "testapp",
@@ -19,6 +23,10 @@ DEBUG = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

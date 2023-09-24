@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
+import warnings
+
 from django import template
+from django.urls import reverse
+from django.utils.html import json_script
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-from cookie_consent.conf import settings
-from cookie_consent.util import (
+from ..cache import all_cookie_groups as get_all_cookie_groups
+from ..conf import settings
+from ..util import (
     are_all_cookies_accepted,
     get_accepted_cookies,
     get_cookie_dict_from_request,
@@ -90,10 +89,15 @@ def cookie_consent_decline_url(cookie_groups):
 
 
 @register.simple_tag
-def get_accept_cookie_groups_cookie_string(request, cookie_groups):
+def get_accept_cookie_groups_cookie_string(request, cookie_groups):  # pragma: no cover
     """
     Tag returns accept cookie string suitable to use in javascript.
     """
+    warnings.warn(
+        "Cookie string template tags for JS are deprecated and will be removed "
+        "in django-cookie-consent 1.0",
+        DeprecationWarning,
+    )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
         cookie_dic[cookie_group.varname] = cookie_group.get_version()
@@ -105,6 +109,11 @@ def get_decline_cookie_groups_cookie_string(request, cookie_groups):
     """
     Tag returns decline cookie string suitable to use in javascript.
     """
+    warnings.warn(
+        "Cookie string template tags for JS are deprecated and will be removed "
+        "in django-cookie-consent 1.0",
+        DeprecationWarning,
+    )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
         cookie_dic[cookie_group.varname] = settings.COOKIE_CONSENT_DECLINE
@@ -124,6 +133,13 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         alert("Social cookie accepted");
       </script>
     """
+    # This approach doesn't work with page caches and/or strict Content-Security-Policies
+    # (unless you use nonces, which again doesn't work with aggressive page caching).
+    warnings.warn(
+        "Template tags for use in/with JS are deprecated and will be removed "
+        "in django-cookie-consent 1.0",
+        DeprecationWarning,
+    )
     enabled = is_cookie_consent_enabled(request)
     if not enabled:
         res = True
@@ -147,3 +163,17 @@ def accepted_cookies(request):
 
     """
     return [c.varname for c in get_accepted_cookies(request)]
+
+
+@register.simple_tag
+def all_cookie_groups(element_id: str):
+    """
+    Serialize all cookie groups to JSON and output them in a script tag.
+
+    :param element_id: The ID for the script tag so you can look it up in JS later.
+
+    This uses Django's core json_script filter under the hood.
+    """
+    groups = get_all_cookie_groups()
+    value = [group.for_json() for group in groups.values()]
+    return json_script(value, element_id)

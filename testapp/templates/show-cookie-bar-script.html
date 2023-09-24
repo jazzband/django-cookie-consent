@@ -1,0 +1,30 @@
+{% load static cookie_consent_tags %}
+{% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
+<script type="module">
+    import {showCookieBar} from '{{ cookiebar_src }}';
+
+    const showShareButton = () => {
+        const template = document.getElementById('show-share-button')
+        const showButtonScript = template.content.cloneNode(true);
+        document.body.appendChild(showButtonScript);
+    };
+
+    showCookieBar({
+      statusUrl: '{{ status_url|escapejs }}',
+      templateSelector: '#cookie-consent__cookie-bar',
+      cookieGroupsSelector: '#cookie-consent__cookie-groups',
+      onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
+      onAccept: (cookieGroups) => {
+        document.querySelector('body').classList.remove('with-cookie-bar');
+        const hasSocial = cookieGroups.find(g => g.varname == 'social') !== undefined;
+        hasSocial && showShareButton();
+      },
+      onDecline: () => document.querySelector('body').classList.remove('with-cookie-bar'),
+    });
+</script>
+
+<template id="show-share-button">
+    <script type="text/javascript">
+      document.getElementById('share-button').style.display = 'block';
+    </script>
+</template>

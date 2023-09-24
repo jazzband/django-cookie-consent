@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+from typing import TypedDict
 
 from django.core.validators import RegexValidator
 from django.db import models
@@ -16,6 +17,16 @@ validate_cookie_name = RegexValidator(
     ),
     "invalid",
 )
+
+
+class CookieGroupDict(TypedDict):
+    varname: str
+    name: str
+    description: str
+    is_required: bool
+    # TODO: should we output this? page cache busting would be
+    # required if we do this. Alternatively, set up a JSONView to output these?
+    # version: str
 
 
 class CookieGroup(models.Model):
@@ -45,7 +56,7 @@ class CookieGroup(models.Model):
     def __str__(self):
         return self.name
 
-    def get_version(self):
+    def get_version(self) -> str:
         try:
             return str(self.cookie_set.all()[0].get_version())
         except IndexError:
@@ -58,6 +69,15 @@ class CookieGroup(models.Model):
     def save(self, *args, **kwargs):
         super(CookieGroup, self).save(*args, **kwargs)
         delete_cache()
+
+    def for_json(self) -> CookieGroupDict:
+        return {
+            "varname": self.varname,
+            "name": self.name,
+            "description": self.description,
+            "is_required": self.is_required,
+            # "version": self.get_version(),
+        }
 
 
 class Cookie(models.Model):

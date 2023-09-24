@@ -19,5 +19,6 @@ dist/
 .tox/
 .pytest_cache
 .coverage
+htmlcov/
 reports/
 testapp/*.db

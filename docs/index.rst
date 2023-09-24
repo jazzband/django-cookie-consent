@@ -31,6 +31,7 @@ User Guide
    quickstart
    concept
    usage
+   javascript
    example_app
    settings
    contributing

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import datetime
+from typing import Union
 
 from django.utils.encoding import smart_str
 
-from cookie_consent.cache import all_cookie_groups, get_cookie, get_cookie_group
-from cookie_consent.conf import settings
-from cookie_consent.models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
+from .cache import all_cookie_groups, get_cookie, get_cookie_group
+from .conf import settings
+from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
 
 
 def parse_cookie_str(cookie):
@@ -132,15 +133,33 @@ def are_all_cookies_accepted(request):
     )
 
 
+def _get_cookie_groups_by_state(request, state: Union[bool, None]):
+    return [
+        cookie_group
+        for cookie_group in get_cookie_groups()
+        if get_cookie_value_from_request(request, cookie_group.varname) is state
+    ]
+
+
 def get_not_accepted_or_declined_cookie_groups(request):
     """
     Returns all cookie groups that are neither accepted or declined.
     """
-    return [
-        cookie_group
-        for cookie_group in get_cookie_groups()
-        if get_cookie_value_from_request(request, cookie_group.varname) is None
-    ]
+    return _get_cookie_groups_by_state(request, state=None)
+
+
+def get_accepted_cookie_groups(request):
+    """
+    Returns all cookie groups that are accepted.
+    """
+    return _get_cookie_groups_by_state(request, state=True)
+
+
+def get_declined_cookie_groups(request):
+    """
+    Returns all cookie groups that are declined.
+    """
+    return _get_cookie_groups_by_state(request, state=False)
 
 
 def is_cookie_consent_enabled(request):

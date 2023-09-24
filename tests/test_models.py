@@ -2,11 +2,14 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
+from cookie_consent.cache import delete_cache
 from cookie_consent.models import Cookie, CookieGroup, validate_cookie_name
 
 
 class CookieGroupTest(TestCase):
     def setUp(self):
+        self.addCleanup(delete_cache)
+
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
             name="Optional",
@@ -24,6 +27,8 @@ class CookieGroupTest(TestCase):
 
 class CookieTest(TestCase):
     def setUp(self):
+        self.addCleanup(delete_cache)
+
         self.cookie_group = CookieGroup.objects.create(
             varname="optional",
             name="Optional",
