@@ -29,6 +29,16 @@ class CookieGroupDict(TypedDict):
     # version: str
 
 
+class BaseQueryset(models.query.QuerySet):
+    def delete(self):
+        super().delete()
+        delete_cache()
+
+    def update(self, *args, **kwargs):
+        super().update(*args, **kwargs)
+        delete_cache()
+
+
 class CookieGroup(models.Model):
     varname = models.CharField(
         _("Variable name"), max_length=32, validators=[validate_cookie_name]
@@ -47,6 +57,8 @@ class CookieGroup(models.Model):
     )
     ordering = models.IntegerField(_("Ordering"), default=0)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
+
+    objects = BaseQueryset.as_manager()
 
     class Meta:
         verbose_name = _("Cookie Group")
@@ -91,6 +103,8 @@ class Cookie(models.Model):
     path = models.TextField(_("Path"), blank=True, default="/")
     domain = models.CharField(_("Domain"), max_length=250, blank=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
+
+    objects = BaseQueryset.as_manager()
 
     class Meta:
         verbose_name = _("Cookie")
