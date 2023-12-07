@@ -28,14 +28,21 @@ class CookieGroupTest(TestCase):
 
     @mock.patch("cookie_consent.models.delete_cache")
     def test_bulk_delete(self, mock_delete_cache):
-        CookieGroup.objects.filter(id=self.cookie_group.id).delete()
+        deleted_objs_count, _ = CookieGroup.objects.filter(
+            id=self.cookie_group.id
+        ).delete()
 
+        # Deleting a CookieGroup also deletes the associated Cookies, that's why we expect a count of 2.
+        self.assertEqual(deleted_objs_count, 2)
         self.assertEqual(mock_delete_cache.call_count, 1)
 
     @mock.patch("cookie_consent.models.delete_cache")
     def test_bulk_update(self, mock_delete_cache):
-        CookieGroup.objects.filter(id=self.cookie_group.id).update(name="Optional2")
+        updated_objs_count = CookieGroup.objects.filter(id=self.cookie_group.id).update(
+            name="Optional2"
+        )
 
+        self.assertEqual(updated_objs_count, 1)
         self.assertEqual(mock_delete_cache.call_count, 1)
 
 
@@ -58,14 +65,18 @@ class CookieTest(TestCase):
 
     @mock.patch("cookie_consent.models.delete_cache")
     def test_bulk_delete(self, mock_delete_cache):
-        Cookie.objects.filter(id=self.cookie.id).delete()
+        deleted_objs_count, _ = Cookie.objects.filter(id=self.cookie.id).delete()
 
+        self.assertEqual(deleted_objs_count, 1)
         self.assertEqual(mock_delete_cache.call_count, 1)
 
     @mock.patch("cookie_consent.models.delete_cache")
     def test_bulk_update(self, mock_delete_cache):
-        Cookie.objects.filter(id=self.cookie.id).update(name="foo2")
+        updated_objs_count = Cookie.objects.filter(id=self.cookie.id).update(
+            name="foo2"
+        )
 
+        self.assertEqual(updated_objs_count, 1)
         self.assertEqual(mock_delete_cache.call_count, 1)
 
 
