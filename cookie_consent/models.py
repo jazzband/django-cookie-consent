@@ -19,6 +19,15 @@ validate_cookie_name = RegexValidator(
 )
 
 
+def clear_cache_after(func):
+    def wrapper(*args, **kwargs):
+        return_value = func(*args, **kwargs)
+        delete_cache()
+        return return_value
+
+    return wrapper
+
+
 class CookieGroupDict(TypedDict):
     varname: str
     name: str
@@ -30,13 +39,13 @@ class CookieGroupDict(TypedDict):
 
 
 class BaseQueryset(models.query.QuerySet):
+    @clear_cache_after
     def delete(self):
-        super().delete()
-        delete_cache()
+        return super().delete()
 
-    def update(self, *args, **kwargs):
-        super().update(*args, **kwargs)
-        delete_cache()
+    @clear_cache_after
+    def update(self, **kwargs):
+        return super().update(**kwargs)
 
 
 class CookieGroup(models.Model):
@@ -74,13 +83,13 @@ class CookieGroup(models.Model):
         except IndexError:
             return ""
 
+    @clear_cache_after
     def delete(self, *args, **kwargs):
         super(CookieGroup, self).delete(*args, **kwargs)
-        delete_cache()
 
+    @clear_cache_after
     def save(self, *args, **kwargs):
         super(CookieGroup, self).save(*args, **kwargs)
-        delete_cache()
 
     def for_json(self) -> CookieGroupDict:
         return {
@@ -121,13 +130,13 @@ class Cookie(models.Model):
     def get_version(self):
         return self.created.isoformat()
 
+    @clear_cache_after
     def delete(self, *args, **kwargs):
         super(Cookie, self).delete(*args, **kwargs)
-        delete_cache()
 
+    @clear_cache_after
     def save(self, *args, **kwargs):
         super(Cookie, self).save(*args, **kwargs)
-        delete_cache()
 
 
 ACTION_ACCEPTED = 1
