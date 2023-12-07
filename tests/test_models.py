@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
+
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -24,6 +26,18 @@ class CookieGroupTest(TestCase):
             self.cookie_group.get_version(), self.cookie.created.isoformat()
         )
 
+    @mock.patch("cookie_consent.models.delete_cache")
+    def test_bulk_delete(self, mock_delete_cache):
+        CookieGroup.objects.filter(id=self.cookie_group.id).delete()
+
+        self.assertEqual(mock_delete_cache.call_count, 1)
+
+    @mock.patch("cookie_consent.models.delete_cache")
+    def test_bulk_update(self, mock_delete_cache):
+        CookieGroup.objects.filter(id=self.cookie_group.id).update(name="Optional2")
+
+        self.assertEqual(mock_delete_cache.call_count, 1)
+
 
 class CookieTest(TestCase):
     def setUp(self):
@@ -41,6 +55,18 @@ class CookieTest(TestCase):
 
     def test_varname(self):
         self.assertEqual(self.cookie.varname, "optional=foo:.example.com")
+
+    @mock.patch("cookie_consent.models.delete_cache")
+    def test_bulk_delete(self, mock_delete_cache):
+        Cookie.objects.filter(id=self.cookie.id).delete()
+
+        self.assertEqual(mock_delete_cache.call_count, 1)
+
+    @mock.patch("cookie_consent.models.delete_cache")
+    def test_bulk_update(self, mock_delete_cache):
+        Cookie.objects.filter(id=self.cookie.id).update(name="foo2")
+
+        self.assertEqual(mock_delete_cache.call_count, 1)
 
 
 class ValidateCookieNameTest(TestCase):
