@@ -19,6 +19,15 @@ validate_cookie_name = RegexValidator(
 )
 
 
+def clear_cache_after(func):
+    def wrapper(*args, **kwargs):
+        return_value = func(*args, **kwargs)
+        delete_cache()
+        return return_value
+
+    return wrapper
+
+
 class CookieGroupDict(TypedDict):
     varname: str
     name: str
@@ -27,6 +36,16 @@ class CookieGroupDict(TypedDict):
     # TODO: should we output this? page cache busting would be
     # required if we do this. Alternatively, set up a JSONView to output these?
     # version: str
+
+
+class BaseQueryset(models.query.QuerySet):
+    @clear_cache_after
+    def delete(self):
+        return super().delete()
+
+    @clear_cache_after
+    def update(self, **kwargs):
+        return super().update(**kwargs)
 
 
 class CookieGroup(models.Model):
@@ -48,6 +67,8 @@ class CookieGroup(models.Model):
     ordering = models.IntegerField(_("Ordering"), default=0)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
 
+    objects = BaseQueryset.as_manager()
+
     class Meta:
         verbose_name = _("Cookie Group")
         verbose_name_plural = _("Cookie Groups")
@@ -62,13 +83,13 @@ class CookieGroup(models.Model):
         except IndexError:
             return ""
 
+    @clear_cache_after
     def delete(self, *args, **kwargs):
         super(CookieGroup, self).delete(*args, **kwargs)
-        delete_cache()
 
+    @clear_cache_after
     def save(self, *args, **kwargs):
         super(CookieGroup, self).save(*args, **kwargs)
-        delete_cache()
 
     def for_json(self) -> CookieGroupDict:
         return {
@@ -92,6 +113,8 @@ class Cookie(models.Model):
     domain = models.CharField(_("Domain"), max_length=250, blank=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
 
+    objects = BaseQueryset.as_manager()
+
     class Meta:
         verbose_name = _("Cookie")
         verbose_name_plural = _("Cookies")
@@ -107,13 +130,13 @@ class Cookie(models.Model):
     def get_version(self):
         return self.created.isoformat()
 
+    @clear_cache_after
     def delete(self, *args, **kwargs):
         super(Cookie, self).delete(*args, **kwargs)
-        delete_cache()
 
+    @clear_cache_after
     def save(self, *args, **kwargs):
         super(Cookie, self).save(*args, **kwargs)
-        delete_cache()
 
 
 ACTION_ACCEPTED = 1
