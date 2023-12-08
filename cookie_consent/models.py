@@ -77,19 +77,19 @@ class CookieGroup(models.Model):
     def __str__(self):
         return self.name
 
-    def get_version(self) -> str:
-        try:
-            return str(self.cookie_set.all()[0].get_version())
-        except IndexError:
-            return ""
+    @clear_cache_after
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
     @clear_cache_after
     def delete(self, *args, **kwargs):
         return super().delete(*args, **kwargs)
 
-    @clear_cache_after
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+    def get_version(self) -> str:
+        try:
+            return str(self.cookie_set.all()[0].get_version())
+        except IndexError:
+            return ""
 
     def for_json(self) -> CookieGroupDict:
         return {
@@ -123,20 +123,20 @@ class Cookie(models.Model):
     def __str__(self):
         return "%s %s%s" % (self.name, self.domain, self.path)
 
+    @clear_cache_after
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    @clear_cache_after
+    def delete(self, *args, **kwargs):
+        return super().delete(*args, **kwargs)
+
     @property
     def varname(self):
         return "%s=%s:%s" % (self.cookiegroup.varname, self.name, self.domain)
 
     def get_version(self):
         return self.created.isoformat()
-
-    @clear_cache_after
-    def delete(self, *args, **kwargs):
-        return super().delete(*args, **kwargs)
-
-    @clear_cache_after
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
 
 ACTION_ACCEPTED = 1
