@@ -85,11 +85,11 @@ class CookieGroup(models.Model):
 
     @clear_cache_after
     def delete(self, *args, **kwargs):
-        super(CookieGroup, self).delete(*args, **kwargs)
+        return super().delete(*args, **kwargs)
 
     @clear_cache_after
     def save(self, *args, **kwargs):
-        super(CookieGroup, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def for_json(self) -> CookieGroupDict:
         return {
@@ -132,11 +132,11 @@ class Cookie(models.Model):
 
     @clear_cache_after
     def delete(self, *args, **kwargs):
-        super(Cookie, self).delete(*args, **kwargs)
+        return super().delete(*args, **kwargs)
 
     @clear_cache_after
     def save(self, *args, **kwargs):
-        super(Cookie, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 ACTION_ACCEPTED = 1
