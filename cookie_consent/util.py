@@ -7,6 +7,12 @@ from .conf import settings
 from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
 
 
+def _consent_domain():
+    if callable(settings.COOKIE_CONSENT_DOMAIN):
+        return settings.COOKIE_CONSENT_DOMAIN()
+    return settings.COOKIE_CONSENT_DOMAIN
+
+
 def parse_cookie_str(cookie):
     dic = {}
     if not cookie:
@@ -31,7 +37,7 @@ def set_cookie_dict_to_response(response, dic):
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(dic),
         max_age=settings.COOKIE_CONSENT_MAX_AGE,
-        domain=settings.COOKIE_CONSENT_DOMAIN,
+        domain=_consent_domain(),
         secure=settings.COOKIE_CONSENT_SECURE or None,
         httponly=settings.COOKIE_CONSENT_HTTPONLY or None,
         samesite=settings.COOKIE_CONSENT_SAMESITE,
