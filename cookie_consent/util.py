@@ -7,9 +7,9 @@ from .conf import settings
 from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
 
 
-def _consent_domain():
+def _consent_domain(request):
     if callable(settings.COOKIE_CONSENT_DOMAIN):
-        return settings.COOKIE_CONSENT_DOMAIN()
+        return settings.COOKIE_CONSENT_DOMAIN(request)
     return settings.COOKIE_CONSENT_DOMAIN
 
 
@@ -32,7 +32,7 @@ def get_cookie_dict_from_request(request):
     return parse_cookie_str(cookie_str)
 
 
-def set_cookie_dict_to_response(response, dic):
+def set_cookie_dict_to_response(request, response, dic):
     response.set_cookie(
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(dic),
@@ -99,7 +99,7 @@ def accept_cookies(request, response, varname=None):
                 cookiegroup=cookie_group,
                 version=cookie_group.get_version(),
             )
-    set_cookie_dict_to_response(response, cookie_dic)
+    set_cookie_dict_to_response(request, response, cookie_dic)
 
 
 def delete_cookies(response, cookie_group):
@@ -122,7 +122,7 @@ def decline_cookies(request, response, varname=None):
                 cookiegroup=cookie_group,
                 version=cookie_group.get_version(),
             )
-    set_cookie_dict_to_response(response, cookie_dic)
+    set_cookie_dict_to_response(request, response, cookie_dic)
 
 
 def are_all_cookies_accepted(request):
