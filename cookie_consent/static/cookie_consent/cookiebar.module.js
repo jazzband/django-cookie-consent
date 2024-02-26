@@ -198,6 +198,6 @@ export const showCookieBar = async (options={}) => {
   // calling the onShow callback
   const cookieBarNode = templateNode.content.firstElementChild.cloneNode(true);
   registerEvents(cookieBarNode, cookieGroups);
-  onShow?.();
   doInsert(cookieBarNode);
+  onShow?.();
 };
