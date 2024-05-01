@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.views import RedirectURLMixin
 from django.core.exceptions import SuspiciousOperation
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.middleware.csrf import get_token as get_csrf_token
@@ -6,7 +7,6 @@ from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.generic import ListView, View
 
-from .compat import RedirectURLMixin
 from .models import CookieGroup
 from .util import (
     accept_cookies,
