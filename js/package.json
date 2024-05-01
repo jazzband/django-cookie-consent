@@ -1,0 +1,31 @@
+{
+  "name": "django-cookie-consent",
+  "version": "0.5.0-beta0",
+  "description": "Frontend code for django-cookie-consent",
+  "main": "lib/index.js",
+  "type": "module",
+  "files": ["lib/"],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzband/django-cookie-consent.git"
+  },
+  "keywords": [
+    "django",
+    "typescript",
+    "cookie",
+    "consent"
+  ],
+  "author": "Sergei Maertens",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jazzband/django-cookie-consent/issues"
+  },
+  "homepage": "https://github.com/jazzband/django-cookie-consent#readme",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
