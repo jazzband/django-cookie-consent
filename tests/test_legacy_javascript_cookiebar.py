@@ -4,6 +4,7 @@ to transition to the new implementation.
 
 TODO: remove in django-cookie-consent 1.0
 """
+
 from django.urls import reverse
 
 import pytest

@@ -3,6 +3,7 @@ Test the behaviour of the dynamic (JS based) cookiebar module.
 
 See docs: https://playwright.dev/python/docs/test-runners for CLI options.
 """
+
 from django.urls import reverse
 
 import pytest
