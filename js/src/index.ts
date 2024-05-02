@@ -1,1 +1,1 @@
-export {loadCookieGroups, showCookieBar} from './cookiebar';
+export {loadCookieGroups, showCookieBar} from './cookiebar.js';
