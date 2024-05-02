@@ -320,6 +320,6 @@ export const showCookieBar = async (options: Partial<Options> = {}): Promise<voi
     declinedCookieGroups,
     notAcceptedOrDeclinedCookieGroups,
   });
-  onShow?.();
   doInsert(cookieBarNode);
+  onShow?.();
 };

@@ -153,8 +153,8 @@ var showCookieBar = async (options = {}) => {
     declinedCookieGroups,
     notAcceptedOrDeclinedCookieGroups
   });
-  onShow == null ? void 0 : onShow();
   doInsert(cookieBarNode);
+  onShow == null ? void 0 : onShow();
 };
 export {
   loadCookieGroups,
