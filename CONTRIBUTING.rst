@@ -46,6 +46,18 @@ You can then install the project with all the dev-tools:
 
    pip install -e .[tests,pep8,coverage,docs,release]
 
+Some frontend tooling is needed to:
+
+* NodeJS (for the version, see ``.nvmrc``, you can use ``nvm``)
+
+.. code-block:: bash
+
+    cd js
+    nvm use
+    npm install
+    npm run build:django-static
+    npm run build  # optional, but a nice check
+
 **Running the testapp as dev environment**
 
 In Django project's, you are typically expecting a ``manage.py`` file. This is less

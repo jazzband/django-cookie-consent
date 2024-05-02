@@ -24,5 +24,6 @@ reports/
 testapp/*.db
 
 # frontend tooling / builds
-js/lib/
 js/node_modules/
+js/lib/
+cookie_consent/static/cookie_consent/cookiebar.module.*

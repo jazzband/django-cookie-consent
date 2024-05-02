@@ -26,6 +26,11 @@ jobs:
           python -m pip install -U pip
           python -m pip install -U setuptools twine wheel
 
+      - uses: ./.github/actions/build-js
+        with:
+          npm-package: 'true'
+          django-staticfiles: 'true'
+
       - name: Build package
         run: |
           python setup.py --version
