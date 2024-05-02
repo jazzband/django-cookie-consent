@@ -11,6 +11,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-js:
+    runs-on: ubuntu-latest
+    name: Compile the frontend code
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'js/.nvmrc'
+          cache: npm
+          cache-dependency-path: js/package-lock.json
+
+      - name: Build TS
+        run: |
+          npm ci
+          npm run build
+          npm run build:django-static
+        working-directory: js
+
   tests:
     runs-on: ubuntu-latest
     strategy:
