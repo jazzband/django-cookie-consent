@@ -2,6 +2,8 @@
 
 Package containing the JS code for django-cookie-consent.
 
+[![Jazzband][badge:jazzband]][jazzband]
+
 The cookiebar module is shipped in the Python package itself and available through
 django's staticfiles mechanism. This package is aimed at users wishing to include the
 assets in their own Javascript bundle through webpack/vite/...
@@ -45,3 +47,6 @@ in the Python package:
 ```bash
 npm run build:django-static
 ```
+
+[jazzband]: https://jazzband.co/
+[badge:jazzband]: https://jazzband.co/static/img/badge.svg

@@ -105,8 +105,18 @@ The ``status_url`` is special - it points to a backend view which returns the
 user-specific cookie consent status, returning the appropriate accept and decline URLs
 and other details relevant to cookie consent.
 
-You can of course also import this function in your own Javascript entrypoint (if you
-use Babel/Webpack or similar tooling) and initialize the cookie bar that way.
+.. note::
+
+    If you prefer the include the cookiebar module in your own Javascript entrypoint,
+    the easiest way is to install our `published package`_.
+
+    This package should work with TypeScript, Webpack, ESBuild, Vite... and other popular
+    bundlers and toolchains.
+
+    Just be careful to install the same (minor) version as the backend package to avoid
+    weird bugs.
+
+.. _published package: hhttps://www.npmjs.com/package/django-cookie-consent
 
 Options
 =======
