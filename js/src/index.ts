@@ -1,1 +1,1 @@
-console.log('ok')
+export {loadCookieGroups, showCookieBar} from './cookiebar';
