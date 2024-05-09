@@ -6,8 +6,9 @@ Changelog
 ------------------
 
 💥 This feature release has a potential breaking change. The ``CookieGroup.varname``
-field now has a unique constraint on it. If you have duplicate values, this migration
-will crash.
+field now has a unique constraint on it. The ``Cookie`` model now has a unique
+constraint on ``cookiegroup``, ``name`` and ``domain``. If you have duplicate values,
+this migration will crash.
 
 * ...
 
