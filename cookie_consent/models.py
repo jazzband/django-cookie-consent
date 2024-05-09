@@ -48,6 +48,11 @@ class BaseQueryset(models.query.QuerySet):
         return super().update(**kwargs)
 
 
+class CookieGroupManager(models.Manager.from_queryset(BaseQueryset)):
+    def get_by_natural_key(self, varname):
+        return self.get(varname=varname)
+
+
 class CookieGroup(models.Model):
     varname = models.CharField(
         _("Variable name"),
@@ -70,7 +75,7 @@ class CookieGroup(models.Model):
     ordering = models.IntegerField(_("Ordering"), default=0)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
 
-    objects = BaseQueryset.as_manager()
+    objects = CookieGroupManager()
 
     class Meta:
         verbose_name = _("Cookie Group")
@@ -88,6 +93,9 @@ class CookieGroup(models.Model):
     def delete(self, *args, **kwargs):
         return super().delete(*args, **kwargs)
 
+    def natural_key(self):
+        return (self.varname,)
+
     def get_version(self) -> str:
         try:
             return str(self.cookie_set.all()[0].get_version())
@@ -104,6 +112,12 @@ class CookieGroup(models.Model):
         }
 
 
+class CookieManager(models.Manager.from_queryset(BaseQueryset)):
+    def get_by_natural_key(self, name, domain, cookiegroup):
+        group = CookieGroup.objects.get_by_natural_key(cookiegroup)
+        return self.get(cookiegroup=group, name=name, domain=domain)
+
+
 class Cookie(models.Model):
     cookiegroup = models.ForeignKey(
         CookieGroup,
@@ -116,11 +130,17 @@ class Cookie(models.Model):
     domain = models.CharField(_("Domain"), max_length=250, blank=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
 
-    objects = BaseQueryset.as_manager()
+    objects = CookieManager()
 
     class Meta:
         verbose_name = _("Cookie")
         verbose_name_plural = _("Cookies")
+        constraints = [
+            models.UniqueConstraint(
+                fields=("cookiegroup", "name", "domain"),
+                name="natural_key",
+            ),
+        ]
         ordering = ["-created"]
 
     def __str__(self):
@@ -133,6 +153,11 @@ class Cookie(models.Model):
     @clear_cache_after
     def delete(self, *args, **kwargs):
         return super().delete(*args, **kwargs)
+
+    def natural_key(self):
+        return (self.name, self.domain) + self.cookiegroup.natural_key()
+
+    natural_key.dependencies = ["cookie_consent.cookiegroup"]
 
     @property
     def varname(self):

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from copy import deepcopy
-from unittest import mock
 
 from django.conf import settings
 from django.core.cache import caches
