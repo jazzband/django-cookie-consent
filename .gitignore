@@ -22,3 +22,8 @@ dist/
 htmlcov/
 reports/
 testapp/*.db
+
+# frontend tooling / builds
+js/node_modules/
+js/lib/
+cookie_consent/static/cookie_consent/cookiebar.module.*
