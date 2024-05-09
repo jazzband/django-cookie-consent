@@ -20,6 +20,7 @@ Do you agree to use these cookies?
 
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each(live_server, page: Page, load_testapp_fixture):
+    page.on("console", lambda msg: print(f"CONSOLE OUTPUT: {msg.text}"))
     test_page_url = f"{live_server.url}{reverse('test_page')}"
     page.goto(test_page_url)
     marker = page.get_by_text("page-done-loading")
@@ -71,11 +72,17 @@ def test_cookiebar_not_shown_anymore_after_accept_or_decline(btn_text: str, page
 def test_on_accept_handler_runs_on_load(page: Page, live_server):
     accept_button = page.get_by_role("button", name="Accept")
     accept_button.click()
+    # wait for fetch calls to complete & avoid test race conditions...
+    share_button = page.get_by_role("button", name="SHARE")
+    expect(share_button).to_be_visible()
 
     test_page_url = f"{live_server.url}{reverse('test_page')}"
     page.goto(test_page_url)
+    print("GOTO PAGE")
     marker = page.get_by_text("page-done-loading")
     expect(marker).to_be_visible()
+    print("PAGE DONE LOADING")
 
     share_button = page.get_by_role("button", name="SHARE")
+    print("CHECKING SHARE BUTTON")
     expect(share_button).to_be_visible()

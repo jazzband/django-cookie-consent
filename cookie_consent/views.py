@@ -97,6 +97,7 @@ class CookieStatusView(View):
     """
 
     def get(self, request: HttpRequest) -> JsonResponse:
+        print("GET cookie status")
         accepted = get_accepted_cookie_groups(request)
         declined = get_declined_cookie_groups(request)
         not_accepted_or_declined = get_not_accepted_or_declined_cookie_groups(request)
@@ -114,4 +115,6 @@ class CookieStatusView(View):
                 group.varname for group in not_accepted_or_declined
             ],
         }
+        print("RESPONSE cookie status")
+        print(data)
         return JsonResponse(data)

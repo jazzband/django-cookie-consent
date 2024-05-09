@@ -286,6 +286,7 @@ export const showCookieBar = async (options: Partial<Options> = {}): Promise<voi
 
   const client = new FetchClient(statusUrl, csrfHeaderName);
   const cookieStatus = await client.getCookieStatus();
+  console.log('Retrieved cookie status', cookieStatus);
 
   // calculate the cookie groups to invoke the callbacks. We deliberately fire those
   // without awaiting so that our cookie bar is shown/hidden as soon as possible.
@@ -296,7 +297,12 @@ export const showCookieBar = async (options: Partial<Options> = {}): Promise<voi
   } = cookieStatus;
 
   const acceptedGroups = filterCookieGroups(cookieGroups, acceptedCookieGroups);
-  if (acceptedGroups.length) onAccept?.(acceptedGroups);
+  if (acceptedGroups.length) {
+    console.log('Accepted groups: ', acceptedGroups);
+    console.log('Calling onAccept');
+    onAccept?.(acceptedGroups);
+    console.log('Called onAccept');
+  }
   const declinedGroups = filterCookieGroups(cookieGroups, declinedCookieGroups);
   if (declinedGroups.length) onDecline?.(declinedGroups);
 
