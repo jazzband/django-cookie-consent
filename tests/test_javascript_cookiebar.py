@@ -22,6 +22,8 @@ Do you agree to use these cookies?
 def before_each_after_each(live_server, page: Page, load_testapp_fixture):
     test_page_url = f"{live_server.url}{reverse('test_page')}"
     page.goto(test_page_url)
+    marker = page.get_by_text("page-done-loading")
+    expect(marker).to_be_visible()
     yield
 
 
@@ -72,6 +74,8 @@ def test_on_accept_handler_runs_on_load(page: Page, live_server):
 
     test_page_url = f"{live_server.url}{reverse('test_page')}"
     page.goto(test_page_url)
+    marker = page.get_by_text("page-done-loading")
+    expect(marker).to_be_visible()
 
     share_button = page.get_by_role("button", name="SHARE")
     expect(share_button).to_be_visible()
