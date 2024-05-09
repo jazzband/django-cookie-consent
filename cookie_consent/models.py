@@ -6,8 +6,6 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from cookie_consent.cache import delete_cache
-
 COOKIE_NAME_RE = re.compile(r"^[-_a-zA-Z0-9]+$")
 validate_cookie_name = RegexValidator(
     COOKIE_NAME_RE,
@@ -21,6 +19,8 @@ validate_cookie_name = RegexValidator(
 
 def clear_cache_after(func):
     def wrapper(*args, **kwargs):
+        from .cache import delete_cache
+
         return_value = func(*args, **kwargs)
         delete_cache()
         return return_value
@@ -50,7 +50,10 @@ class BaseQueryset(models.query.QuerySet):
 
 class CookieGroup(models.Model):
     varname = models.CharField(
-        _("Variable name"), max_length=32, validators=[validate_cookie_name]
+        _("Variable name"),
+        max_length=32,
+        unique=True,
+        validators=[validate_cookie_name],
     )
     name = models.CharField(_("Name"), max_length=100, blank=True)
     description = models.TextField(_("Description"), blank=True)

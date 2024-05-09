@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.core.cache import caches
 
-from cookie_consent.conf import settings
+from .conf import settings
+from .models import CookieGroup
 
 CACHE_KEY = "cookie_consent_cache"
-CACHE_TIMEOUT = 60 * 60
+CACHE_TIMEOUT = 60 * 60  # 60 minutes
 
 
 def _get_cache():
@@ -23,20 +24,22 @@ def delete_cache():
     cache.delete(CACHE_KEY)
 
 
-def all_cookie_groups():
-    cache = _get_cache()
-    items = cache.get(CACHE_KEY)
-    if items is None:
-        from cookie_consent.models import CookieGroup
+def _get_cookie_groups_from_db():
+    qs = CookieGroup.objects.filter(is_required=False).prefetch_related("cookie_set")
+    return qs.in_bulk(field_name="varname")
 
-        qs = CookieGroup.objects.filter(is_required=False)
-        qs = qs.prefetch_related("cookie_set")
-        # items = qs.in_bulk(field_name="varname")
-        # FIXME -> doesn't work because varname is not a unique fieldl, we need to
-        # make this unique
-        items = {group.varname: group for group in qs}
-        cache.set(CACHE_KEY, items, CACHE_TIMEOUT)
-    return items
+
+def all_cookie_groups():
+    """
+    Get all cookie groups that are optional.
+
+    Reads from the cache where possible, sets the value in the cache if there's a
+    cache miss.
+    """
+    cache = _get_cache()
+    return cache.get_or_set(
+        CACHE_KEY, _get_cookie_groups_from_db, timeout=CACHE_TIMEOUT
+    )
 
 
 def get_cookie_group(varname):

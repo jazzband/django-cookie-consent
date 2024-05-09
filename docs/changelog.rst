@@ -2,6 +2,15 @@
 Changelog
 =========
 
+0.6.0 (unreleased)
+------------------
+
+💥 This feature release has a potential breaking change. The ``CookieGroup.varname``
+field now has a unique constraint on it. If you have duplicate values, this migration
+will crash.
+
+* ...
+
 0.5.0b0 (2023-09-24)
 --------------------
 
