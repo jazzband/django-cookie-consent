@@ -2,15 +2,70 @@
 Changelog
 =========
 
-0.6.0 (unreleased)
+0.6.0 (2024-05-10)
 ------------------
+
+Feature release with improved JS support.
 
 💥 This feature release has a potential breaking change. The ``CookieGroup.varname``
 field now has a unique constraint on it. The ``Cookie`` model now has a unique
 constraint on ``cookiegroup``, ``name`` and ``domain``. If you have duplicate values,
 this migration will crash.
 
-* ...
+**💥 Breaking changes**
+
+Some (database) unique constraints have been added to the model fields. If you have
+duplicate values in those fields, the migrations will crash. You should check for
+duplicates before upgrading, and fix those:
+
+.. code-block:: py
+
+    from django.db.models import Count
+    from cookie_consent.models import CookieGroup, Cookie
+
+    # duplicated cookie groups (by varname)
+    CookieGroup.objects.values("varname").annotate(n=Count("varname")).filter(n__gt=1)
+    # <QuerySet []>
+
+    # duplicated cookies
+    Cookie.objects.values("cookiegroup", "name", "domain").annotate(n=Count("id")).filter(n__gt=1)
+    # <QuerySet []>
+
+Additionally, support for unmaintained Django versions (3.2, 4.1) is dropped.
+
+**New features**
+
+* The JS for the cookiebar module is rewritten in TypeScript and published as an
+  `npm package`_ for people wishing to integrate this functionality in their own
+  frontend stack. ``cookie_consent/cookiebar.module.js`` is still in the Python package,
+  and it's generated from the same source code.
+
+* Added support for natural keys in dumpdata/loaddata management commands.
+
+**Deprecations**
+
+None.
+
+**Bugfixes**
+
+* Fixed cache not being cleared after queryset (bulk) update/deletes
+* Swapped the order of ``onShow`` and ``doInsert`` in the cookiebar JS. ``onShow`` is
+  now called after the cookiebar is inserted into the document.
+* Added missing unique constraint to ``CookieGroup.varname`` field
+* Added missing unique constraint on ``Cookie`` fields ``cookiegroup``, ``name`` and
+  ``domain``.
+
+**Project maintenance**
+
+* Add missing templatetag instruction to docs
+* Removed Django < 4.2 compatibility shims
+* Formatted code with latest black version
+* Dropped Django 3.2 & 4.1 from the supported versions
+* Removed unused dependencies
+* Bumped github actions to latest versions
+* Updated to modern packaging tooling with ``pyproject.toml``
+
+.. _npm package: https://www.npmjs.com/package/django-cookie-consent
 
 0.5.0b0 (2023-09-24)
 --------------------
