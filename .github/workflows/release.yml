@@ -27,8 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -U pip
-          python -m pip install -U setuptools twine wheel
+          python -m pip install build twine
 
       - uses: ./.github/actions/build-js
         with:
@@ -37,8 +36,7 @@ jobs:
 
       - name: Build package
         run: |
-          python setup.py --version
-          python setup.py sdist --format=gztar bdist_wheel
+          python -m build
           twine check dist/*
 
       - name: Upload packages to Jazzband private PyPI

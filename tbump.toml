@@ -14,7 +14,7 @@ message_template = ":bookmark: Bump to {new_version}"
 tag_template = "{new_version}"
 
 [[file]]
-src = "setup.cfg"
+src = "pyproject.toml"
 version_template = "{major}.{minor}.{patch}{pre}"
 
 [[file]]
