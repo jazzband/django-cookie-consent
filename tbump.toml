@@ -14,10 +14,6 @@ message_template = ":bookmark: Bump to {new_version}"
 tag_template = "{new_version}"
 
 [[file]]
-src = "pyproject.toml"
-version_template = "{major}.{minor}.{patch}{pre}"
-
-[[file]]
 src = "cookie_consent/__init__.py"
 version_template = "{major}.{minor}.{patch}{pre}"
 
