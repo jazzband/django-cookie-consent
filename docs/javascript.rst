@@ -197,7 +197,7 @@ and the Javascript function:
 
 .. code-block:: javascript
 
-    function onAccept(event, cookieGroups) {
+    function onAccept(cookieGroups) {
         const analyticsEnabled = cookieGroups.find(group => group.varname === 'analytics') != undefined;
         if (analyticsEnabled) {
             const template = document.getElementById('analytics-scripts').content;
