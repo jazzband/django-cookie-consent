@@ -26,12 +26,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ['3.10', '3.11', '3.12']
-        django: ['4.2', '5.0']
+        python: ['3.10', '3.11', '3.12', '3.13']
+        django: ['4.2', '5.1', '5.2']
         include:
           - python: '3.8'
             django: '4.2'
           - python: '3.9'
+            django: '4.2'
+        exclude:
+          - python: '3.13'
             django: '4.2'
 
     name: Run the test suite (Python ${{ matrix.python }}, Django ${{ matrix.django }})
@@ -73,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install tox tox-gh-actions pytest-playwright
-          playwright install --with-deps
+          playwright install --with-deps chromium
 
       - name: Run tests
         run: tox -e e2e
