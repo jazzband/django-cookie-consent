@@ -2,6 +2,22 @@
 Changelog
 =========
 
+0.7.0 (2025-04-26)
+------------------
+
+Bugfix and Django supported versions release.
+
+**New features**
+
+* Confirmed Python 3.13 support.
+* Confirmed Django 5.1 and 5.2 support.
+
+**Project maintenance**
+
+* Fixed incorrect JS example in the documentation.
+* Removed Django 5.0 from CI pipeline (it still works, but Django 5.0 is end of life).
+* Upgraded esbuild for the Javascript module building.
+
 0.6.0 (2024-05-10)
 ------------------
 
