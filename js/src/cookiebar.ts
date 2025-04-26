@@ -109,7 +109,14 @@ const DEFAULT_FETCH_HEADERS: Record<string, string> = {
   'X-Cookie-Consent-Fetch': '1'
 };
 
-class FetchClient {
+/**
+ * A simple wrapper around window.fetch that understands the django-cookie-consent
+ * backend endpoints.
+ *
+ * @private - while exported, use at your own risk. This class is not part of the
+ * public API covered by SemVer.
+ */
+export class FetchClient {
   protected statusUrl: string;
   protected csrfHeaderName: string;
   protected cookieStatus: CookieStatus | null;
