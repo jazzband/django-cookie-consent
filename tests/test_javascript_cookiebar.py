@@ -4,6 +4,8 @@ Test the behaviour of the dynamic (JS based) cookiebar module.
 See docs: https://playwright.dev/python/docs/test-runners for CLI options.
 """
 
+import contextlib
+
 from django.urls import reverse
 
 import pytest
@@ -68,7 +70,16 @@ def test_cookiebar_not_shown_anymore_after_accept_or_decline(btn_text: str, page
     expect(page.get_by_text(COOKIE_BAR_CONTENT)).not_to_be_visible()
 
 
-def test_on_accept_handler_runs_on_load(page: Page, live_server):
+@pytest.fixture
+def trace(page: Page):
+    page.context.tracing.start(screenshots=True, snapshots=True)
+    try:
+        yield
+    finally:
+        page.context.tracing.stop(path="/tmp/trace.zip")
+
+
+def test_on_accept_handler_runs_on_load(page: Page, trace, live_server):
     accept_button = page.get_by_role("button", name="Accept")
     accept_button.click()
     # wait for fetch calls to complete & avoid test race conditions...

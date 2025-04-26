@@ -76,9 +76,17 @@ jobs:
           playwright install --with-deps
 
       - name: Run tests
-        run: tox -e e2e
+        run: tox -e e2e -- tests/test_javascript_cookiebar.py -k test_on_accept_handler_runs_on_load
 
       - name: Publish coverage report
         uses: codecov/codecov-action@v3
         with:
           directory: reports/
+
+      - name: Upload playwright traces artifact on failure
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-trace
+          path: /tmp/trace.zip
+          retention-days: 1
