@@ -3,8 +3,6 @@ Django cookie consent
 
 Manage cookie information and let visitors give or reject consent for them.
 
-[![Jazzband][badge:jazzband]][jazzband]
-
 ![License](https://img.shields.io/pypi/l/django-cookie-consent)
 [![Build status][badge:GithubActions:CI]][GithubActions:CI]
 [![Code Quality][badge:GithubActions:CQ]][GithubActions:CQ]
