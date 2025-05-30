@@ -9,7 +9,8 @@ authors = [
     {name = "Informatika Mihelac", email = "bmihelac@mihelac.org"}
 ]
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "BSD-2-Clause-first-lines"
+license-files = ["LICENSE"]
 keywords = ["cookies", "cookie-consent", "cookie bar"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -18,7 +19,6 @@ classifiers = [
     "Framework :: Django :: 5.1",
     "Framework :: Django :: 5.2",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: Unix",
     "Operating System :: MacOS",
     "Operating System :: Microsoft :: Windows",
