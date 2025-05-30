@@ -1,5 +1,5 @@
 [version]
-current = "0.7.0"
+current = "0.8.0"
 regex = '''
   (?P<major>\d+)
   \.
@@ -15,6 +15,10 @@ tag_template = "{new_version}"
 
 [[file]]
 src = "cookie_consent/__init__.py"
+version_template = "{major}.{minor}.{patch}{pre}"
+
+[[file]]
+src = "js/package.json"
 version_template = "{major}.{minor}.{patch}{pre}"
 
 [[field]]

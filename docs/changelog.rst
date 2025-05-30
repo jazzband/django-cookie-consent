@@ -2,6 +2,19 @@
 Changelog
 =========
 
+0.8.0 (2025-05-30)
+------------------
+
+Small feature release
+
+**New features**
+
+* The Javascript (package) now exports some more utilities (#126).
+
+**Project maintenance**
+
+* Fixed some test flakiness.
+
 0.7.0 (2025-04-26)
 ------------------
 
