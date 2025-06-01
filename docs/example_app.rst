@@ -16,7 +16,7 @@ a wrapper around this anyway).
 
    .. code-block:: bash
 
-       git clone https://github.com/jazzband/django-cookie-consent.git
+       git clone https://github.com/django-commons/django-cookie-consent.git
        cd django-cookie-consent
 
 #. Create a virtual environment for the project, using any supported Python version
