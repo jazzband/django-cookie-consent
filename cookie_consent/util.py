@@ -18,7 +18,7 @@ def parse_cookie_str(cookie):
 
 
 def dict_to_cookie_str(dic):
-    return "|".join(["%s=%s" % (k, v) for k, v in dic.items() if v])
+    return "|".join(["%s=%s" % (k, v) for k, v in dic.items()])
 
 
 def get_cookie_dict_from_request(request):
