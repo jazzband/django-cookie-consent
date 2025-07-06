@@ -97,7 +97,7 @@ exclude_also = [
 [tool.ruff.lint]
 extend-select = [
     # "UP",  # pyupgrade
-    # "DJ",  # django
+    "DJ",  # django
     "LOG", # logging
     "G",
     "I",   # isort

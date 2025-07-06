@@ -185,10 +185,10 @@ class LogItem(models.Model):
     version = models.CharField(_("Version"), max_length=32)
     created = models.DateTimeField(_("Created"), auto_now_add=True, blank=True)
 
-    def __str__(self):
-        return "%s %s" % (self.cookiegroup.name, self.version)
-
     class Meta:
         verbose_name = _("Log item")
         verbose_name_plural = _("Log items")
         ordering = ["-created"]
+
+    def __str__(self):
+        return "%s %s" % (self.cookiegroup.name, self.version)
