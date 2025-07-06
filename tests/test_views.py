@@ -1,6 +1,9 @@
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
+
+import pytest
+from pytest_django.asserts import assertRedirects
 
 from cookie_consent.models import (
     ACTION_ACCEPTED,
@@ -11,21 +14,36 @@ from cookie_consent.models import (
 )
 
 
-class CookieGroupBaseProcessViewTests(TestCase):
-    def test_get_success_url(self):
-        """
-        If user adds a 'next' as URL parameter it should,
-        redirect to the value of 'next'
-        """
-        expected_url = reverse("test_page")
-        url = "{}?next={}".format(reverse("cookie_consent_accept_all"), expected_url)
-        response = self.client.post(url, follow=True)
-        self.assertRedirects(response, expected_url)
+@pytest.mark.django_db
+def test_processing_get_success_url(client: Client):
+    """
+    If user adds a 'next' as URL parameter it should,
+    redirect to the value of 'next'
+    """
+    expected_url = reverse("test_page")
+    url = "{}?next={}".format(reverse("cookie_consent_accept_all"), expected_url)
 
-    def test_no_open_redirects(self):
-        url = "{}?next=https://evil.com".format(reverse("cookie_consent_accept_all"))
-        response = self.client.post(url, follow=True)
-        self.assertEqual(response.status_code, 400)  # result of SupiciousOperation
+    response = client.post(url, follow=True)
+
+    assertRedirects(response, expected_url)
+
+
+@pytest.mark.django_db
+def test_processing_no_open_redirects(client: Client):
+    url = "{}?next=https://evil.com".format(reverse("cookie_consent_accept_all"))
+
+    response = client.post(url, follow=True)
+
+    assert response.status_code == 400  # result of SupiciousOperation
+
+
+@pytest.mark.django_db
+def test_alternative_redirect_fallback(client: Client, settings):
+    settings.COOKIE_CONSENT_SUCCESS_URL = "/alternative"
+
+    response = client.post(reverse("cookie_consent_accept_all"), follow=False)
+
+    assertRedirects(response, "/alternative", fetch_redirect_response=False)
 
 
 class IntegrationTest(TestCase):
