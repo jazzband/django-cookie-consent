@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jazzband/django-cookie-consent.git"
+    "url": "git+https://github.com/django-commons/django-cookie-consent.git"
   },
   "keywords": [
     "django",
@@ -25,9 +25,9 @@
   "author": "Sergei Maertens",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/jazzband/django-cookie-consent/issues"
+    "url": "https://github.com/django-commons/django-cookie-consent/issues"
   },
-  "homepage": "https://github.com/jazzband/django-cookie-consent#readme",
+  "homepage": "https://github.com/django-commons/django-cookie-consent#readme",
   "devDependencies": {
     "esbuild": "^0.25.3",
     "typescript": "^5.4.5"

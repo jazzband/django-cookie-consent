@@ -32,16 +32,14 @@ to get started.
 Alternatively, if the documentation is not available, you can consult or build the docs
 from the `docs` directory in this repository.
 
-[jazzband]: https://jazzband.co/
-[badge:jazzband]: https://jazzband.co/static/img/badge.svg
-[GithubActions:CI]: https://github.com/jazzband/django-cookie-consent/actions?query=workflow%3A%22Run+CI%22
-[badge:GithubActions:CI]: https://github.com/jazzband/django-cookie-consent/workflows/Run%20CI/badge.svg
-[GithubActions:CQ]: https://github.com/jazzband/django-cookie-consent/actions?query=workflow%3A%22Code+quality+checks%22
-[badge:GithubActions:CQ]: https://github.com/jazzband/django-cookie-consent/workflows/Code%20quality%20checks/badge.svg
+[GithubActions:CI]: https://github.com/django-commons/django-cookie-consent/actions?query=workflow%3A%22Run+CI%22
+[badge:GithubActions:CI]: https://github.com/django-commons/django-cookie-consent/workflows/Run%20CI/badge.svg
+[GithubActions:CQ]: https://github.com/django-commons/django-cookie-consent/actions?query=workflow%3A%22Code+quality+checks%22
+[badge:GithubActions:CQ]: https://github.com/django-commons/django-cookie-consent/workflows/Code%20quality%20checks/badge.svg
 [black]: https://github.com/psf/black
 [badge:black]: https://img.shields.io/badge/code%20style-black-000000.svg
-[codecov]: https://codecov.io/gh/jazzband/django-cookie-consent
-[badge:codecov]: https://codecov.io/gh/jazzband/django-cookie-consent/branch/master/graph/badge.svg
+[codecov]: https://codecov.io/gh/django-commons/django-cookie-consent
+[badge:codecov]: https://codecov.io/gh/django-commons/django-cookie-consent/branch/master/graph/badge.svg
 [docs]: https://django-cookie-consent.readthedocs.io/en/latest/?badge=latest
 [badge:docs]: https://readthedocs.org/projects/django-cookie-consent/badge/?version=latest
 [pypi]: https://pypi.org/project/django-cookie-consent/
