@@ -98,8 +98,8 @@ exclude_also = [
 extend-select = [
     # "UP",  # pyupgrade
     # "DJ",  # django
-    # "LOG", # logging
-    # "G",
+    "LOG", # logging
+    "G",
     "I",   # isort
     "E",   # pycodestyle
     "F",   # pyflakes
