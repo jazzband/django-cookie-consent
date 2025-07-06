@@ -103,7 +103,7 @@ extend-select = [
     "I",   # isort
     "E",   # pycodestyle
     "F",   # pyflakes
-    # "PERF",# perflint
+    "PERF",# perflint
     "B",   # flake8-bugbear
 ]
 

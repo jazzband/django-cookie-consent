@@ -239,5 +239,5 @@ def get_accepted_cookies(request):
             continue
         for cookie in cookie_group.cookie_set.all():
             if version >= cookie.get_version():
-                accepted_cookies.append(cookie)
+                accepted_cookies.append(cookie)  # noqa: PERF401
     return accepted_cookies
