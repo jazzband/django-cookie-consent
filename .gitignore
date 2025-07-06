@@ -22,6 +22,7 @@ dist/
 htmlcov/
 reports/
 testapp/*.db
+.hypothesis
 
 # frontend tooling / builds
 js/node_modules/

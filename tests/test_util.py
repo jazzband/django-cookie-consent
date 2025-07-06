@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from django.http import parse_cookie
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
+
+from hypothesis import example, given, strategies as st
 
 from cookie_consent.conf import settings
 from cookie_consent.models import Cookie, CookieGroup
@@ -127,3 +130,25 @@ class UtilTest(TestCase):
         self.request.COOKIES[settings.COOKIE_CONSENT_NAME] = cookie_str
         cookies = get_accepted_cookies(self.request)
         self.assertIn(self.cookie, cookies)
+
+
+@example({"": "|"})
+@example({"": "="})
+@given(
+    cookie_dict=st.dictionaries(
+        keys=st.text(min_size=0),
+        values=st.text(min_size=0),
+    )
+)
+def test_serialize_and_parse_cookie_str(cookie_dict):
+    serialized = dict_to_cookie_str(cookie_dict)
+    parsed = parse_cookie_str(serialized)
+
+    assert len(parsed.keys()) <= len(cookie_dict.keys())
+
+
+@given(cookie_str=st.text(min_size=0))
+def test_parse_cookie_str(cookie_str: str):
+    parsed = parse_cookie_str(cookie_str)
+
+    assert isinstance(parsed, dict)

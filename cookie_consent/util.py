@@ -1,24 +1,64 @@
 # -*- coding: utf-8 -*-
 import datetime
-from typing import Union
+import logging
+from typing import Dict, Union
 
 from .cache import all_cookie_groups, get_cookie, get_cookie_group
 from .conf import settings
 from .models import ACTION_ACCEPTED, ACTION_DECLINED, LogItem
 
+logger = logging.getLogger(__name__)
 
-def parse_cookie_str(cookie):
-    dic = {}
+COOKIE_GROUP_SEP = "|"
+KEY_VALUE_SEP = "="
+
+
+def parse_cookie_str(cookie: str) -> Dict[str, str]:
     if not cookie:
-        return dic
-    for c in cookie.split("|"):
-        key, value = c.split("=")
-        dic[key] = value
-    return dic
+        return {}
+
+    bits = cookie.split(COOKIE_GROUP_SEP)
+
+    def _gen_pairs():
+        for possible_pair in bits:
+            parts = possible_pair.split(KEY_VALUE_SEP)
+            if len(parts) == 2:
+                yield parts
+            else:
+                logger.debug("cookie_value_discarded", extra={"value": possible_pair})
+
+    return dict(_gen_pairs())
 
 
-def dict_to_cookie_str(dic):
-    return "|".join(["%s=%s" % (k, v) for k, v in dic.items() if v])
+def _contains_invalid_characters(*inputs: str) -> bool:
+    # = and | are special separators. They are unexpected characters in both
+    # keys and values.
+    for separator in (COOKIE_GROUP_SEP, KEY_VALUE_SEP):
+        for value in inputs:
+            if separator in value:
+                logger.debug("skip_separator", extra={"value": value, "sep": separator})
+                return True
+    return False
+
+
+def dict_to_cookie_str(dic) -> str:
+    """
+    Serialize a dictionary of cookie-group metadata to a string.
+
+    The result is stored in a cookie itself. Note that the dictionary keys are expected
+    to be cookie group ``varname`` fields, which are validated against a slug regex. The
+    values are supposed to be ISO-8601 timestamps.
+
+    Invalid key/value pairs are dropped.
+    """
+
+    def _gen_pairs():
+        for key, value in dic.items():
+            if _contains_invalid_characters(key, value):
+                continue
+            yield f"{key}={value}"
+
+    return "|".join(_gen_pairs())
 
 
 def get_cookie_dict_from_request(request):
@@ -171,6 +211,7 @@ def is_cookie_consent_enabled(request):
         return enabled
 
 
+# Deprecated
 def get_cookie_string(cookie_dic):
     """
     Returns cookie in format suitable for use in javascript.
