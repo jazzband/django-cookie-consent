@@ -1,12 +1,12 @@
 from textwrap import dedent
-from typing import Any, Dict, Optional
+from typing import Any
 
 from django.template import Context, Template
 
 import pytest
 
 
-def render(tpl: str, context: Optional[Dict[str, Any]] = None) -> str:
+def render(tpl: str, context: dict[str, Any] | None = None) -> str:
     template = Template(dedent(tpl).strip())
     return template.render(Context(context))
 

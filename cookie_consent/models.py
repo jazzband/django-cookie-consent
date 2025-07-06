@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 from typing import TypedDict
 
@@ -144,7 +143,7 @@ class Cookie(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return "%s %s%s" % (self.name, self.domain, self.path)
+        return f"{self.name} {self.domain}{self.path}"
 
     @clear_cache_after
     def save(self, *args, **kwargs):
@@ -161,7 +160,8 @@ class Cookie(models.Model):
 
     @property
     def varname(self):
-        return "%s=%s:%s" % (self.cookiegroup.varname, self.name, self.domain)
+        group_varname = self.cookiegroup.varname
+        return f"{group_varname}={self.name}:{self.domain}"
 
     def get_version(self):
         return self.created.isoformat()
@@ -191,4 +191,4 @@ class LogItem(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return "%s %s" % (self.cookiegroup.name, self.version)
+        return f"{self.cookiegroup.name} {self.version}"

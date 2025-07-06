@@ -166,6 +166,12 @@ def accepted_cookies(request):
         {{ request|accepted_cookies }}
 
     """
+    warnings.warn(
+        "The 'accepted_cookies' template filter is deprecated and will be removed"
+        "in django-cookie-consent 1.0.",
+        DeprecationWarning,
+        stacklevel=1,
+    )
     return [c.varname for c in get_accepted_cookies(request)]
 
 
