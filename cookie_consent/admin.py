@@ -1,4 +1,9 @@
 from django.contrib import admin
+from django.db.models import Count
+from django.templatetags.l10n import localize
+from django.templatetags.static import static
+from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from .conf import settings
 from .models import Cookie, CookieGroup, LogItem
@@ -12,7 +17,14 @@ class CookieAdmin(admin.ModelAdmin):
 
 
 class CookieGroupAdmin(admin.ModelAdmin):
-    list_display = ("varname", "name", "is_required", "is_deletable", "get_version")
+    list_display = (
+        "varname",
+        "name",
+        "is_required",
+        "is_deletable",
+        "num_cookies",
+        "get_version",
+    )
     search_fields = (
         "varname",
         "name",
@@ -21,6 +33,22 @@ class CookieGroupAdmin(admin.ModelAdmin):
         "is_required",
         "is_deletable",
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.annotate(num_cookies=Count("cookie"))
+
+    @admin.display(ordering="num_cookies", description=_("# cookies"))
+    def num_cookies(self, obj):
+        if (count := obj.num_cookies) > 0:
+            return localize(count)
+
+        return format_html(
+            '{count} <img src="{src}" alt="{alt}">',
+            count=localize(count),
+            src=static("admin/img/icon-alert.svg"),
+            alt=_("Warning icon for missing cookies in cookie group."),
+        )
 
 
 class LogItemAdmin(admin.ModelAdmin):
