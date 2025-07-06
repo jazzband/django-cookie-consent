@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import string
 from copy import deepcopy
 
 from django.conf import settings
@@ -7,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase, override_settings
 
 import pytest
+from hypothesis import given, strategies as st
 
 from cookie_consent.cache import CACHE_KEY, delete_cache
 from cookie_consent.models import Cookie, CookieGroup, validate_cookie_name
@@ -112,10 +114,17 @@ class CookieTest(CacheMixin, TestCase):
         self.assertCacheNotPopulated()
 
 
-def test_valid_cookie_name_does_not_raise():
-    result = validate_cookie_name("_foo-bar")
-
-    assert result is None
+@given(
+    name=st.text(
+        alphabet=string.ascii_letters + string.digits + "-_",
+        min_size=1,
+    )
+)
+def test_valid_cookie_name_does_not_raise(name):
+    try:
+        validate_cookie_name(name)
+    except ValidationError:
+        pytest.fail(reason=f"Expected {name} to be valid")
 
 
 @pytest.mark.parametrize(
