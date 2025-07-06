@@ -1,6 +1,7 @@
 from django.conf import settings  # NOQA
 
 from appconf import AppConf
+from django.urls import reverse_lazy
 
 __all__ = ["settings"]
 
@@ -24,3 +25,5 @@ class CookieConsentConf(AppConf):
     CACHE_BACKEND = "default"
 
     LOG_ENABLED = True
+
+    SUCCESS_URL = reverse_lazy("cookie_consent_cookie_group_list")
