@@ -97,6 +97,7 @@ def get_accept_cookie_groups_cookie_string(request, cookie_groups):  # pragma: n
         "Cookie string template tags for JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
@@ -113,6 +114,7 @@ def get_decline_cookie_groups_cookie_string(request, cookie_groups):
         "Cookie string template tags for JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
@@ -140,6 +142,7 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         "Template tags for use in/with JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     enabled = is_cookie_consent_enabled(request)
     if not enabled:

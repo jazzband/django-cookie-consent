@@ -104,7 +104,7 @@ extend-select = [
     "E",   # pycodestyle
     "F",   # pyflakes
     # "PERF",# perflint
-    # "B",   # flake8-bugbear
+    "B",   # flake8-bugbear
 ]
 
 [tool.ruff.lint.isort]

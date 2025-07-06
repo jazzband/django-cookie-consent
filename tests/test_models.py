@@ -6,6 +6,8 @@ from django.core.cache import caches
 from django.core.exceptions import ValidationError
 from django.test import TestCase, override_settings
 
+import pytest
+
 from cookie_consent.cache import CACHE_KEY, delete_cache
 from cookie_consent.models import Cookie, CookieGroup, validate_cookie_name
 
@@ -110,16 +112,20 @@ class CookieTest(CacheMixin, TestCase):
         self.assertCacheNotPopulated()
 
 
-class ValidateCookieNameTest(TestCase):
-    def test_valid(self):
-        validate_cookie_name("_foo-bar")
+def test_valid_cookie_name_does_not_raise():
+    result = validate_cookie_name("_foo-bar")
 
-    def test_invalid(self):
-        invalid_names = (
-            "space inside",
-            "a!b",
-            "$",
-        )
-        for name in invalid_names:
-            with self.assertRaises(ValidationError):
-                validate_cookie_name("no spaces")
+    assert result is None
+
+
+@pytest.mark.parametrize(
+    "name",
+    (
+        "space inside",
+        "a!b",
+        "$",
+    ),
+)
+def test_invalid_cookie_name_raises(name: str):
+    with pytest.raises(ValidationError):
+        validate_cookie_name(name)
