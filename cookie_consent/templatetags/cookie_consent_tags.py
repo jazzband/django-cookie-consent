@@ -133,8 +133,9 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         alert("Social cookie accepted");
       </script>
     """
-    # This approach doesn't work with page caches and/or strict Content-Security-Policies
-    # (unless you use nonces, which again doesn't work with aggressive page caching).
+    # This approach doesn't work with page caches and/or strict
+    # Content-Security-Policies (unless you use nonces, which again doesn't work with
+    # aggressive page caching).
     warnings.warn(
         "Template tags for use in/with JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",

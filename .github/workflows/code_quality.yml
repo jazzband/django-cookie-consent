@@ -17,9 +17,7 @@ jobs:
     strategy:
       matrix:
         toxenv:
-          - isort
-          - black
-          # - flake8
+          - ruff
           - docs
     steps:
       - uses: actions/checkout@v4

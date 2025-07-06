@@ -57,7 +57,8 @@ class CookieGroupTest(CacheMixin, TestCase):
             id=self.cookie_group.id
         ).delete()
 
-        # Deleting a CookieGroup also deletes the associated Cookies, that's why we expect a count of 2.
+        # Deleting a CookieGroup also deletes the associated Cookies, that's why we
+        # expect a count of 2.
         self.assertEqual(deleted_objs_count, 2)
         self.assertCacheNotPopulated()
 
