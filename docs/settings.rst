@@ -66,3 +66,8 @@ for more details about the meaning.
   Boolean value represents if user actions when they accepting and declining cookies will be logged. Turning it off might be useful for preventing your database from getting filled up with log items.
 
   Default: ``True`` 
+
+``COOKIE_CONSENT_SUCCESS_URL``
+  The success URL to redirect the user too after a successful accept/decline action. If
+  a ``?next`` parameter is present in the request, then it takes priority over this
+  setting. Defaults to the URL of the built-in cookie list view.

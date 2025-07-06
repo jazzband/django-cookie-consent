@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.generic import ListView, View
 
+from .conf import settings
 from .models import CookieGroup
 from .util import (
     accept_cookies,
@@ -48,7 +49,7 @@ class CookieGroupBaseProcessView(RedirectURLMixin, View):
             require_https=self.request.is_secure(),
         ):
             raise SuspiciousOperation("Unsafe open redirect suspected.")
-        return redirect_to or reverse("cookie_consent_cookie_group_list")
+        return redirect_to or settings.COOKIE_CONSENT_SUCCESS_URL
 
     def process(self, request, response, varname):  # pragma: no cover
         raise NotImplementedError()
