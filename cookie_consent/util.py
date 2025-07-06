@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 import datetime
 import logging
-from typing import Dict, Union
 
 from .cache import all_cookie_groups, get_cookie, get_cookie_group
 from .conf import settings
@@ -13,7 +11,7 @@ COOKIE_GROUP_SEP = "|"
 KEY_VALUE_SEP = "="
 
 
-def parse_cookie_str(cookie: str) -> Dict[str, str]:
+def parse_cookie_str(cookie: str) -> dict[str, str]:
     if not cookie:
         return {}
 
@@ -171,7 +169,7 @@ def are_all_cookies_accepted(request):
     )
 
 
-def _get_cookie_groups_by_state(request, state: Union[bool, None]):
+def _get_cookie_groups_by_state(request, state: bool | None):
     return [
         cookie_group
         for cookie_group in get_cookie_groups()
@@ -219,7 +217,7 @@ def get_cookie_string(cookie_dic):
     expires = datetime.datetime.now() + datetime.timedelta(
         seconds=settings.COOKIE_CONSENT_MAX_AGE
     )
-    cookie_str = "%s=%s; expires=%s; path=/" % (
+    cookie_str = "{}={}; expires={}; path=/".format(
         settings.COOKIE_CONSENT_NAME,
         dict_to_cookie_str(cookie_dic),
         expires.strftime("%a, %d %b %Y %H:%M:%S GMT"),
@@ -239,5 +237,5 @@ def get_accepted_cookies(request):
             continue
         for cookie in cookie_group.cookie_set.all():
             if version >= cookie.get_version():
-                accepted_cookies.append(cookie)
+                accepted_cookies.append(cookie)  # noqa: PERF401
     return accepted_cookies

@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("cookie_consent", "0002_auto__add_logitem"),
     ]
@@ -22,7 +21,8 @@ class Migration(migrations.Migration):
                 validators=[
                     django.core.validators.RegexValidator(
                         re.compile("^[-_a-zA-Z0-9]+$"),
-                        "Enter a valid 'varname' consisting of letters, numbers, underscores or hyphens.",
+                        "Enter a valid 'varname' consisting of letters, numbers, "
+                        "underscores or hyphens.",
                         "invalid",
                     )
                 ],

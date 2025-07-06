@@ -68,7 +68,8 @@ class Migration(migrations.Migration):
                         validators=[
                             django.core.validators.RegexValidator(
                                 re.compile("^[-_a-zA-Z0-9]+$"),
-                                "Enter a valid 'varname' consisting of letters, numbers, underscores or hyphens.",
+                                "Enter a valid 'varname' consisting of letters, "
+                                "numbers, underscores or hyphens.",
                                 "invalid",
                             )
                         ],

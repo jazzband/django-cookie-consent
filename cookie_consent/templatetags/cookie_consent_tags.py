@@ -97,6 +97,7 @@ def get_accept_cookie_groups_cookie_string(request, cookie_groups):  # pragma: n
         "Cookie string template tags for JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
@@ -113,6 +114,7 @@ def get_decline_cookie_groups_cookie_string(request, cookie_groups):
         "Cookie string template tags for JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     cookie_dic = get_cookie_dict_from_request(request)
     for cookie_group in cookie_groups:
@@ -133,12 +135,14 @@ def js_type_for_cookie_consent(request, varname, cookie=None):
         alert("Social cookie accepted");
       </script>
     """
-    # This approach doesn't work with page caches and/or strict Content-Security-Policies
-    # (unless you use nonces, which again doesn't work with aggressive page caching).
+    # This approach doesn't work with page caches and/or strict
+    # Content-Security-Policies (unless you use nonces, which again doesn't work with
+    # aggressive page caching).
     warnings.warn(
         "Template tags for use in/with JS are deprecated and will be removed "
         "in django-cookie-consent 1.0",
         DeprecationWarning,
+        stacklevel=1,
     )
     enabled = is_cookie_consent_enabled(request)
     if not enabled:
@@ -162,6 +166,12 @@ def accepted_cookies(request):
         {{ request|accepted_cookies }}
 
     """
+    warnings.warn(
+        "The 'accepted_cookies' template filter is deprecated and will be removed"
+        "in django-cookie-consent 1.0.",
+        DeprecationWarning,
+        stacklevel=1,
+    )
     return [c.varname for c in get_accepted_cookies(request)]
 
 

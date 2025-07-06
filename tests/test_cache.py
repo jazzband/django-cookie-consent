@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.test import TestCase, override_settings
 
 from cookie_consent.cache import delete_cache, get_cookie, get_cookie_group

@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from typing import Optional
-
 from .cache import all_cookie_groups
 from .conf import settings
 from .util import get_cookie_dict_from_request, is_cookie_consent_enabled
 
 
-def _should_delete_cookie(group_version: Optional[str]) -> bool:
+def _should_delete_cookie(group_version: str | None) -> bool:
     # declined after it was accepted (and set) before
     if group_version == settings.COOKIE_CONSENT_DECLINE:
         return True

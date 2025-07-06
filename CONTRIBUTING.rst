@@ -23,8 +23,8 @@ checks:
 * Pull requests must be accompanied by tests. We use ``pytest`` and prefer using this
   testing style over Django's ``django.test.TestCase``.
 * Ideally, documentation updates are included in a pull request.
-* Imports are sorted using ``isort``, while code is formatted using ``black``. There
-  are tox environments and CI checks in place to check/enforce this.
+* Code formatting and linting is done with ``ruff``. There are tox environments and CI
+  checks in place to check/enforce this.
 * Follow Django's code style where possible.
 * Keep commits atomic - one commit should only concern one topic. Bugfixes typically
   have one commit for the regression test and one commit with the fix.
@@ -100,8 +100,8 @@ or to build the full test matrix
 
 .. code-block:: bash
 
-   black .
-   isort .
+   ruff format .
+   ruff check --fix .
 
 Should be sufficient. Consider using a pre-commit hook to automate this.
 

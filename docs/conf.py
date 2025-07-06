@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
 from pathlib import Path
@@ -14,7 +13,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "testapp.settings")
 
 django.setup()
 
-from cookie_consent import __version__  # isort:skip
+from cookie_consent import __version__  # noqa: E402
 
 # -- General configuration -----------------------------------------------------
 

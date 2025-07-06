@@ -45,16 +45,12 @@ Changelog = "https://github.com/django-commons/django-cookie-consent/blob/master
 [project.optional-dependencies]
 tests = [
     "pytest",
+    "pytest-cov",
     "pytest-django",
     "pytest-playwright",
     "hypothesis",
     "tox",
-    "isort",
-    "black",
-    "flake8",
-]
-coverage = [
-    "pytest-cov",
+    "ruff",
 ]
 docs = [
     "sphinx",
@@ -70,14 +66,6 @@ version = {attr = "cookie_consent.__version__"}
 [tool.setuptools.packages.find]
 include = ["cookie_consent*"]
 namespaces = true
-
-[tool.isort]
-profile = "black"
-combine_as_imports = true
-skip = ["env", ".tox", ".history", ".eggs"]
-known_django = "django"
-known_first_party="cookie_consent"
-sections=["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -105,3 +93,30 @@ exclude_also = [
     "\\.\\.\\.",
     "\\bpass$",
 ]
+
+[tool.ruff.lint]
+extend-select = [
+    "UP",  # pyupgrade
+    "DJ",  # django
+    "LOG", # logging
+    "G",
+    "I",   # isort
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "PERF",# perflint
+    "B",   # flake8-bugbear
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+section-order = [
+    "future",
+    "standard-library",
+    "django",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.isort.sections]
+"django" = ["django"]

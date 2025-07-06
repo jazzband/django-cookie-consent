@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime
 
-from django.http import parse_cookie
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings

@@ -6,7 +6,7 @@ Manage cookie information and let visitors give or reject consent for them.
 ![License](https://img.shields.io/pypi/l/django-cookie-consent)
 [![Build status][badge:GithubActions:CI]][GithubActions:CI]
 [![Code Quality][badge:GithubActions:CQ]][GithubActions:CQ]
-[![Code style: black][badge:black]][black]
+[![Code style: ruff][badge:ruff]][ruff]
 [![Test coverage][badge:codecov]][codecov]
 [![Documentation][badge:docs]][docs]
 
@@ -36,8 +36,8 @@ from the `docs` directory in this repository.
 [badge:GithubActions:CI]: https://github.com/django-commons/django-cookie-consent/workflows/Run%20CI/badge.svg
 [GithubActions:CQ]: https://github.com/django-commons/django-cookie-consent/actions?query=workflow%3A%22Code+quality+checks%22
 [badge:GithubActions:CQ]: https://github.com/django-commons/django-cookie-consent/workflows/Code%20quality%20checks/badge.svg
-[black]: https://github.com/psf/black
-[badge:black]: https://img.shields.io/badge/code%20style-black-000000.svg
+[ruff]: https://github.com/astral-sh/ruff
+[badge:ruff]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
 [codecov]: https://codecov.io/gh/django-commons/django-cookie-consent
 [badge:codecov]: https://codecov.io/gh/django-commons/django-cookie-consent/branch/master/graph/badge.svg
 [docs]: https://django-cookie-consent.readthedocs.io/en/latest/?badge=latest
